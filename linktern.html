@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Linktern | Explore Internships ✨</title>
+  <!-- Modern font family for professional look -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #23272f;
+      --accent: #040404;
+      --danger: #d32f2f;
+      --warning: #ffa726;
+      --bg-light: #f8f9fa;
+      --bg-dark: #121212;
+      --surface-light: #fff;
+      --surface-dark: #23272f;
+      --surface-alt-light: #f3f5f7;
+      --surface-alt-dark: #1c1e22;
+      --hover-light: #eef0f2;
+      --hover-dark: #22242a;
+      --card-float: 0 4px 16px 0 rgba(23,105,170,0.08), 0 1px 10px 0 rgba(35,39,47,0.06);
+      --text-light: #23272f;
+      --text-dark: #f6f6f6;
+      --muted-light: #5f6776;
+      --muted-dark: #bcc5d2;
+      --radius: 14px;
+      --radius-sm: 8px;
+      --transition: 0.18s cubic-bezier(.7,.2,.2,1);
+      --shadow: 0 8px 24px 0 rgba(23,105,170,.11);
+      --modal-blur: blur(8px);
+      --focus: #ffffff;
+      --inactive: #b0b6c4;
+      --input-bg-light: #f3f5f7;
+      --input-bg-dark: #23272f;
+      --input-focus-light: #e0e3e7;
+      --input-focus-dark: #22242a;
+      --modal-bg-light: rgba(255,255,255,0.99);
+      --modal-bg-dark: rgba(23, 34, 43, 0.99);
+      --link: #000000;
+      --info: #000000;
+      --highlight: #ffa726;
+      --forum-preview-bg-light: #f3f5f7;
+      --forum-preview-bg-dark: #22242a;
+      --fun-emoji-bg: #ffe8b8;
+      --sticky-rect-bg: #fff8e1;
+      --sticky-rect-dark: #23272f;
+      --sticky-rect-shadow: 0 2px 12px #ffa72655;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Nunito', 'Roboto', sans-serif;
+      background: var(--bg-light);
+      color: var(--text-light);
+      min-height: 100%;
+      box-sizing: border-box;
+      transition: background .3s, color .3s;
+    }
+    body.dark-mode, 
+body.dark-mode * {
+  color: #fff !important;
+}
+body.dark-mode nav button,
+body.dark-mode nav .top-links button,
+body.dark-mode .mode-toggle {
+  color: #070707 !important;
+}
+
+    body.dark-mode {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+    body.dark-mode header, body.dark-mode footer {
+      background: var(--surface-dark);
+      color: var(--muted-dark);
+    }
+    body.dark-mode aside {
+      background: var(--surface-alt-dark);
+    }
+    body.dark-mode .container,
+    body.dark-mode .card,
+    body.dark-mode .forum-thread,
+    body.dark-mode .modal-content {
+      background: var(--surface-dark);
+      color: var(--text-dark);
+    }
+    body.dark-mode .card {
+      border-color: var(--focus);
+    }
+    body.dark-mode .subject-btn {
+      background: var(--input-bg-dark);
+      color: var(--muted-dark);
+      border-color: var(--inactive);
+    }
+    body.dark-mode .subject-btn.active, body.dark-mode .subject-btn:focus, body.dark-mode .subject-btn:hover {
+      background: var(--input-focus-dark);
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    body.dark-mode .search-bar,
+    body.dark-mode .add-thread-form,
+    body.dark-mode .add-comment-form {
+      background: var(--input-bg-dark);
+      color: var(--text-dark);
+    }
+    body.dark-mode .modal {
+      background: rgba(23, 34, 43, 0.88);
+    }
+    body.dark-mode .forum-preview {
+      background: var(--forum-preview-bg-dark);
+      color: var(--text-dark);
+    }
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      background: var(--surface-light);
+      box-shadow: var(--shadow);
+      padding: 1.1rem 3vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 200;
+      border-bottom: 2px solid var(--accent);
+      animation: headerFadeIn 0.5s;
+      transition: background .3s, color .3s;
+    }
+    @keyframes headerFadeIn {
+      from { opacity: 0; transform: translateY(-10px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .logo {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 2.1rem;
+      color: var(--accent);
+      letter-spacing: -1px;
+      user-select: none;
+      cursor: pointer;
+      transition: filter .12s;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .logo::before {
+      content: "🌐";
+      font-size: 2.1rem;
+      margin-right: 0.2rem;
+      filter: drop-shadow(0 2px 8px #1769aa55);
+      animation: bounceEmoji 1.5s infinite alternate;
+    }
+    @keyframes bounceEmoji {
+      to { transform: translateY(-6px);}
+    }
+    nav {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    nav button {
+      background: var(--input-bg-light);
+      border: 2px solid var(--inactive);
+      color: var(--muted-light);
+      font-size: 1.13rem;
+      font-weight: 700;
+      margin: 0 0.18rem;
+      padding: 0.6rem 1.18rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: color var(--transition), background var(--transition), border var(--transition), box-shadow var(--transition);
+      outline: none;
+      box-shadow: 0 2px 10px #1769aa20;
+      font-family: 'Nunito', sans-serif;
+      letter-spacing: 0.01em;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.3em;
+    }
+    nav button.active, nav button:focus, nav button:hover {
+      color: var(--accent);
+      background: var(--input-focus-light);
+      border-color: var(--accent);
+      box-shadow: 0 2px 12px 0 rgba(255, 255, 255, 0.13);
+      outline: none;
+      transform: scale(1.06);
+    }
+    nav .top-links {
+      display: flex;
+      gap: 0.28rem;
+      margin-left: 2.3rem;
+    }
+    nav .top-links button, .mode-toggle {
+      background: var(--surface-alt-light);
+      color: var(--accent);
+      font-size: 1.01rem;
+      padding: 0.52rem 1rem;
+      border: 2px solid var(--accent);
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      margin: 0 0.08rem;
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition), border var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.3em;
+    }
+    nav .top-links button:hover, nav .top-links button:focus, .mode-toggle:hover, .mode-toggle:focus {
+      color: var(--surface-light);
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .mode-toggle {
+      margin-left: 0.8rem;
+    }
+    /* Features Buttons Row */
+    .features-row {
+      display: flex;
+      gap: 0.7em;
+      margin: 0.7em 0 1.1em 0;
+      justify-content: start;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .features-btn {
+      background: var(--fun-emoji-bg);
+      color: var(--accent);
+      border: 2px solid var(--warning);
+      border-radius: 14px;
+      font-size: 1.09rem;
+      font-weight: 900;
+      padding: 0.34em 1.3em 0.34em 1.1em;
+      margin: 0 0.1em;
+      cursor: pointer;
+      box-shadow: 0 2px 10px #ffa72622;
+      transition: background var(--transition), color var(--transition), border var(--transition), transform .13s;
+      outline: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4em;
+    }
+    .features-btn:hover, .features-btn:focus {
+      background: var(--warning);
+      color: #fff;
+      border-color: var(--accent);
+      transform: scale(1.08);
+      box-shadow: 0 4px 18px #ffa72614;
+      outline: none;
+    }
+    /* Layout */
+    main {
+      display: flex;
+      width: 100vw;
+      max-width: 100vw;
+      min-height: 0;
+      overflow-x: hidden;
+      flex: 1;
+    }
+    aside {
+      min-width: 210px;
+      max-width: 230px;
+      background: var(--surface-alt-light);
+      box-shadow: var(--card-float);
+      padding: 2rem 1.2rem 1.3rem 1.3rem;
+      border-top-right-radius: var(--radius);
+      border-bottom-right-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.2rem;
+      z-index: 10;
+      height: auto;
+      margin: 2rem 0 2rem 1.8vw;
+      transition: background var(--transition), box-shadow var(--transition);
+      position: relative;
+    }
+    /* Aside forum preview section */
+    .forum-preview {
+      background: var(--forum-preview-bg-light);
+      border-radius: var(--radius-sm);
+      padding: 0.9rem 1rem 0.8rem 1rem;
+      box-shadow: 0 1px 6px 0 #bcc5d210;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+      width: 100%;
+    }
+    .forum-preview h4 {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--accent);
+      margin: 0 0 0.5rem 0;
+      letter-spacing: 0.01em;
+      display: flex;
+      align-items: center;
+      gap: 0.2em;
+    }
+    .forum-preview h4::before {
+      content: "💬";
+      font-size: 1.3em;
+      filter: drop-shadow(0 1px 4px #ffa72633);
+    }
+    .forum-preview-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+    .forum-preview-list li {
+      font-size: 0.97rem;
+      color: var(--text-light);
+      font-weight: 700;
+      background: transparent;
+      border-left: 3px solid var(--accent);
+      padding-left: 0.5em;
+      margin: 0.1em 0;
+      cursor: pointer;
+      transition: background .14s;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.2em;
+    }
+    .forum-preview-list li::after {
+      content: "🗨️";
+      font-size: 1em;
+      margin-left: 0.3em;
+      opacity: 0.7;
+    }
+    .forum-preview-list li:hover {
+      background: var(--hover-light);
+      color: var(--accent);
+    }
+    body.dark-mode .forum-preview-list li {
+      color: var(--text-dark);
+      border-left-color: var(--accent);
+    }
+    body.dark-mode .forum-preview-list li:hover {
+      background: var(--hover-dark);
+      color: var(--accent);
+    }
+    /* Aside divider */
+    .aside-divider {
+      height: 1px;
+      width: 85%;
+      margin: 1.1rem 0 0.7rem 0;
+      background: linear-gradient(90deg, #1769aa33, #ffa72633 70%, transparent);
+      border: 0;
+    }
+    /* Subject Panel */
+    .subjects-panel {
+      width: 100%;
+    }
+    .subjects-panel h3 {
+      margin: 0 0 1rem 0;
+      font-size: 1.07rem;
+      color: var(--accent);
+      font-weight: 900;
+      letter-spacing: 0.01em;
+      text-shadow: 0 2px 10px #1769aa13;
+      display: flex;
+      align-items: center;
+      gap: 0.25em;
+    }
+    .subjects-panel h3::after {
+      content: "📚";
+      font-size: 1.1em;
+      filter: drop-shadow(0 0 4px #ffa72655);
+    }
+    .subject-btn {
+      background: var(--input-bg-light);
+      border: 2px solid var(--inactive);
+      color: var(--muted-light);
+      width: 100%;
+      text-align: left;
+      font-size: 1.01rem;
+      font-weight: 700;
+      padding: 0.5rem 0.8rem;
+      margin-bottom: 0.13rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: color var(--transition), background var(--transition), border var(--transition);
+      outline: none;
+      font-family: 'Nunito', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 0.2em;
+    }
+    .subject-btn.active, .subject-btn:focus, .subject-btn:hover {
+      color: var(--accent);
+      background: var(--input-focus-light);
+      border-color: var(--accent);
+      outline: none;
+    }
+    .subject-btn::before {
+      content: "🔎";
+      font-size: 0.95em;
+      margin-right: 0.1em;
+      opacity: 0.7;
+      transition: opacity .2s;
+    }
+    .subject-btn.active::before, .subject-btn:focus::before, .subject-btn:hover::before {
+      opacity: 1;
+    }
+    /* Container and Card */
+    .container {
+      flex: 1;
+      padding: 2rem 4vw 1.3rem 2.5vw;
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      animation: fadeInMain .27s;
+      background: transparent;
+    }
+    @keyframes fadeInMain {
+      from { opacity: 0;}
+      to { opacity: 1;}
+    }
+    .search-bar {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+      align-items: center;
+      flex-wrap: wrap;
+      background: var(--input-bg-light);
+      padding: 0.7rem 1.2rem;
+      border-radius: var(--radius-sm);
+      box-shadow: 0 2px 7px #1769aa10;
+      border: 2px solid var(--accent);
+      position: relative;
+    }
+    .search-bar input, .search-bar select {
+      padding: 0.4rem 1rem;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--inactive);
+      background: var(--input-bg-light);
+      color: var(--text-light);
+      font-size: 1.01rem;
+      transition: border var(--transition), background var(--transition);
+      outline: none;
+      font-family: 'Roboto', sans-serif;
+    }
+    .search-bar input:focus, .search-bar select:focus {
+      border-color: var(--accent);
+      background: var(--input-focus-light);
+    }
+    body.dark-mode .search-bar input, body.dark-mode .search-bar select {
+      background: var(--input-bg-dark);
+      color: var(--text-dark);
+    }
+    body.dark-mode .search-bar input:focus, body.dark-mode .search-bar select:focus {
+      background: var(--input-focus-dark);
+      border-color: var(--accent);
+    }
+    .search-bar label {
+      font-size: 1.01rem;
+      color: var(--muted-light);
+      margin-right: 0.4rem;
+      font-weight: 700;
+      font-family: 'Nunito', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 0.2em;
+    }
+    .search-bar label::after {
+      
+      font-size: 1em;
+      margin-left: 0.1em;
+      opacity: 0.7;
+    }
+    .search-bar select {
+      min-width: 90px;
+      cursor: pointer;
+    }
+    .search-bar button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 1.03rem;
+      font-weight: 900;
+      padding: 0.41rem 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #1769aa15;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition), color .14s;
+    }
+    .search-bar button:focus, .search-bar button:hover {
+      background: var(--primary);
+      color: #fff;
+      transform: scale(1.07);
+      box-shadow: 0 4px 18px #1769aa08;
+      outline: none;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 1.3rem;
+      width: 100%;
+      margin-top: 0.14rem;
+    }
+    .card {
+      background: var(--surface-light);
+      border-radius: var(--radius);
+      padding: 1.1rem 1rem 1rem 1rem;
+      cursor: pointer;
+      box-shadow: var(--card-float);
+      border: 2px solid var(--accent);
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition), border var(--transition), background var(--transition);
+      outline: none;
+      min-height: 175px;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:focus {
+      outline: 2px solid var(--accent);
+      box-shadow: 0 0 0 3px var(--accent);
+      background: var(--hover-light);
+    }
+    .card:hover {
+      background: var(--hover-light);
+      border: 2px solid var(--focus);
+      transform: scale(1.03) translateY(-2px);
+      box-shadow: 0 8px 32px 0 rgba(23,105,170,.11);
+    }
+    .card .fav-btn {
+      position: absolute;
+      top: 14px;
+      right: 13px;
+      font-size: 1.2rem;
+      background: none;
+      border: none;
+      color: var(--accent);
+      cursor: pointer;
+      transition: color var(--transition), transform var(--transition);
+      z-index: 2;
+      padding: 0.07rem 0.13rem;
+      display: flex;
+      align-items: center;
+      gap: 0.2em;
+    }
+    .card .fav-btn.favorited {
+      color: var(--focus);
+      transform: scale(1.15) rotate(-10deg);
+      filter: drop-shadow(0 0 14px #1769aa50);
+    }
+    
+    .tag {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 0.12rem 0.43rem;
+      border-radius: 7px;
+      font-size: 0.77rem;
+      font-weight: 700;
+      margin: 0.09rem 0.11rem 0 0;
+      opacity: 0.97;
+      letter-spacing: 0.01em;
+      box-shadow: 0 1px 2px 0 #1769aa0c;
+      position: relative;
+    }
+    .tag::after {
+      content: "✨";
+      font-size: 1em;
+      margin-left: 0.13em;
+      opacity: 0.7;
+    }
+    .card h3 {
+      margin: 0 0 0.22rem 0;
+      font-size: 1.06rem;
+      font-weight: 900;
+      color: var(--accent);
+      text-shadow: 0 3px 11px #1769aa10;
+      font-family: 'Nunito', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 0.18em;
+    }
+    .card h3::before {
+      content: "🧑‍🎓";
+      font-size: 1.1em;
+      margin-right: 0.09em;
+      opacity: 0.7;
+    }
+    .card p {
+      margin: 0.09rem 0;
+      color: var(--muted-light);
+      font-size: 0.93rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.2em;
+    }
+    .card p::after {
+      content: "🏢";
+      font-size: 1em;
+      margin-left: 0.1em;
+      opacity: 0.7;
+    }
+    .card .card-details {
+      margin-top: 0.56rem;
+      color: var(--text-light);
+      font-size: 0.97rem;
+      display: flex;
+      align-items: center;
+      gap: 0.2em;
+    }
+    .card .card-details::before {
+      content: "💰";
+      font-size: 1em;
+      margin-right: 0.1em;
+      opacity: 0.7;
+    }
+    .card .card-tags {
+      margin-top: 0.65rem;
+    }
+    .empty-state {
+      color: var(--muted-light);
+      font-size: 1.03rem;
+      text-align: center;
+      margin-top: 2.2rem;
+      font-style: italic;
+    }
+    .empty-state img {
+      width: 64px;
+      margin-bottom: 1rem;
+      opacity: 0.7;
+    }
+    /* Modal */
+    .modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(23,105,170,0.08);
+      z-index: 10000;
+      animation: fadeInModal 0.22s;
+      backdrop-filter: var(--modal-blur);
+    }
+    @keyframes fadeInModal {
+      from { opacity: 0;}
+      to { opacity: 1;}
+    }
+    .modal-content {
+      background: var(--modal-bg-light);
+      border-radius: 20px;
+      padding: 1.4rem 2vw 1rem 2vw;
+      width: 95vw;
+      max-width: 420px;
+      box-shadow: 0 10px 32px 0 rgba(23,105,170,.17);
+      position: relative;
+      border: 3px solid var(--accent);
+      animation: popUpModal 0.23s cubic-bezier(.43,1.42,.62,1.01);
+      color: var(--text-light);
+    }
+    body.dark-mode .modal-content {
+      background: var(--modal-bg-dark);
+      color: var(--text-dark);
+    }
+    @keyframes popUpModal {
+      from { transform: scale(0.92) translateY(48px);}
+      to { transform: scale(1);}
+    }
+    .modal-content h2 {
+      margin-top: 0;
+      color: var(--accent);
+      font-size: 1.15rem;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      text-shadow: 0 8px 24px #1769aa15;
+      display: flex;
+      align-items: center;
+      gap: 0.18em;
+    }
+    .modal-content h2::before {
+      content: "🔍";
+      font-size: 1.1em;
+      margin-right: 0.09em;
+      opacity: 0.7;
+    }
+    .modal-content .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 16px;
+      font-size: 1.6rem;
+      background: none;
+      border: none;
+      color: var(--muted-light);
+      cursor: pointer;
+      font-family: inherit;
+      transition: color var(--transition), transform var(--transition);
+      z-index: 1;
+    }
+    body.dark-mode .modal-content .close-btn {
+      color: var(--muted-dark);
+    }
+    .modal-content .close-btn:hover {
+      color: var(--danger);
+      transform: scale(1.15);
+    }
+    .modal-content p {
+      font-size: 1.01rem;
+      color: inherit;
+      margin: 0.7rem 0 0.4rem 0;
+    }
+    .modal-content .modal-tags {
+      margin-top: 0.7rem;
+      margin-bottom: 1rem;
+    }
+    .apply-btn {
+      background: var(--accent);
+      color: #fff;
+      font-weight: 900;
+      font-size: 1.09rem;
+      border: none;
+      border-radius: 11px;
+      padding: 0.58rem 1.9rem;
+      cursor: pointer;
+      box-shadow: 0 2px 10px #1769aa12;
+      margin-top: 0.7rem;
+      display: inline-block;
+      text-decoration: none;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.25em;
+    }
+    .apply-btn::after {
+      content: "🚀";
+      font-size: 1em;
+      margin-left: 0.13em;
+      opacity: 0.8;
+    }
+    .apply-btn:hover, .apply-btn:focus {
+      background: var(--focus);
+      transform: scale(1.04) translateY(-1px);
+      box-shadow: 0 7px 18px #1769aa08;
+      color: #fff;
+      filter: brightness(1.07);
+      outline: none;
+    }
+    .apply-btn:active {
+      background: var(--accent);
+      color: #fff;
+      transform: scale(0.97);
+    }
+    /* Footer */
+    footer {
+      background: var(--surface-light);
+      color: var(--muted-light);
+      padding: 0.9rem 0;
+      text-align: center;
+      font-size: 1.06rem;
+      margin-top: 1rem;
+      box-shadow: 0 -2px 14px 0 #1769aa0a;
+      border-top: 2px solid var(--accent);
+      border-top-left-radius: var(--radius);
+      border-top-right-radius: var(--radius);
+      transition: background .3s, color .3s;
+    }
+    body.dark-mode footer {
+      background: var(--surface-dark);
+      color: var(--muted-dark);
+    }
+    footer a {
+      color: var(--link);
+      text-decoration: underline;
+      font-weight: 900;
+      transition: color .14s;
+    }
+    footer a:hover {
+      color: var(--accent);
+    }
+    /* Forums */
+    .forum-section, .favorites-section {
+      min-height: 40vh;
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    .forum-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+      margin-top: 0.7rem;
+    }
+    .forum-thread {
+      background: var(--surface-alt-light);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--card-float);
+      border: 2px solid var(--accent);
+      padding: 0.9rem 1.1rem 0.8rem 1.1rem;
+      transition: box-shadow var(--transition), border var(--transition), background var(--transition);
+      position: relative;
+    }
+    .forum-thread:focus, .forum-thread:hover {
+      background: var(--hover-light);
+      border-color: var(--focus);
+      box-shadow: 0 4px 18px #1769aa0a;
+      outline: none;
+    }
+    .forum-thread-title {
+      font-weight: 900;
+      font-size: 1.06rem;
+      color: var(--accent);
+      margin-bottom: 0.13rem;
+      text-shadow: 0 3px 13px #1769aa13;
+      display: flex;
+      align-items: center;
+      gap: 0.17em;
+    }
+    .forum-thread-title::before {
+      content: "💡";
+      font-size: 1.1em;
+      margin-right: 0.09em;
+      opacity: 0.7;
+    }
+    .forum-thread-meta {
+      color: var(--muted-light);
+      font-size: 1.01rem;
+      margin-bottom: 0.31rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.14em;
+    }
+    .forum-thread-meta::after {
+      content: "🕒";
+      font-size: 1em;
+      margin-left: 0.08em;
+      opacity: 0.7;
+    }
+    .forum-thread-desc {
+      color: var(--text-light);
+      font-size: 1.01rem;
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.12em;
+    }
+    .forum-thread-desc::after {
+      content: "❓";
+      font-size: 1em;
+      margin-left: 0.09em;
+      opacity: 0.7;
+    }
+    .forum-comments {
+      padding-left: 0.4rem;
+      border-left: 2px solid var(--accent);
+      margin-left: 0.7rem;
+      margin-top: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      font-size: 0.97rem;
+      color: var(--muted-light);
+      background: rgba(23,105,170,0.04);
+      border-radius: 7px;
+      padding-top: 0.26rem;
+      padding-bottom: 0.26rem;
+    }
+    .forum-comments div::before {
+      content: "👉";
+      font-size: 1em;
+      margin-right: 0.12em;
+      opacity: 0.7;
+    }
+    .forum-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.23rem;
+    }
+    .forum-btn, .post-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      font-size: 1.01rem;
+      font-family: inherit;
+      font-weight: 800;
+      padding: 0.34rem 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 2px 7px #1769aa0a;
+      transition: background var(--transition), box-shadow var(--transition), color var(--transition);
+      outline: none;
+      display: flex;
+      align-items: center;
+      gap: 0.16em;
+    }
+    .forum-btn:focus, .forum-btn:hover, .post-btn:focus, .post-btn:hover {
+      filter: brightness(1.09);
+      box-shadow: 0 4px 14px #1769aa09;
+      outline: none;
+      color: #fff;
+      background: var(--focus);
+    }
+    .forum-btn.cancel {
+      background: var(--danger);
+      color: #fff;
+      box-shadow: 0 2px 7px #d32f2f20;
+    }
+    .forum-btn::before, .post-btn::before {
+      content: "📤";
+      font-size: 1em;
+      margin-right: 0.1em;
+      opacity: 0.7;
+    }
+    .add-thread-form, .add-comment-form {
+      margin-top: 0.13rem;
+      background: var(--input-bg-light);
+      border-radius: 8px;
+      padding: 0.9rem 1.1rem 0.7rem 1.1rem;
+      box-shadow: 0 2px 7px #1769aa05;
+      display: flex;
+      flex-direction: column;
+      gap: 0.53rem;
+      border: 2px solid var(--accent);
+      margin-bottom: 0.8rem;
+    }
+    .add-thread-form input, .add-thread-form textarea,
+    .add-comment-form textarea {
+      border: 2px solid var(--inactive);
+      border-radius: 7px;
+      padding: 0.45rem 0.8rem;
+      font-size: 0.95rem;
+      font-family: inherit;
+      background: var(--input-bg-light);
+      color: var(--text-light);
+      resize: vertical;
+      min-height: 30px;
+      outline: none;
+      max-height: 90px;
+      transition: border var(--transition), background var(--transition);
+    }
+    .add-thread-form input:focus, .add-thread-form textarea:focus,
+    .add-comment-form textarea:focus {
+      border-color: var(--accent);
+      background: var(--input-focus-light);
+      outline: none;
+    }
+    body.dark-mode .add-thread-form, body.dark-mode .add-comment-form {
+      background: var(--input-bg-dark);
+      color: var(--text-dark);
+    }
+    body.dark-mode .add-thread-form input, body.dark-mode .add-thread-form textarea,
+    body.dark-mode .add-comment-form textarea {
+      background: var(--input-bg-dark);
+      color: var(--text-dark);
+    }
+    body.dark-mode .add-thread-form input:focus, body.dark-mode .add-thread-form textarea:focus,
+    body.dark-mode .add-comment-form textarea:focus {
+      background: var(--input-focus-dark);
+      border-color: var(--accent);
+    }
+    /* Favorites */
+    .favorites-section .grid {
+      margin-top: 0.18rem;
+    }
+    .favorites-section .empty-state {
+      margin-top: 1.1rem;
+    }
+    /* Responsive */
+    @media (max-width: 900px) {
+      main { flex-direction: column;}
+      aside {
+        min-width: 100vw;
+        max-width: 100vw;
+        flex-direction: row;
+        align-items: start;
+        border-radius: 0 0 var(--radius) var(--radius);
+        margin: 0 0 1.1rem 0;
+        padding: 0.9rem 2vw;
+        gap: 0.7rem;
+        background: var(--surface-alt-light);
+      }
+      .subjects-panel { width: 100%; }
+      .container { padding: 1rem 3vw 1rem 3vw;}
+      .forum-preview { margin-top: 0.5rem;}
+    }
+    @media (max-width: 700px) {
+      .grid { grid-template-columns: 1fr;}
+      aside { flex-wrap: wrap; gap: 0.4rem; padding: 0.6rem 1vw;}
+      .subjects-panel h3 { font-size: 1.01rem;}
+      .modal-content {padding: 0.7rem 1vw;}
+      .forum-section, .favorites-section {padding: 0 2vw;}
+      .forum-preview {padding: 0.7rem;}
+    }
+    @media (max-width: 500px) {
+      header, footer { padding: 0.18rem 2vw;}
+      .logo { font-size: 1rem;}
+      nav button { font-size: 0.93rem; padding: 0.39rem 0.7rem;}
+      .modal-content {padding: 0.54rem 1vw;}
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 7px; background: var(--surface-alt-light);}
+    ::-webkit-scrollbar-thumb { background: var(--hover-light); border-radius: 7px;}
+    body.dark-mode ::-webkit-scrollbar { background: var(--surface-alt-dark);}
+    body.dark-mode ::-webkit-scrollbar-thumb { background: var(--hover-dark);}
+    /* --- Sticky Rectangle --- */
+    #stickyThreads {
+      position: fixed;
+      bottom: 18px;
+      left: 18px;
+      background: var(--sticky-rect-bg);
+      color: var(--accent);
+      border-radius: 12px;
+      box-shadow: var(--sticky-rect-shadow);
+      z-index: 99999;
+      min-width: 260px;
+      max-width: 330px;
+      padding: 1em 1.1em 0.7em 1.1em;
+      border: 2px solid var(--warning);
+      font-size: 1.01rem;
+      transition: background .3s, color .3s;
+      opacity: 0.95;
+      animation: stickyIn .5s;
+    }
+    @keyframes stickyIn {
+      from { opacity: 0; transform: translateY(40px);}
+      to { opacity: 0.95; transform: translateY(0);}
+    }
+    #stickyThreads h5 {
+      margin: 0 0 0.5em 0;
+      font-size: 1.09em;
+      font-weight: 900;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.21em;
+    }
+    #stickyThreads h5::before {
+      content: "🔥";
+      font-size: 1.12em;
+      filter: drop-shadow(0 0 8px #ffa72655);
+    }
+    #stickyThreads ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.32em;
+    }
+    #stickyThreads li {
+      cursor: pointer;
+      padding: 0.16em 0.12em;
+      border-left: 2px solid var(--accent);
+      margin-bottom: 0.08em;
+      background: none;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.97em;
+      transition: background .14s, color .14s;
+      display: flex;
+      align-items: center;
+      gap: 0.2em;
+    }
+    #stickyThreads li::after {
+      content: "📝";
+      font-size: 1em;
+      margin-left: 0.17em;
+      opacity: 0.7;
+    }
+    #stickyThreads li:hover {
+      background: var(--warning);
+      color: #fff;
+    }
+    body.dark-mode #stickyThreads {
+      background: var(--sticky-rect-dark);
+      color: var(--highlight);
+      border-color: var(--accent);
+    }
+    body.dark-mode #stickyThreads li {
+      color: var(--highlight);
+      border-left-color: var(--highlight);
+    }
+    body.dark-mode #stickyThreads li:hover {
+      background: var(--focus);
+      color: #fff;
+    }
+    #stickyThreads .hide-rect {
+      position: absolute;
+      top: 7px;
+      right: 12px;
+      font-size: 1.11em;
+      color: var(--accent);
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color .15s;
+      opacity: 0.7;
+    }
+    #stickyThreads .hide-rect:hover {
+      color: var(--danger);
+      opacity: 1;
+    }
+    /* Hide sticky on mobile */
+    @media (max-width: 600px) {
+      #stickyThreads { display: none;}
+    }
+    body.dark-mode nav .top-links button:hover,
+body.dark-mode nav .top-links button:focus,
+body.dark-mode .mode-toggle:hover,
+body.dark-mode .mode-toggle:focus {
+  color: #fff !important;
+}
+button.features-btn {
+  color: #000 !important;
+}
+body.dark-mode button.features-btn {
+  color: #000 !important;
+}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo" tabindex="0" aria-label="Go to homepage" onclick="window.location.reload()">Linktern</div>
+    <nav>
+      <button id="tab-internships" class="active" onclick="switchTab('internships')">Internships 🎯</button>
+      <button id="tab-forums" onclick="switchTab('forums')">Forums 💬</button>
+      <button id="tab-favorites" onclick="switchTab('favorites')">Favorites 💖</button>
+      <div class="top-links">
+        <button onclick="showAbout()">About 🎉</button>  
+        <button onclick="showContact()">Contact 📬</button>
+        <button onclick="showStats()">Statistics 📊</button>
+        <button onclick="showHelp()">Help 🆘</button>
+      </div>
+      <button class="mode-toggle" id="modeToggle" onclick="toggleDarkMode()" title="Toggle Dark/Light Mode">🌙</button>
+    </nav>
+  </header>
+  <main>
+    <aside>
+      <div class="subjects-panel">
+        <h3>Subjects</h3>
+        <button class="subject-btn active" onclick="filterSubject('All')">🌐 All</button>
+        <button class="subject-btn" onclick="filterSubject('AI & Machine Learning')">🤖 AI & ML</button>
+        <button class="subject-btn" onclick="filterSubject('Computer Science')">💻 Computer Science</button>
+        <button class="subject-btn" onclick="filterSubject('Engineering')">⚙️ Engineering</button>
+        <button class="subject-btn" onclick="filterSubject('Biology')">🧬 Biology</button>
+        <button class="subject-btn" onclick="filterSubject('Medicine')">🩺 Medicine</button>
+        <button class="subject-btn" onclick="filterSubject('Finance')">💵 Finance</button>
+        <button class="subject-btn" onclick="filterSubject('Finance')">📈 Marketing & Business Development</button>
+        <button class="subject-btn" onclick="filterSubject('Design')">✏️ Design</button>
+        <button class="subject-btn" onclick="filterSubject('Physics')">📐 Physics</button>
+        <button class="subject-btn" onclick="filterSubject('Business')">👔 Business</button>
+        <button class="subject-btn" onclick="filterSubject('Arts')">🎨 Arts</button>
+        <button class="subject-btn" onclick="filterSubject('Environmental Science')">🌋 Env. Science</button>
+        <button class="subject-btn" onclick="filterSubject('Law')">📖 Law</button>
+        <button class="subject-btn" onclick="filterSubject('Education')">🧑‍🏫 Education</button>
+        <button class="subject-btn" onclick="filterSubject('Psychology')">🧠 Psychology</button>
+        <button class="subject-btn" onclick="filterSubject('Mathematics')">🧮 Mathematics</button>
+        <button class="subject-btn" onclick="filterSubject('Sports Science')">👟 Sports Science</button>
+        <button class="subject-btn" onclick="filterSubject('History')">🕰️ History</button>
+        <button class="subject-btn" onclick="filterSubject('Social Sciences')">🫂 Social Sciences</button>
+      </div>
+      <hr class="aside-divider">
+      <div class="forum-preview" id="forumPreview">
+        <h4>Recent Forum Threads</h4>
+        <ul class="forum-preview-list" id="forumPreviewList"></ul>
+      </div>
+    </aside>
+    <section class="container" id="internships-section">
+      <div class="features-row" id="featuresRow">
+
+        <button class="features-btn" onclick="showRandomInternship()">Random 🎲</button>
+<button class="features-btn" onclick="showModalContent('Daily Pick 🌟', 'Coming soon: Highlighted internship of the day!')">Daily Pick 🌟</button>
+<button class="features-btn" onclick="showEvents()">Events 📅</button>
+<button class="features-btn" onclick="showModalContent('Global Map 🗺️', 'Coming soon: Explore internships on a world map!')">Global Map 🗺️</button>
+<button class="features-btn" onclick="showFeedbackModal()">Feedback 💡</button>
+
+<script>
+function showRandomInternship() {
+  // Assumes `internships` is an array of available internships
+  if (!window.internships || internships.length === 0) {
+    showModalContent('Random Internship 🎲', 'No internships available at the moment!');
+    return;
+  }
+  const idx = Math.floor(Math.random() * internships.length);
+  const i = internships[idx];
+  showModalContent(
+    'Random Internship 🎲',
+    `<b>${i.title}</b> at <b>${i.company}</b> <br>
+    <span style="color:var(--muted-light);">${i.location} • ${i.duration} • Stipend: ${i.stipend}</span>
+    <div style="margin-top:0.4em;">${i.description}</div>
+    <div style="margin-top:0.7em;">${i.tags.map(t=>`<span class="tag">${t}</span>`).join(' ')}</div>
+    <a class="apply-btn" href="${i.link}" target="_blank" rel="noopener">Apply Now</a>`
+  );
+}
+
+function showEvents() {
+  showModalContent('Events 📅', `
+    <ul style="margin:0 0 0 1em;">
+      <li><b>Global Internship Fair</b> – Sept 15, 2025 (Online)</li>
+      <li><b>Women in STEM Panel</b> – Oct 10, 2025 (London & Virtual)</li>
+      <li><b>AI & ML Career Day</b> – Nov 2, 2025 (San Francisco)</li>
+      <li><b>Finance Internship Webinar</b> – Nov 18, 2025 (Online)</li>
+    </ul>
+    <div style="margin-top:0.7em;">Check back for more events soon!</div>
+  `);
+}
+
+function showFeedbackModal() {
+  showModalContent('Feedback 💡', `
+    <p>We'd love to hear your ideas and feedback!<br>
+    Email us at <b>team@internlinkplus.com</b>, or use the "Send Feedback" link in the footer.<br><br>
+    Thank you for helping us improve Linktern+! 🙏</p>
+  `);
+}
+document.getElementById('searchInput').addEventListener('input', renderInternships);
+</script>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="🔍 Search internships..." autocomplete="off">
+        <label for="filterLocation">Location:</label>
+        <select id="filterLocation"></select>
+        <label for="sortBy">Sort by:</label>
+        <select id="sortBy">
+          <option value="default">All</option>
+          <option value="stipend">Full-Time</option>
+          <option value="duration">Part Time</option>
+          <option value="company">Unpaid</option>
+        </select>
+        <button onclick="clearFilters()" title="Clear all filters">Clear All</button>
+      </div>
+      <div id="internshipGrid" class="grid"></div>
+      <div id="loadingInternships" style="display:none;text-align:center;margin-top:1.2rem;">
+        <div style="color:var(--muted-light);font-size:1.1rem;">Loading internships... ⏳</div>
+      </div>
+    </section>
+    <section class="container" id="forums-section" style="display:none;">
+      <div class="forum-section">
+        <form class="add-thread-form" id="addThreadForm">
+          <input type="text" id="threadTitle" required maxlength="80" placeholder="Thread title (e.g. 'Tips for Data Science Internships')">
+          <textarea id="threadDesc" required maxlength="512" placeholder="Describe your topic/question..."></textarea>
+          <button type="submit" class="post-btn">+ Post New Thread</button>
+        </form>
+        <div class="forum-list" id="forumList"></div>
+      </div>
+    </section>
+    <section class="container" id="favorites-section" style="display:none;">
+      <div class="favorites-section">
+        <h2 style="color:var(--accent);margin-top:0;margin-bottom:1.1rem;">Your Favorite Internships 💖</h2>
+        <div id="favoritesGrid" class="grid"></div>
+        <div id="favoritesEmpty" class="empty-state" style="display:none;">
+          <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/svg/1f60d.svg" alt="No favorites">
+          No favorites yet. Click <span style="color:var(--accent);font-weight:900;">&#9733;</span> on an internship to add it here!
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    Linktern+ &copy; 2025 &mdash; Crafted for students worldwide. 🎓 |
+    <a href="#" style="color:var(--link);text-decoration:underline;">Send Feedback</a>
+  </footer>
+
+  <!-- Modal -->
+  <div id="modal" class="modal" style="display:none" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-content" id="modalContent"></div>
+  </div>
+
+  <!-- Sticky Rectangle for Latest Threads -->
+  <div id="stickyThreads" style="display:none;">
+    <button class="hide-rect" onclick="document.getElementById('stickyThreads').style.display='none';" title="Hide">✖️</button>
+    <h5>🔥 Latest Threads</h5>
+    <ul id="stickyThreadsList"></ul>
+  </div>
+
+  <script>
+    // --- DARK MODE ---
+    function toggleDarkMode() {
+      const body = document.body;
+      body.classList.toggle('dark-mode');
+      document.getElementById('modeToggle').textContent = body.classList.contains('dark-mode') ? '☀️' : '🌙';
+      localStorage.setItem('linktern-darkmode', body.classList.contains('dark-mode')?'1':'0');
+    }
+    // Persist dark mode
+    if (localStorage.getItem('linktern-darkmode') === '1') {
+      document.body.classList.add('dark-mode');
+      document.getElementById('modeToggle').textContent = '☀️';
+    }
+
+    // --- DATA ---
+    const subjectLabels = [
+      'AI & Machine Learning', 'Computer Science', 'Engineering', 'Biology', 'Medicine',
+      'Finance', 'Design', 'Physics', 'Business', 'Arts', 'Environmental Science'
+    ];
+    const locationsPool = ["Remote", "Hybrid", "Onsite",  "USA", "UK", "India", "China", "Germany", "France", "Japan", "Canada", "Australia", "Russia",
+"Italy", "Brazil", "South Korea", "Spain", "Mexico", "Saudi Arabia", "UAE", "Switzerland", "Netherlands", "Singapore",
+"Sweden", "Norway", "South Africa", "Turkey", "Argentina", "Indonesia", "Israel", "Ukraine", "Thailand", "New Zealand",
+"Nigeria", "Egypt", "Vietnam", "Malaysia", "Pakistan", , 
+
+];
+    const tagsPool = [
+      "Remote", "Paid", "Unpaid", "Research", "Portfolio", "On-site", "Flexible", "Experience", "NGO", "Museum"
+    ];
+    const companiesPool = {
+      "AI & Machine Learning": ["OpenAI","DeepMind","NVIDIA","Meta AI","Anthropic"],
+      "Computer Science": ["Google","Microsoft","Amazon","Apple","IBM"],
+      "Engineering": ["Tesla","SpaceX","Boston Dynamics","Siemens","Airbus"],
+      "Biology": ["Pfizer","Novartis","Genentech","GSK","Roche"],
+      "Medicine": ["Mayo Clinic","Cleveland Clinic","Johns Hopkins","Stanford Med","Mount Sinai"],
+      "Finance": ["Goldman Sachs","JPMorgan","BlackRock","Morgan Stanley","Citibank"],
+      "Design": ["Canva","Adobe","IDEO","Pentagram","Behance"],
+      "Physics": ["CERN","Max Planck","SLAC","MIT","Caltech"],
+      "Business": ["Unilever","P&G","Deloitte","EY","McKinsey"],
+      "Arts": ["Tate Modern","MoMA","Louvre","Getty","National Gallery"],
+      "Environmental Science": ["UNEP","WWF","Greenpeace","NASA Earth","Global Footprint"]
+    };
+    function random(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
+    function randomStipend(loc) {
+      if (loc === "Remote") return "$" + (2000 + Math.floor(Math.random()*8000));
+      if (loc === "India") return "₹" + (40000 + Math.floor(Math.random()*90000));
+      if (loc === "UK") return "£" + (800 + Math.floor(Math.random()*3000));
+      if (loc === "Australia") return "A$" + (1000 + Math.floor(Math.random()*4000));
+      if (loc === "Germany" || loc === "France" || loc === "Switzerland") return "€" + (800 + Math.floor(Math.random()*3200));
+      return "$" + (1500 + Math.floor(Math.random()*9000));
+    }
+    function randomDuration() {
+      return (6 + Math.floor(Math.random()*10)) + " weeks";
+    }
+    function randomTags(field) {
+      let base = [];
+      if (field === "AI & Machine Learning" || field === "Physics") base.push("Research");
+      if (field === "Design") base.push("Portfolio");
+      if (field === "Environmental Science") base.push("NGO");
+      if (field === "Arts") base.push("Museum");
+      base = base.concat(random(tagsPool), random(tagsPool));
+      return Array.from(new Set(base)).slice(0,3);
+    }
+    function randomDesc(title, company, field) {
+      const generic = {
+        "AI & Machine Learning": "Work on advanced AI models, collaborate on experiments, and contribute to research publications.",
+        "Computer Science": "Join development teams, contribute to major projects, and gain hands-on experience with modern technologies.",
+        "Engineering": "Participate in R&D, design, and testing in world-class engineering environments.",
+        "Biology": "Assist in laboratory research, work with experienced scientists, and help develop new solutions.",
+        "Medicine": "Gain exposure to clinical settings, support research, and interact with patients and medical professionals.",
+        "Finance": "Analyze financial data, learn investment strategies, and work with top experts in the field.",
+        "Design": "Join design teams, work on marketing assets, and expand your portfolio with real projects.",
+        "Physics": "Collaborate on experiments, simulations, and groundbreaking research in physics.",
+        "Business": "Contribute to campaigns, analyze markets, and learn business strategy with leading companies.",
+        "Arts": "Support exhibition curation, collection management, and learn about art history and presentation.",
+        "Environmental Science": "Assist in policy research, climate action, and environmental campaigns for global impact."
+      };
+      return `<strong>${title}</strong> at <b>${company}</b> allows you to ${generic[field]}`;
+    }
+    let internships = [];
+    subjectLabels.forEach(field => {
+      for (let i=1; i<=5; i++) {
+        let company = companiesPool[field][(i-1)%companiesPool[field].length];
+        let location = random(locationsPool);
+        let title = field + " Intern #" + i;
+        internships.push({
+          title,
+          company,
+          field,
+          location,
+          stipend: randomStipend(location),
+          duration: randomDuration(),
+          tags: randomTags(field),
+          link: "#",
+          description: randomDesc(title, company, field)
+        });
+      }
+    });
+    internships.unshift(
+      { title: 'AI Research Intern', company: 'OpenAI', field: 'AI & Machine Learning', location: 'Remote', stipend: '$8000', duration: '10 weeks', tags: ['Remote', 'Paid', 'Research'], link: 'https://openai.com/careers/', description: 'Work on next-gen AI models, conduct experiments, and publish papers alongside top researchers at OpenAI. Collaborate in a world-class research environment.' }
+    );
+    const locations = Array.from(new Set(['All', ...internships.map(i=>i.location)]));
+
+    // --- FILTERS ---
+    function populateFilters() {
+      const locSel = document.getElementById('filterLocation');
+      locSel.innerHTML = '';
+      locations.forEach(loc => {
+        const opt = document.createElement('option');
+        opt.value = loc;
+        opt.textContent = loc;
+        locSel.appendChild(opt);
+      });
+    }
+    let subjectFilter = 'All';
+    let searchText = '';
+    let locationFilter = 'All';
+    let sortBy = 'default';
+    document.getElementById('sortBy').addEventListener('change', function() {
+      sortBy = this.value;
+      renderInternships();
+    });
+    function clearFilters() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('filterLocation').value = 'All';
+      document.getElementById('sortBy').value = 'default';
+      subjectFilter = 'All';
+      filterSubject('All');
+      renderInternships();
+    }
+
+    // --- FAVORITES ---
+    function loadFavorites() {
+      try {
+        return JSON.parse(localStorage.getItem('intern-favs')||'[]');
+      } catch { return []; }
+    }
+    function saveFavorites(favs) {
+      localStorage.setItem('intern-favs', JSON.stringify(favs));
+    }
+    function isFavorited(intern) {
+      const favs = loadFavorites();
+      return favs.some(f => f.title===intern.title && f.company===intern.company);
+    }
+    function toggleFavorite(intern) {
+      let favs = loadFavorites();
+      if (isFavorited(intern)) {
+        favs = favs.filter(f => !(f.title===intern.title && f.company===intern.company));
+      } else {
+        favs.push(intern);
+      }
+      saveFavorites(favs);
+      renderInternships();
+      if (currentTab==='favorites') renderFavorites();
+    }
+
+    // --- INTERNHIPS ---
+    function filterSubject(subj) {
+      subjectFilter = subj;
+      document.querySelectorAll('.subject-btn').forEach(btn => btn.classList.remove('active'));
+      Array.from(document.querySelectorAll('.subject-btn')).find(btn => btn.textContent.trim() === (subj==='All'?'All':subj.split(' ')[0]))?.classList.add('active');
+      renderInternships();
+    }
+
+    function sortInternships(arr) {
+      if (sortBy === 'stipend') {
+        return arr.slice().sort((a, b) => {
+          let an = parseInt(a.stipend.replace(/[^0-9]/g, '')), bn = parseInt(b.stipend.replace(/[^0-9]/g, ''));
+          return bn - an;
+        });
+      }
+      if (sortBy === 'duration') {
+        return arr.slice().sort((a, b) => {
+          let an = parseInt(a.duration), bn = parseInt(b.duration);
+          return bn - an;
+        });
+      }
+      if (sortBy === 'company') {
+        return arr.slice().sort((a, b) => a.company.localeCompare(b.company));
+      }
+      return arr;
+    }
+    function renderInternships() {
+      if (currentTab!=='internships') return;
+      const grid = document.getElementById('internshipGrid');
+      const loading = document.getElementById('loadingInternships');
+      searchText = document.getElementById('searchInput').value.toLowerCase();
+      locationFilter = document.getElementById('filterLocation').value;
+      loading.style.display = 'block';
+      setTimeout(() => {
+        let filtered = internships.filter(i =>
+          (subjectFilter === 'All' || i.field === subjectFilter) &&
+          (locationFilter === 'All' || i.location === locationFilter) &&
+          (
+            i.title.toLowerCase().includes(searchText) ||
+            i.company.toLowerCase().includes(searchText) ||
+            i.field.toLowerCase().includes(searchText) ||
+            i.location.toLowerCase().includes(searchText)
+          )
+        );
+        filtered = sortInternships(filtered);
+        loading.style.display = 'none';
+        if (filtered.length === 0) {
+          grid.innerHTML = `<div class="empty-state">No internships found matching your criteria. 😢</div>`;
+          return;
+        }
+        grid.innerHTML = filtered.map((i, idx) => `
+          <div class="card" tabindex="0" role="button" aria-label="View details for ${i.title}"
+            onkeydown="if(event.key==='Enter'){showModal(${internships.indexOf(i)})}" onclick='showModal(${internships.indexOf(i)})'>
+            <button class="fav-btn${isFavorited(i) ? ' favorited' : ''}" title="${isFavorited(i)?'Remove from favorites':'Add to favorites'}"
+              onclick="event.stopPropagation();toggleFavorite(internships[${internships.indexOf(i)}])">
+              ${isFavorited(i) ? '&#9733;' : '&#9734;'}
+            </button>
+            <h3>${i.title}</h3>
+            <p>${i.company} • ${i.location}</p>
+            <p class="card-details">Stipend: <b>${i.stipend}</b> &nbsp;•&nbsp; Duration: ${i.duration}</p>
+            <div class="card-tags">${i.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+          </div>
+        `).join('');
+      }, 350); // Simulate loading
+    }
+
+    // --- MODAL ---
+    function showModal(idx) {
+      const data = internships[idx];
+      document.getElementById('modal').style.display = 'flex';
+      document.getElementById('modalContent').innerHTML = `
+        <button class="close-btn" onclick="closeModal()" aria-label="Close modal">&times;</button>
+        <h2 id="modalTitle">${data.title}</h2>
+        <p style="color:var(--muted-light);margin-bottom:0.4rem;"><b>${data.company}</b> • ${data.location} &nbsp;•&nbsp; <span style="color:var(--accent);">${data.field}</span></p>
+        <div class="modal-tags">${data.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+        <p><strong>Stipend:</strong> ${data.stipend} <strong>Duration:</strong> ${data.duration}</p>
+        <p style="margin-top:0.7rem;">${data.description}</p>
+        <a class="apply-btn" href="${data.link}" target="_blank" rel="noopener">Apply Now</a>
+        <button class="apply-btn" style="background:var(--info);color:#fff;padding:0.5rem 1rem;font-size:0.97rem;margin-left:0.5rem;" onclick="shareInternship('${encodeURIComponent(data.title)}','${encodeURIComponent(data.company)}','${encodeURIComponent(data.link)}')">Share</button>
+      `;
+      document.getElementById('modalContent').focus();
+    }
+    function shareInternship(title, company, link) {
+      const shareText = decodeURIComponent(title) + " at " + decodeURIComponent(company) + " - " + decodeURIComponent(link);
+      navigator.clipboard.writeText(shareText).then(() => {
+        alert("Internship details copied to clipboard! 📋");
+      });
+    }
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+    document.getElementById('modal').addEventListener('click', e => {
+      if (e.target.id === 'modal') closeModal();
+    });
+    window.showModal = showModal;
+    window.closeModal = closeModal;
+    window.toggleFavorite = toggleFavorite;
+
+    // --- TAB NAV ---
+    let currentTab = 'internships';
+    function switchTab(tab) {
+      if (tab === currentTab) return;
+      document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
+      document.getElementById('tab-'+tab).classList.add('active');
+      document.getElementById('internships-section').style.display = tab==='internships' ? '' : 'none';
+      document.getElementById('forums-section').style.display = tab==='forums' ? '' : 'none';
+      document.getElementById('favorites-section').style.display = tab==='favorites' ? '' : 'none';
+      currentTab = tab;
+      if (tab==='internships') renderInternships();
+      if (tab==='forums') renderForum();
+      if (tab==='favorites') renderFavorites();
+    }
+    window.switchTab = switchTab;
+
+    // --- FORUMS ---
+    let forumThreads = JSON.parse(localStorage.getItem('linktern-forum') || '[]');
+    function saveForum() {
+      localStorage.setItem('linktern-forum', JSON.stringify(forumThreads));
+    }
+    function renderForum() {
+      const forumList = document.getElementById('forumList');
+      if (!forumThreads.length) {
+        forumList.innerHTML = `<div class="empty-state"><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/svg/1f4ac.svg" alt="Forum">No threads yet. Be the first to post! 🎉</div>`;
+        return;
+      }
+      forumList.innerHTML = '';
+      for (let i=forumThreads.length-1; i>=0; i--) {
+        const th = forumThreads[i];
+        let div = document.createElement('div');
+        div.className = 'forum-thread';
+        div.tabIndex = 0;
+        div.role = "button";
+        div.setAttribute("aria-label", "View thread: " + th.title);
+        div.innerHTML = `
+          <div class="forum-thread-title">${th.title}</div>
+          <div class="forum-thread-meta">By <b style="color:var(--accent);">${th.user}</b> on ${new Date(th.date).toLocaleDateString()}</div>
+          <div class="forum-thread-desc">${th.description}</div>
+          <div class="forum-actions">
+            <button class="forum-btn" onclick="showCommentForm(${i});event.stopPropagation();">Comment 💬</button>
+            <span style="color:var(--accent);font-size:1.01rem;font-weight:900;">${th.comments.length} Comment${th.comments.length!==1?'s':''}</span>
+          </div>
+          <div class="forum-comments" id="comments${i}">
+            ${th.comments.map(c=>`<div><b>${c.user}:</b> ${c.text} <span style="font-size:0.97em;color:var(--info);">(${new Date(c.date).toLocaleDateString()})</span></div>`).join('')}
+          </div>
+          <form class="add-comment-form" id="commentForm${i}" style="display:none;" onsubmit="addComment(event,${i})">
+            <textarea required maxlength="300" placeholder="Add your comment..."></textarea>
+            <div style="display:flex;gap:0.32rem;">
+              <button type="submit" class="forum-btn">Post</button>
+              <button type="button" class="forum-btn cancel" onclick="hideCommentForm(${i})">Cancel</button>
+            </div>
+          </form>
+        `;
+        forumList.appendChild(div);
+      }
+      renderForumPreview();
+      renderStickyThreads();
+    }
+    function showCommentForm(idx) {
+      document.getElementById('commentForm'+idx).style.display = '';
+      setTimeout(()=>document.querySelector(`#commentForm${idx} textarea`).focus(), 60);
+    }
+    function hideCommentForm(idx) {
+      document.getElementById('commentForm'+idx).style.display = 'none';
+    }
+    function addComment(event, idx) {
+      event.preventDefault();
+      let textarea = event.target.querySelector('textarea');
+      let text = textarea.value.trim();
+      if (!text) return;
+      forumThreads[idx].comments.push({ user: "Guest", text, date: new Date().toISOString().slice(0,10)});
+      textarea.value = '';
+      hideCommentForm(idx);
+      saveForum();
+      renderForum();
+    }
+    document.getElementById('addThreadForm').onsubmit = function(e) {
+      e.preventDefault();
+      let title = document.getElementById('threadTitle').value.trim();
+      let desc = document.getElementById('threadDesc').value.trim();
+      if (title && desc) {
+        forumThreads.push({
+          title,
+          description: desc,
+          user: "Guest",
+          date: new Date().toISOString().slice(0,10),
+          comments: []
+        });
+        this.reset();
+        saveForum();
+        renderForum();
+      }
+    };
+    window.showCommentForm = showCommentForm;
+    window.hideCommentForm = hideCommentForm;
+    window.addComment = addComment;
+
+    // --- Aside Forum Preview ---
+    function renderForumPreview() {
+      const previewList = document.getElementById('forumPreviewList');
+      if (!forumThreads.length) {
+        previewList.innerHTML = `<li style="color:var(--muted-light);font-style:italic;">No forum threads yet.</li>`;
+        return;
+      }
+      // Show top 4 most recent threads
+      previewList.innerHTML = forumThreads.slice(-4).reverse().map((thread, idx) =>
+        `<li onclick="openForumThread(${forumThreads.length-1-idx})" tabindex="0">${thread.title}</li>`
+      ).join('');
+    }
+    function openForumThread(idx) {
+      switchTab('forums');
+      setTimeout(() => {
+        const threadElems = document.querySelectorAll('.forum-thread');
+        if (threadElems.length > 0 && threadElems[idx]) {
+          threadElems[idx].scrollIntoView({behavior:'smooth', block:'center'});
+          threadElems[idx].focus();
+        }
+      }, 100);
+    }
+    window.openForumThread = openForumThread;
+
+    // --- FAVORITES ---
+    function renderFavorites() {
+      const grid = document.getElementById('favoritesGrid');
+      const favs = loadFavorites();
+      document.getElementById('favoritesEmpty').style.display = favs.length ? 'none' : '';
+      if (!favs.length) {
+        grid.innerHTML = '';
+        return;
+      }
+      grid.innerHTML = favs.map(i => `
+        <div class="card" tabindex="0" role="button" aria-label="View details for ${i.title}"
+          onkeydown="if(event.key==='Enter'){showFavModal(${favs.indexOf(i)})}" onclick='showFavModal(${favs.indexOf(i)})'>
+          <button class="fav-btn favorited" title="Remove from favorites" onclick="event.stopPropagation();toggleFavoriteFromFav(${favs.indexOf(i)})">
+            &#9733;
+          </button>
+          <h3>${i.title}</h3>
+          <p>${i.company} • ${i.location}</p>
+          <p class="card-details">Stipend: <b>${i.stipend}</b> &nbsp;•&nbsp; Duration: ${i.duration}</p>
+          <div class="card-tags">${i.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+        </div>
+      `).join('');
+    }
+    function showFavModal(idx) {
+      const favs = loadFavorites();
+      const data = favs[idx];
+      document.getElementById('modal').style.display = 'flex';
+      document.getElementById('modalContent').innerHTML = `
+        <button class="close-btn" onclick="closeModal()" aria-label="Close modal">&times;</button>
+        <h2>${data.title}</h2>
+        <p style="color:var(--muted-light);margin-bottom:0.4rem;"><b>${data.company}</b> • ${data.location} &nbsp;•&nbsp; <span style="color:var(--accent);">${data.field}</span></p>
+        <div class="modal-tags">${data.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+        <p><strong>Stipend:</strong> ${data.stipend} <strong>Duration:</strong> ${data.duration}</p>
+        <p style="margin-top:0.7rem;">${data.description}</p>
+        <a class="apply-btn" href="${data.link}" target="_blank" rel="noopener">Apply Now</a>
+        <button class="apply-btn" style="background:var(--info);color:#fff;padding:0.5rem 1rem;font-size:0.97rem;margin-left:0.5rem;" onclick="shareInternship('${encodeURIComponent(data.title)}','${encodeURIComponent(data.company)}','${encodeURIComponent(data.link)}')">Share</button>
+      `;
+    }
+    window.showFavModal = showFavModal;
+    function toggleFavoriteFromFav(idx) {
+      let favs = loadFavorites();
+      favs.splice(idx, 1);
+      saveFavorites(favs);
+      renderFavorites();
+      renderInternships();
+    }
+    window.toggleFavoriteFromFav = toggleFavoriteFromFav;
+
+    // --- INIT ---
+    document.getElementById('searchInput').addEventListener('input', renderInternships);
+    document.getElementById('filterLocation').addEventListener('change', renderInternships);
+    populateFilters();
+    renderInternships();
+    renderForum();
+    renderFavorites();
+    renderForumPreview();
+
+    // Keyboard: close modal with ESC
+    window.addEventListener('keydown', e=>{
+      if (e.key==='Escape') closeModal();
+    });
+
+    // Footer feedback
+    document.querySelector('footer a').onclick = function(e) {
+      e.preventDefault();
+      alert("Thank you for your feedback! 🙏\n\nFeature coming soon!");
+    };
+
+    // ---- Extra top link modals ----
+    function showModalContent(title, content) {
+      document.getElementById('modal').style.display = 'flex';
+      document.getElementById('modalContent').innerHTML = `
+        <button class="close-btn" onclick="closeModal()" aria-label="Close modal">&times;</button>
+        <h2>${title}</h2>
+        <p>${content}</p>
+      `;
+    }
+    function showAbout() {
+      showModalContent('About Linktern+ 🎉', `Linktern'+ is a professional platform designed to help students find and explore international internships across multiple disciplines. Our mission is to empower students with real-world opportunities and a vibrant community for career growth.<br><br><span style="color:var(--info);font-weight:900;">Features:</span> <ul style="margin:0.7em 0 0 1em;padding:0 0 0 0.4em;"><li>Share internships 🚀</li><li>Responsive, practical UI 📱</li><li>Light and dark modes 🌙☀️</li><li>Forum preview sidebar 💬</li><li>Sticky latest threads 🔥</li><li>Fun features row 🎲</li></ul>`);
+    }
+    function showContact() {
+      showModalContent('Contact Us 📬', `For inquiries, partnership, or support, email us at <b>team@internlinkplus.com</b>. We aim to reply within 24 hours. 🕒`);
+    }
+    function showStats() {
+      showModalContent('Platform Statistics 📊', `Total internships listed: <b>${internships.length}</b><br>Total forum threads: <b>${forumThreads.length}</b><br>Your favorites: <b>${loadFavorites().length}</b>`);
+    }
+    function showHelp() {
+      showModalContent('Help & FAQ 🆘', `
+        <ul style="margin:0.7em 0 0 1em;padding:0 0 0 0.4em;">
+          <li>Use the subject filter to browse internships by discipline. 📚</li>
+          <li>Search for companies or locations using the search bar. 🔍</li>
+          <li>Participate in forums to ask questions or share experiences. 💬</li>
+          <li>Share internships using the share button. 🚀</li>
+          <li>Switch between light and dark mode for comfort. 🌙☀️</li>
+          <li>For more assistance, contact us! 📬</li>
+        </ul>
+        <div style="margin-top:1em;color:var(--highlight);font-weight:900;">Accessibility:</div>
+        <ul style="margin:0.4em 0 0 1em;padding:0 0 0 0.4em;">
+          <li>Keyboard navigation supported ⌨️</li>
+          <li>High contrast and large targets for mobile 📱</li>
+        </ul>
+      `);
+    }
+    window.showAbout = showAbout;
+    window.showContact = showContact;
+    window.showStats = showStats;
+    window.showHelp = showHelp;
+
+    // --- Sticky Rectangle Latest Threads ---
+    function renderStickyThreads() {
+      const sticky = document.getElementById('stickyThreads');
+      const stickyList = document.getElementById('stickyThreadsList');
+      if (!forumThreads.length) {
+        sticky.style.display = 'none';
+        return;
+      }
+      sticky.style.display = '';
+      stickyList.innerHTML = forumThreads.slice(-5).reverse().map((thread, idx) =>
+        `<li onclick="openForumThread(${forumThreads.length-1-idx})">${thread.title}</li>`
+      ).join('');
+    }
+    // Show sticky rectangle on load
+    renderStickyThreads();
+
+    // Show sticky rectangle when forum thread is added
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'linktern-forum') renderStickyThreads();
+    });
+    // Also rerender on tab switch
+    document.querySelectorAll('nav button').forEach(btn => btn.addEventListener('click', renderStickyThreads));
+  </script>
+</body>
+</html>
