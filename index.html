@@ -1001,6 +1001,156 @@ body.dark-mode .mode-toggle {
       .logo { font-size: 1rem;}
       nav button { font-size: 0.93rem; padding: 0.39rem 0.7rem;}
       .modal-content {padding: 0.54rem 1vw;}
+
+      /* --- MOBILE-FIRST RESPONSIVE IMPROVEMENTS --- */
+
+/* 1. Reduce base font size for mobile for better scaling */
+@media (max-width: 500px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+/* 2. Header, Nav, and Logo: less padding, smaller logo, wrap nav buttons */
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.6rem 2vw;
+    gap: 0.4em;
+  }
+  .logo {
+    font-size: 1.4rem;
+  }
+  .logo::before {
+    font-size: 1.4rem;
+  }
+  nav {
+    gap: 0.3rem;
+    flex-wrap: wrap;
+    width: 100%;
+    padding-bottom: 0.2rem;
+  }
+  nav .top-links {
+    margin-left: 0.7rem;
+  }
+  nav button, .mode-toggle, nav .top-links button {
+    font-size: 0.95rem;
+    padding: 0.38em 0.7em;
+  }
+}
+
+/* 3. Sidebar/Aside: Stacks below header, collapses to button on xs screens */
+@media (max-width: 900px) {
+  aside {
+    min-width: 100vw;
+    max-width: 100vw;
+    border-radius: 0 0 var(--radius) var(--radius);
+    margin: 0 0 1rem 0;
+    padding: 0.8rem 2vw;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0.6rem;
+    position: relative;
+  }
+  .forum-preview {
+    margin-top: 0.5rem;
+    padding: 0.7rem;
+  }
+}
+@media (max-width: 600px) {
+  aside {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.6rem 1vw;
+    gap: 0.4rem;
+    margin: 0 0 0.7rem 0;
+  }
+  .forum-preview {
+    margin-bottom: 0.2rem;
+    padding: 0.6rem 0.5rem;
+  }
+  .subjects-panel h3 {
+    font-size: 1rem;
+  }
+}
+
+/* 4. Cards/Grid: Single column, less padding */
+@media (max-width: 700px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+  }
+  .card {
+    padding: 0.75rem 0.7rem;
+    min-height: 100px;
+  }
+}
+
+/* 5. Search bar: stack, shrink paddings */
+@media (max-width: 500px) {
+  .search-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    padding: 0.5rem 0.6rem;
+  }
+  .search-bar input, .search-bar select {
+    font-size: 0.93rem;
+    padding: 0.36rem 0.7rem;
+  }
+  .search-bar label {
+    font-size: 0.95rem;
+  }
+}
+
+/* 6. Features row: wrap, less spacing */
+@media (max-width: 600px) {
+  .features-row {
+    gap: 0.3em;
+    margin: 0.5em 0 0.7em 0;
+    flex-wrap: wrap;
+  }
+  .features-btn {
+    font-size: 0.98rem;
+    padding: 0.21em 0.8em 0.21em 0.7em;
+  }
+}
+
+/* 7. Modal: fit screen */
+@media (max-width: 500px) {
+  .modal-content {
+    max-width: 97vw;
+    width: 99vw;
+    padding: 0.5rem 0.3rem;
+    border-radius: 13px;
+  }
+  .modal-content h2 {
+    font-size: 1.01rem;
+  }
+}
+
+/* 8. Forums and Favorites: shrink section padding */
+@media (max-width: 700px) {
+  .forum-section, .favorites-section {
+    padding: 0 1vw;
+    max-width: 100vw;
+  }
+  .forum-thread,
+  .add-thread-form,
+  .add-comment-form {
+    padding: 0.6rem 0.5rem;
+  }
+}
+
+/* 9. Footer: less margin and padding */
+@media (max-width: 600px) {
+  footer {
+    font-size: 0.97rem;
+    padding: 0.5rem 0;
+    margin-top: 0.4rem;
+  }
+}
     }
     /* Custom scrollbar */
     ::-webkit-scrollbar { width: 7px; background: var(--surface-alt-light);}
@@ -1121,24 +1271,476 @@ button.features-btn {
 body.dark-mode button.features-btn {
   color: #000 !important;
 }
+/* Hide desktop nav links and show hamburger on mobile */
+@media (max-width: 700px) {
+  nav .top-links {
+    display: none !important;
+  }
+  .hamburger {
+    display: inline-flex !important;
+  }
+}
+
+/* Hamburger style */
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 1.1rem;
+  right: 1.2rem;
+  z-index: 1030;
+  width: 2.7em;
+  height: 2.7em;
+  background: var(--accent);
+  border: none;
+  border-radius: 50%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 12px #1769aa33;
+  cursor: pointer;
+}
+.hamburger span {
+  display: block;
+  width: 1.4em;
+  height: 0.19em;
+  background: #fff;
+  margin: 0.23em 0;
+  border-radius: 2px;
+}
+@media (max-width: 700px) {
+  .hamburger {
+    display: flex !important;
+  }
+}
+/* Mobile dropdown menu */
+.mobile-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 1vw;
+  background: var(--surface-light);
+  border-radius: 12px;
+  box-shadow: 0 6px 20px #1769aa22;
+  padding: 0.3em 0.6em;
+  z-index: 2000;
+  min-width: 160px;
+  animation: fadeInMobileMenu .23s;
+}
+@keyframes fadeInMobileMenu {
+  from { opacity: 0; transform: translateY(-10px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+.mobile-menu button {
+  background: none;
+  color: var(--accent);
+  border: none;
+  border-radius: 7px;
+  font-size: 1rem;
+  font-weight: 700;
+  width: 100%;
+  text-align: left;
+  padding: 0.7em 0.9em;
+  margin: 0.13em 0;
+  transition: background .16s, color .16s;
+}
+.mobile-menu button:hover,
+.mobile-menu button:focus {
+  background: var(--accent);
+  color: #fff;
+  outline: none;
+}
+
+/* Show menu when open */
+.mobile-menu.open {
+  display: block;
+}
+@media (max-width: 700px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.6rem 2vw;
+    gap: 0.4em;
+  }
+  nav {
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 0.2em;
+  }
+  nav button, .mode-toggle {
+    font-size: 0.98rem;
+    padding: 0.4em 0.8em;
+    min-width: unset;
+    margin: 0.13em 0.13em 0.13em 0;
+  }
+  .logo {
+    font-size: 1.3rem;
+  }
+  .logo::before {
+    font-size: 1.3rem;
+  }
+}
+/* Hide original aside on mobile */
+@media (max-width: 700px) {
+  aside {
+    display: none !important;
+  }
+  .subjects-hamburger {
+    display: flex !important;
+  }
+}
+
+/* Hamburger for subjects */
+.subjects-hamburger {
+  display: none;
+  position: fixed;
+  top: 1.1rem;
+  left: 1.2rem;
+  z-index: 1030;
+  width: 2.7em;
+  height: 2.7em;
+  background: var(--accent);
+  border: none;
+  border-radius: 50%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 12px #1769aa33;
+  cursor: pointer;
+}
+.subjects-hamburger span {
+  display: block;
+  width: 1.4em;
+  height: 0.19em;
+  background: #fff;
+  margin: 0.23em 0;
+  border-radius: 2px;
+}
+
+/* Drawer styles */
+.subjects-drawer {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 75vw;
+  max-width: 340px;
+  height: 100vh;
+  background: var(--surface-light);
+  box-shadow: 4px 0 25px #23272f33;
+  z-index: 2001;
+  transform: translateX(-100%);
+  transition: transform .26s cubic-bezier(.7,.2,.2,1);
+  padding: 0;
+  animation: fadeInDrawer .2s;
+}
+.subjects-drawer.open {
+  display: block;
+  transform: translateX(0);
+}
+@keyframes fadeInDrawer {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 900;
+  font-size: 1.19rem;
+  background: var(--accent);
+  color: #fff;
+  padding: 1.1rem 1.2rem 1rem 1.2rem;
+  border-bottom: 2px solid var(--focus);
+}
+.close-drawer {
+  background: none;
+  color: #fff;
+  border: none;
+  font-size: 2rem;
+  font-weight: 900;
+  cursor: pointer;
+  padding: 0 0.3em;
+  margin-right: -0.2em;
+}
+.drawer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  padding: 1.2em 1.2em;
+}
+.drawer-list button {
+  background: var(--input-bg-light);
+  border: 2px solid var(--inactive);
+  color: var(--muted-light);
+  border-radius: 8px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.1em;
+  text-align: left;
+  padding: 0.45em 1em;
+  cursor: pointer;
+  transition: background .14s, color .14s, border .14s;
+}
+.drawer-list button.active,
+.drawer-list button:focus,
+.drawer-list button:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  outline: none;
+}
+body.dark-mode .subjects-drawer {
+  background: var(--surface-dark);
+}
+body.dark-mode .drawer-header {
+  background: var(--surface-dark);
+  color: var(--highlight);
+}
+body.dark-mode .drawer-list button {
+  background: var(--input-bg-dark);
+  color: var(--muted-dark);
+  border-color: var(--inactive);
+}
+body.dark-mode .drawer-list button.active,
+body.dark-mode .drawer-list button:focus,
+body.dark-mode .drawer-list button:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* --- SUBJECTS DRAWER --- */
+@media (max-width: 700px) {
+  aside {
+    display: none !important;
+  }
+  .subjects-hamburger {
+    display: flex !important;
+  }
+}
+.subjects-hamburger {
+  display: none;
+  position: fixed;
+  top: 1.1rem;
+  left: 1.2rem;
+  z-index: 2002;
+  width: 2.7em;
+  height: 2.7em;
+  background: var(--accent);
+  border: none;
+  border-radius: 50%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 12px #1769aa33;
+  cursor: pointer;
+}
+.subjects-hamburger span {
+  display: block;
+  width: 1.5em;
+  height: 0.22em;
+  background: #fff;
+  margin: 0.18em 0;
+  border-radius: 2px;
+}
+
+/* Subjects Drawer */
+.subjects-drawer {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 75vw;
+  max-width: 340px;
+  height: 100vh;
+  background: var(--surface-light);
+  box-shadow: 4px 0 25px #23272f33;
+  z-index: 3001;
+  transform: translateX(-100%);
+  transition: transform .26s cubic-bezier(.7,.2,.2,1);
+  padding: 0;
+}
+.subjects-drawer.open {
+  display: block;
+  transform: translateX(0);
+}
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 900;
+  font-size: 1.19rem;
+  background: var(--accent);
+  color: #fff;
+  padding: 1.1rem 1.2rem 1rem 1.2rem;
+  border-bottom: 2px solid var(--focus);
+}
+.close-drawer {
+  background: none;
+  color: #fff;
+  border: none;
+  font-size: 2rem;
+  font-weight: 900;
+  cursor: pointer;
+  padding: 0 0.3em;
+  margin-right: -0.2em;
+}
+.drawer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  padding: 1.2em 1.2em;
+}
+.drawer-list button {
+  background: var(--input-bg-light);
+  border: 2px solid var(--inactive);
+  color: var(--muted-light);
+  border-radius: 8px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.1em;
+  text-align: left;
+  padding: 0.45em 1em;
+  cursor: pointer;
+  transition: background .14s, color .14s, border .14s;
+}
+.drawer-list button.active,
+.drawer-list button:focus,
+.drawer-list button:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  outline: none;
+}
+body.dark-mode .subjects-drawer {
+  background: var(--surface-dark);
+}
+body.dark-mode .drawer-header {
+  background: var(--surface-dark);
+  color: var(--highlight);
+}
+body.dark-mode .drawer-list button {
+  background: var(--input-bg-dark);
+  color: var(--muted-dark);
+  border-color: var(--inactive);
+}
+body.dark-mode .drawer-list button.active,
+body.dark-mode .drawer-list button:focus,
+body.dark-mode .drawer-list button:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* --- ABOUT/CONTACT HAMBURGER --- */
+@media (max-width: 700px) {
+  .hamburger.about-hamburger {
+    display: flex !important;
+    position: fixed;
+    top: 1.1rem;
+    right: 1.2rem;
+    z-index: 2002;
+    width: 2.7em;
+    height: 2.7em;
+    background: var(--accent);
+    border: none;
+    border-radius: 50%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 12px #1769aa33;
+    cursor: pointer;
+  }
+}
+.hamburger.about-hamburger span {
+  display: block;
+  width: 1.5em;
+  height: 0.22em;
+  background: #fff;
+  margin: 0.18em 0;
+  border-radius: 2px;
+}
+
+/* Mobile Menu Dropdown */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 4.2rem;
+  right: 1.2rem;
+  background: var(--surface-light);
+  border-radius: 15px;
+  box-shadow: 0 10px 32px #1769aa33;
+  padding: 0.6em 0.3em;
+  z-index: 3002;
+  min-width: 170px;
+  animation: fadeInMobileMenu .23s;
+}
+@keyframes fadeInMobileMenu {
+  from { opacity: 0; transform: translateY(-10px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+.mobile-menu button {
+  background: none;
+  color: var(--accent);
+  border: none;
+  border-radius: 7px;
+  font-size: 1rem;
+  font-weight: 700;
+  width: 100%;
+  text-align: left;
+  padding: 0.85em 1.1em;
+  margin: 0.13em 0;
+  transition: background .16s, color .16s;
+}
+.mobile-menu button:hover,
+.mobile-menu button:focus {
+  background: var(--accent);
+  color: #fff;
+  outline: none;
+}
+.mobile-menu.open {
+  display: block;
+}
   </style>
 </head>
 <body>
   <header>
+    
+<!-- Hamburger icon for subjects (Mobile Only) -->
+<button id="subjectsHamburger" class="subjects-hamburger" onclick="toggleSubjectsDrawer()" aria-label="Show subjects">
+  <span></span><span></span><span></span>
+</button>
+
+    
     <div class="logo" tabindex="0" aria-label="Go to homepage" onclick="window.location.reload()">Linktern</div>
     <nav>
+      <!-- Hamburger for About/Contact (Mobile Only, Top Right) -->
+<button id="aboutHamburger" aria-label="Open menu" class="hamburger about-hamburger" onclick="toggleMobileMenu()">
+  <span></span><span></span><span></span>
+</button>
+<!-- Mobile dropdown menu -->
+<div id="mobileMenu" class="mobile-menu" aria-label="Main menu" tabindex="-1">
+  <button onclick="showAbout();toggleMobileMenu()">About 🎉</button>
+  <button onclick="showContact();toggleMobileMenu()">Contact 📬</button>
+  <button onclick="showStats();toggleMobileMenu()">Statistics 📊</button>
+  <button onclick="showHelp();toggleMobileMenu()">Help 🆘</button>
+</div>
+<!-- Mobile dropdown menu -->
+
       <button id="tab-internships" class="active" onclick="switchTab('internships')">Internships 🎯</button>
       <button id="tab-forums" onclick="switchTab('forums')">Forums 💬</button>
       <button id="tab-favorites" onclick="switchTab('favorites')">Favorites 💖</button>
-      <div class="top-links">
-        <button onclick="showAbout()">About 🎉</button>  
-        <button onclick="showContact()">Contact 📬</button>
-        <button onclick="showStats()">Statistics 📊</button>
-        <button onclick="showHelp()">Help 🆘</button>
-      </div>
+      
       <button class="mode-toggle" id="modeToggle" onclick="toggleDarkMode()" title="Toggle Dark/Light Mode">🌙</button>
     </nav>
   </header>
+ <!-- Subjects Drawer (Mobile) -->
+<div id="subjectsDrawer" class="subjects-drawer" tabindex="-1" aria-label="Subjects menu">
+  <div class="drawer-header">
+    <span>Subjects</span>
+    <button class="close-drawer" onclick="toggleSubjectsDrawer()" aria-label="Close subjects menu">&times;</button>
+  </div>
+  <div class="drawer-list" id="drawerSubjects"></div>
+</div>
+
   <main>
     <aside>
       <div class="subjects-panel">
@@ -1180,6 +1782,51 @@ body.dark-mode button.features-btn {
 <button class="features-btn" onclick="showFeedbackModal()">Feedback 💡</button>
 
 <script>
+  const subjectsList = [
+  { label: "🌐 All", value: "All" },
+  { label: "🤖 AI & ML", value: "AI & Machine Learning" },
+  { label: "💻 Computer Science", value: "Computer Science" },
+  { label: "⚙️ Engineering", value: "Engineering" },
+  { label: "🧬 Biology", value: "Biology" },
+  { label: "🩺 Medicine", value: "Medicine" },
+  { label: "💵 Finance", value: "Finance" },
+  { label: "📈 Marketing & Business Development", value: "Marketing & Business Development" },
+  { label: "✏️ Design", value: "Design" },
+  { label: "📐 Physics", value: "Physics" },
+  { label: "👔 Business", value: "Business" },
+  { label: "🎨 Arts", value: "Arts" },
+  { label: "🌋 Env. Science", value: "Environmental Science" },
+  { label: "📖 Law", value: "Law" },
+  { label: "🧑‍🏫 Education", value: "Education" },
+  { label: "🧠 Psychology", value: "Psychology" },
+  { label: "🧮 Mathematics", value: "Mathematics" },
+  { label: "👟 Sports Science", value: "Sports Science" },
+  { label: "🕰️ History", value: "History" },
+  { label: "🫂 Social Sciences", value: "Social Sciences" }
+];
+  function toggleMobileMenu() {
+  const menu = document.getElementById('mobileMenu');
+  menu.classList.toggle('open');
+  if (menu.classList.contains('open')) {
+    menu.focus();
+    // Dismiss menu on click outside
+    setTimeout(() => {
+      window.addEventListener('click', closeMenuOnOutside, { once: true });
+    }, 10);
+  }
+}
+function closeMenuOnOutside(e) {
+  const menu = document.getElementById('mobileMenu');
+  const burger = document.getElementById('hamburger');
+  if (!menu.contains(e.target) && !burger.contains(e.target)) {
+    menu.classList.remove('open');
+  }
+}
+// Close menu with Escape key
+document.getElementById('mobileMenu').addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') this.classList.remove('open');
+});
+
 function showRandomInternship() {
   // Assumes `internships` is an array of available internships
   if (!window.internships || internships.length === 0) {
@@ -1218,6 +1865,72 @@ function showFeedbackModal() {
   `);
 }
 document.getElementById('searchInput').addEventListener('input', renderInternships);
+
+// SUBJECTS DRAWER (Mobile)
+const subjects = [
+  { label: "🌐 All", value: "All" },
+  { label: "🤖 AI & ML", value: "AI & Machine Learning" },
+  { label: "💻 Computer Science", value: "Computer Science" },
+  { label: "⚙️ Engineering", value: "Engineering" },
+  { label: "🧬 Biology", value: "Biology" },
+  { label: "🩺 Medicine", value: "Medicine" },
+  { label: "💵 Finance", value: "Finance" },
+  { label: "📈 Marketing & Business Development", value: "Marketing & Business Development" },
+  { label: "✏️ Design", value: "Design" },
+  { label: "📐 Physics", value: "Physics" },
+  { label: "👔 Business", value: "Business" },
+  { label: "🎨 Arts", value: "Arts" },
+  { label: "🌋 Env. Science", value: "Environmental Science" },
+  { label: "📖 Law", value: "Law" },
+  { label: "🧑‍🏫 Education", value: "Education" },
+  { label: "🧠 Psychology", value: "Psychology" },
+  { label: "🧮 Mathematics", value: "Mathematics" },
+  { label: "👟 Sports Science", value: "Sports Science" },
+  { label: "🕰️ History", value: "History" },
+  { label: "🫂 Social Sciences", value: "Social Sciences" }
+];
+
+// Build subject buttons in drawer (on load)
+// Build the subject buttons inside the drawer
+function buildDrawerSubjects() {
+  const list = document.getElementById('drawerSubjects');
+  list.innerHTML = '';
+  subjectsList.forEach(subj => {
+    const btn = document.createElement('button');
+    btn.textContent = subj.label;
+    btn.onclick = () => {
+      filterSubject(subj.value);
+      toggleSubjectsDrawer();
+    };
+    if (subjectFilter === subj.value) btn.classList.add('active');
+    list.appendChild(btn);
+  });
+}
+
+// Open/close the drawer and build subjects each time it opens
+function toggleSubjectsDrawer() {
+  const drawer = document.getElementById('subjectsDrawer');
+  drawer.classList.toggle('open');
+  if (drawer.classList.contains('open')) {
+    buildDrawerSubjects();
+    drawer.focus();
+    setTimeout(() => {
+      window.addEventListener('click', closeDrawerOnOutside, { once: true });
+    }, 10);
+  }
+}
+function closeDrawerOnOutside(e) {
+  const drawer = document.getElementById('subjectsDrawer');
+  const btn = document.getElementById('viewSubjectsBtn');
+  if (!drawer.contains(e.target) && !btn.contains(e.target)) {
+    drawer.classList.remove('open');
+  }
+}
+document.getElementById('subjectsDrawer').addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') this.classList.remove('open');
+});
+
+
 </script>
       <div class="search-bar">
         <input type="text" id="searchInput" placeholder="🔍 Search internships..." autocomplete="off">
@@ -1779,6 +2492,8 @@ document.getElementById('searchInput').addEventListener('input', renderInternshi
     });
     // Also rerender on tab switch
     document.querySelectorAll('nav button').forEach(btn => btn.addEventListener('click', renderStickyThreads));
-  </script>
+  
+
+ </script>
 </body>
 </html>
