@@ -549,10 +549,11 @@ body.dark-mode .mode-toggle {
       filter: drop-shadow(0 0 14px #1769aa50);
     }
     .card .fav-btn.favorited {
-      color: var(--focus);
-      transform: scale(1.15) rotate(-10deg);
-      filter: drop-shadow(0 0 14px #1769aa50);
-    }
+      .card .fav-btn.favorited {
+  color: yellow; /* blue */
+  transform: scale(1.15) rotate(-10deg);
+  filter: drop-shadow(0 0 14px #1769aa50);
+}
     
     .tag {
       display: inline-block;
@@ -2498,12 +2499,5 @@ document.getElementById('subjectsDrawer').addEventListener('keydown', function(e
   
 
  </script>
-  <script>
-  document.querySelectorAll('.fav-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      btn.classList.toggle('favorited');
-    });
-  });
-</script>
 </body>
 </html>
