@@ -544,6 +544,9 @@ body.dark-mode .mode-toggle {
       display: flex;
       align-items: center;
       gap: 0.2em;
+      color: #1769aa; /* blue */
+      transform: scale(1.15) rotate(-10deg);
+      filter: drop-shadow(0 0 14px #1769aa50);
     }
     .card .fav-btn.favorited {
       color: var(--focus);
@@ -2196,7 +2199,7 @@ document.getElementById('subjectsDrawer').addEventListener('keydown', function(e
         grid.innerHTML = filtered.map((i, idx) => `
           <div class="card" tabindex="0" role="button" aria-label="View details for ${i.title}"
             onkeydown="if(event.key==='Enter'){showModal(${internships.indexOf(i)})}" onclick='showModal(${internships.indexOf(i)})'>
-            <button class="fav-btn${isFavorited(i) ? ' favorited' : ''}" title="${isFavorited(i)?'Remove from favorites':'Add to favorites'}"
+            <button class="fav-btn" title="Add to favorites">★</button>
               onclick="event.stopPropagation();toggleFavorite(internships[${internships.indexOf(i)}])">
               ${isFavorited(i) ? '&#9733;' : '&#9734;'}
             </button>
@@ -2495,5 +2498,12 @@ document.getElementById('subjectsDrawer').addEventListener('keydown', function(e
   
 
  </script>
+  <script>
+  document.querySelectorAll('.fav-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      btn.classList.toggle('favorited');
+    });
+  });
+</script>
 </body>
 </html>
