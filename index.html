@@ -1906,6 +1906,7 @@ function buildDrawerSubjects() {
     list.appendChild(btn);
   });
 }
+  
 
 // Open/close the drawer and build subjects each time it opens
 function toggleSubjectsDrawer() {
@@ -1930,8 +1931,31 @@ document.getElementById('subjectsDrawer').addEventListener('keydown', function(e
   if (e.key === 'Escape') this.classList.remove('open');
 });
 
+  document.querySelectorAll('.applyBtn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    // Retrieve internship data from the DOM or dataset attributes
+    const card = btn.closest('.internship-card');
+    const title = card.querySelector('h3').textContent;
+    const company = card.querySelector('p:nth-of-type(1)').textContent.replace('Company: ','');
+    const location = card.querySelector('p:nth-of-type(2)').textContent.replace('Location: ','');
+    window.addApplication({
+      id: Date.now(),
+      title: title,
+      company: company,
+      location: location,
+      appliedDate: new Date().toISOString().slice(0,10),
+      status: "Pending"
+    });
+    btn.textContent = "Applied!";
+    btn.disabled = true;
+    btn.style.background = "#28a745";
+    btn.style.color = "#fff";
+  });
+});
+
 
 </script>
+        
       <div class="search-bar">
         <input type="text" id="searchInput" placeholder="🔍 Search internships..." autocomplete="off">
         <label for="filterLocation">Location:</label>
