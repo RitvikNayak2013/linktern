@@ -2068,7 +2068,7 @@ document.getElementById('subjectsDrawer').addEventListener('keydown', function(e
       };
       return `<strong>${title}</strong> at <b>${company}</b> allows you to ${generic[field]}`;
     }
-    let internships = [
+  let internships = [
   {
     title: 'Web Designer Intern',
     company: 'YourCompany',
@@ -2080,13 +2080,6 @@ document.getElementById('subjectsDrawer').addEventListener('keydown', function(e
     link: 'https://yourcompany.com/internships',
     description: 'Work on real-world web development projects with our experienced team. Gain hands-on experience in modern JavaScript frameworks and contribute to exciting products.'
   },
-  // Add more internships here
-];
-    
-   const internships = [];
-
-// ----- AI & Machine Learning (15 entries) -----
-internships.unshift(
   {
     title: 'Machine Learning Engineer Intern (FeatureStore)',
     company: 'TikTok (ByteDance)',
@@ -2251,11 +2244,8 @@ internships.unshift(
     tags: ['On-site', 'Paid', 'Engineering'],
     link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
     description: 'Focus on AI optimizations for hardware and software at Intel.'
-  }
-);
-
-// ----- Computer Science (15 entries) -----
-internships.push(
+  },
+  // ----- Computer Science (15 entries) -----
   {
     title: 'Data Science Intern',
     company: 'Amazon',
@@ -2420,11 +2410,7 @@ internships.push(
     tags: ['On-site', 'Paid', 'Engineering'],
     link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
     description: 'Work on fraud detection analytics and payment ML models at PayPal.'
-  }
-);
-
-// ----- Finance (15 entries) -----
-internships.push(
+  },
   {
     title: 'Data Science Intern',
     company: 'JPMorgan Chase',
@@ -2579,10 +2565,10 @@ internships.push(
     link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
     description: 'Financial data analytics applied to carbon‑capture and climate tech projects.'
   }
-);
-
-// You can continue adding other fields (Engineering, Biology, Medicine, Marketing & Business Development, Design, etc.) using similar sourcing.
-
+  // Add more internships here if needed
+];
+    
+   
     
   
     const locations = Array.from(new Set(['All', ...internships.map(i=>i.location)]));
