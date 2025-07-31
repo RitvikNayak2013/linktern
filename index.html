@@ -7,13 +7,7 @@
   <!-- Modern font family for professional look -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
-    :root {<div class="grid">
-    <div class="grid">
-  </div>
-  <a href="https://www.innovatex.com/careers/webdev-intern" class="apply-btn" target="_blank">Apply Now</a>
-</div>
-  </div>
-
+    :root {
       --primary: #23272f;
       --accent: #040404;
       --danger: #d32f2f;
@@ -748,13 +742,13 @@ body.dark-mode .mode-toggle {
       background: var(--focus);
       transform: scale(1.04) translateY(-1px);
       box-shadow: 0 7px 18px #1769aa08;
-      color: Black;
+      color: #fff;
       filter: brightness(1.07);
       outline: none;
     }
     .apply-btn:active {
       background: var(--accent);
-      color: White;
+      color: #fff;
       transform: scale(0.97);
     }
     /* Footer */
@@ -1737,8 +1731,6 @@ body.dark-mode .drawer-list button:hover {
       <button id="tab-aboutus" onclick="showModalContent('About Us🤔', 'Linktern is your one-stop platform to discover, explore, and stay updated on the latest internship opportunities from around the world. Whether you are a student taking your first step into the professional world or someone looking to gain real-world experience in your field of interest, Linktern connects you to internships that matter.We curate high-quality listings from trusted companies and startups across industries—making it easier than ever to find the right role, right when it opens. With regular updates, featured opportunities, and a growing community of ambitious learners, Linktern is here to help you take the next step in your career journey. Stay informed. Stay ahead. Start your internship journey with Linktern.')">About Us🤔</button>
        <button id="tab-postinternships" onclick="showModalContent('Contact Us 📞', 'Have a question or want to feature an internship? Reach out to us anytime at [ritviknayakofficial@gmail.com or linkedin.com/in/ritvik-nayak2013/] — we’re here to help!')">Contact Us 📞</button>
       
-       
-      
       <button class="mode-toggle" id="modeToggle" onclick="toggleDarkMode()" title="Toggle Dark/Light Mode">🌙</button>
     </nav>
   </header>
@@ -1788,6 +1780,7 @@ body.dark-mode .drawer-list button:hover {
         <button class="features-btn" onclick="showRandomInternship()">Random 🎲</button>
 <button class="features-btn" onclick="showModalContent('Daily Pick 🌟', 'Coming soon: Highlighted internship of the day!')">Daily Pick 🌟</button>
 <button class="features-btn" onclick="showEvents()">Events 📅</button>
+<button class="features-btn" onclick="showModalContent('Global Map 🗺️', 'Coming soon: Explore internships on a world map!')">Global Map 🗺️</button>
 <button class="features-btn" onclick="showFeedbackModal()">Feedback 💡</button>
 
 <script>
@@ -1839,7 +1832,7 @@ document.getElementById('mobileMenu').addEventListener('keydown', function(e) {
 function showRandomInternship() {
   // Assumes `internships` is an array of available internships
   if (!window.internships || internships.length === 0) {
-    showModalContent("Today's Random Internship 🎲", 'Business Development Intern at Taskflows. Apply now by contacting Ritvik Nayak (Founder & CEO) at this link https://www.linkedin.com/in/ritvik-nayak2013/ ');
+    showModalContent('Random Internship 🎲', 'No internships available at the moment!');
     return;
   }
   const idx = Math.floor(Math.random() * internships.length);
@@ -1915,7 +1908,6 @@ function buildDrawerSubjects() {
     list.appendChild(btn);
   });
 }
-  
 
 // Open/close the drawer and build subjects each time it opens
 function toggleSubjectsDrawer() {
@@ -1940,31 +1932,8 @@ document.getElementById('subjectsDrawer').addEventListener('keydown', function(e
   if (e.key === 'Escape') this.classList.remove('open');
 });
 
-  document.querySelectorAll('.applyBtn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    // Retrieve internship data from the DOM or dataset attributes
-    const card = btn.closest('.internship-card');
-    const title = card.querySelector('h3').textContent;
-    const company = card.querySelector('p:nth-of-type(1)').textContent.replace('Company: ','');
-    const location = card.querySelector('p:nth-of-type(2)').textContent.replace('Location: ','');
-    window.addApplication({
-      id: Date.now(),
-      title: title,
-      company: company,
-      location: location,
-      appliedDate: new Date().toISOString().slice(0,10),
-      status: "Pending"
-    });
-    btn.textContent = "Applied!";
-    btn.disabled = true;
-    btn.style.background = "#28a745";
-    btn.style.color = "#fff";
-  });
-});
-
 
 </script>
-        
       <div class="search-bar">
         <input type="text" id="searchInput" placeholder="🔍 Search internships..." autocomplete="off">
         <label for="filterLocation">Location:</label>
@@ -2528,29 +2497,6 @@ document.getElementById('subjectsDrawer').addEventListener('keydown', function(e
   
 
  </script>
-
-  <script>
-document.addEventListener('DOMContentLoaded', function() {
- <input id="searchInput" type="text" placeholder="Search internships..." />
-  const searchInput = document.getElementById('searchInput');
-  if (!searchInput) return; // If no search input, exit
-
-  searchInput.addEventListener('input', function() {
-    const searchTerm = searchInput.value.toLowerCase();
-    // Select all cards
-    const cards = document.querySelectorAll('.card');
-    cards.forEach(card => {
-      // Search by job title or company
-      const title = card.querySelector('h3')?.textContent.toLowerCase() || '';
-      const company = card.querySelector('p')?.textContent.toLowerCase() || '';
-      if (title.includes(searchTerm) || company.includes(searchTerm)) {
-        card.style.display = '';
-      } else {
-        card.style.display = 'none';
-      }
-    });
-  });
-});
-</script>
 </body>
 </html>
+ 
