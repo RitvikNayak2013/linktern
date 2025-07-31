@@ -2088,8 +2088,42 @@ document.getElementById('subjectsDrawer').addEventListener('keydown', function(e
       }
     });
     internships.unshift(
-      { title: 'AI Research Intern', company: 'OpenAI', field: 'AI & Machine Learning', location: 'Remote', stipend: '$8000', duration: '10 weeks', tags: ['Remote', 'Paid', 'Research'], link: 'https://openai.com/careers/', description: 'Work on next-gen AI models, conduct experiments, and publish papers alongside top researchers at OpenAI. Collaborate in a world-class research environment.' }
-    );
+  { 
+    title: 'Web Developer Intern', 
+    company: 'YourCompany', 
+    field: 'Computer Science', 
+    location: 'India', 
+    stipend: '₹60,000', 
+    duration: '12 weeks', 
+    tags: ['On-site', 'Paid', 'Experience'], 
+    link: 'https://yourcompany.com/internships', 
+    description: 'Work on real-world web development projects with our experienced team. Gain hands-on experience in modern JavaScript frameworks and contribute to exciting products.' 
+  },
+  { 
+    title: 'Marketing Intern', 
+    company: 'AdVantage', 
+    field: 'Business', 
+    location: 'USA', 
+    stipend: '$2,500', 
+    duration: '10 weeks', 
+    tags: ['Remote', 'Paid'], 
+    link: 'https://advantage.com/careers', 
+    description: 'Assist in marketing campaigns and learn from experienced professionals in a fast-paced environment.' 
+  },
+  { 
+    title: 'Ritz Intern', 
+    company: 'DesignStudio', 
+    field: 'Design', 
+    location: 'Remote', 
+    stipend: '$1,500', 
+    duration: '8 weeks', 
+    tags: ['Remote', 'Portfolio'], 
+    link: 'https://designstudio.com/interns', 
+    description: 'Create graphics for real clients and expand your design portfolio with mentorship from top designers.' 
+  }
+);
+    
+  
     const locations = Array.from(new Set(['All', ...internships.map(i=>i.location)]));
 
     // --- FILTERS ---
