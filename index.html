@@ -2068,25 +2068,21 @@ document.getElementById('subjectsDrawer').addEventListener('keydown', function(e
       };
       return `<strong>${title}</strong> at <b>${company}</b> allows you to ${generic[field]}`;
     }
-    let internships = [];
-    subjectLabels.forEach(field => {
-      for (let i=1; i<=5; i++) {
-        let company = companiesPool[field][(i-1)%companiesPool[field].length];
-        let location = random(locationsPool);
-        let title = field + " Intern #" + i;
-        internships.push({
-          title,
-          company,
-          field,
-          location,
-          stipend: randomStipend(location),
-          duration: randomDuration(),
-          tags: randomTags(field),
-          link: "#",
-          description: randomDesc(title, company, field)
-        });
-      }
-    });
+    let internships = [
+  {
+    title: 'Web Designer Intern',
+    company: 'YourCompany',
+    field: 'Computer Science',
+    location: 'India',
+    stipend: '₹60,000',
+    duration: '12 weeks',
+    tags: ['On-site', 'Paid', 'Experience'],
+    link: 'https://yourcompany.com/internships',
+    description: 'Work on real-world web development projects with our experienced team. Gain hands-on experience in modern JavaScript frameworks and contribute to exciting products.'
+  },
+  // Add more internships here
+];
+    
     internships.unshift(
   { 
     title: 'Web Developer Intern', 
