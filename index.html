@@ -2563,5 +2563,29 @@ document.getElementById('subjectsDrawer').addEventListener('keydown', function(e
   
 
  </script>
+
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+ <input id="searchInput" type="text" placeholder="Search internships..." />
+  const searchInput = document.getElementById('searchInput');
+  if (!searchInput) return; // If no search input, exit
+
+  searchInput.addEventListener('input', function() {
+    const searchTerm = searchInput.value.toLowerCase();
+    // Select all cards
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+      // Search by job title or company
+      const title = card.querySelector('h3')?.textContent.toLowerCase() || '';
+      const company = card.querySelector('p')?.textContent.toLowerCase() || '';
+      if (title.includes(searchTerm) || company.includes(searchTerm)) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+});
+</script>
 </body>
 </html>
