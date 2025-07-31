@@ -2083,41 +2083,506 @@ document.getElementById('subjectsDrawer').addEventListener('keydown', function(e
   // Add more internships here
 ];
     
-    internships.unshift(
-  { 
-    title: 'Web Developer Intern', 
-    company: 'YourCompany', 
-    field: 'Computer Science', 
-    location: 'India', 
-    stipend: '₹60,000', 
-    duration: '12 weeks', 
-    tags: ['On-site', 'Paid', 'Experience'], 
-    link: 'https://yourcompany.com/internships', 
-    description: 'Work on real-world web development projects with our experienced team. Gain hands-on experience in modern JavaScript frameworks and contribute to exciting products.' 
+   const internships = [];
+
+// ----- AI & Machine Learning (15 entries) -----
+internships.push(
+  {
+    title: 'Machine Learning Engineer Intern (FeatureStore)',
+    company: 'TikTok (ByteDance)',
+    field: 'AI & Machine Learning',
+    location: 'USA',
+    stipend: 'unknown',
+    duration: 'unknown',
+    tags: ['On-site', 'Paid', 'Engineering'],
+    link: 'https://www.indeed.com/q-summer-2025-internship-machine-learning-jobs.html',
+    description: 'Build scalable feature‑store infrastructure for machine learning usage in TikTok’s systems.'
   },
-  { 
-    title: 'Marketing Intern', 
-    company: 'AdVantage', 
-    field: 'Business', 
-    location: 'USA', 
-    stipend: '$2,500', 
-    duration: '10 weeks', 
-    tags: ['Remote', 'Paid'], 
-    link: 'https://advantage.com/careers', 
-    description: 'Assist in marketing campaigns and learn from experienced professionals in a fast-paced environment.' 
+  {
+    title: 'Machine Learning Intern',
+    company: 'AION Robotics Corporation',
+    field: 'AI & Machine Learning',
+    location: 'USA',
+    stipend: 'unknown',
+    duration: 'unknown',
+    tags: ['On-site', 'Paid', 'Engineering'],
+    link: 'https://www.indeed.com/q-summer-2025-internship-machine-learning-jobs.html',
+    description: 'Contribute to computer vision models for real‑time perception at AION Robotics.' 
   },
-  { 
-    title: 'Ritz Intern', 
-    company: 'DesignStudio', 
-    field: 'Design', 
-    location: 'Remote', 
-    stipend: '$1,500', 
-    duration: '8 weeks', 
-    tags: ['Remote', 'Portfolio'], 
-    link: 'https://designstudio.com/interns', 
-    description: 'Create graphics for real clients and expand your design portfolio with mentorship from top designers.' 
+  {
+    title: 'Research Intern (Deep Learning)',
+    company: 'pony.ai',
+    field: 'AI & Machine Learning',
+    location: 'USA',
+    stipend: 'unknown',
+    duration: 'unknown',
+    tags: ['On-site', 'Paid', 'Research'],
+    link: 'https://www.indeed.com/q-summer-2025-internship-machine-learning-jobs.html',
+    description: 'Assist in deep‑learning research for autonomous driving platforms at pony.ai.'
+  },
+  {
+    title: 'AI/ML Engineer Intern (Summer 2025)',
+    company: 'Meetsta',
+    field: 'AI & Machine Learning',
+    location: 'Remote',
+    stipend: 'unknown',
+    duration: 'unknown',
+    tags: ['Remote', 'Paid', 'Engineering'],
+    link: 'https://www.indeed.com/q-ai-ml-internship-summer-2025-jobs.html',
+    description: 'Design and build advanced AI/ML applications for the iOS platform remotely.'
+  },
+  {
+    title: 'AI/ML Intern',
+    company: 'New Jersey Innovation Institute',
+    field: 'AI & Machine Learning',
+    location: 'USA',
+    stipend: 'unknown',
+    duration: 'unknown',
+    tags: ['On-site', 'Paid', 'Engineering'],
+    link: 'https://www.indeed.com/q-ai-ml-internship-summer-2025-jobs.html',
+    description: 'Develop video‑understanding AI to analyze bodycam footage for NJII.'
+  },
+  {
+    title: 'Data Science & Machine Learning Intern',
+    company: 'Insitro',
+    field: 'AI & Machine Learning',
+    location: 'USA',
+    stipend: 'unknown',
+    duration: 'unknown',
+    tags: ['On-site', 'Paid', 'Biology', 'Engineering'],
+    link: 'https://www.builtinsf.com/job/data-science-machine-learning-intern-summer-2025/3709033',
+    description: 'Work at the intersection of ML and biological data with cross‑disciplinary teams.' 
+  },
+  {
+    title: 'AI/ML Intern (Engineering Intern 1)',
+    company: 'HII',
+    field: 'AI & Machine Learning',
+    location: 'USA',
+    stipend: 'unknown',
+    duration: 'unknown',
+    tags: ['On-site', 'Paid', 'Engineering'],
+    link: 'https://www.indeed.com/q-ai-ml-internship-summer-2025-jobs.html',
+    description: 'Participate in machine learning and systems development at HII’s Air Force programs.'
+  },
+  {
+    title: 'Machine Learning Intern, Fall 2025',
+    company: 'DoorDash',
+    field: 'AI & Machine Learning',
+    location: 'USA',
+    stipend: 'unknown',
+    duration: '12 weeks (Fall)',
+    tags: ['On-site', 'Paid', 'Engineering'],
+    link: 'https://www.indeed.com/q-ai-ml-internship-summer-2025-jobs.html',
+    description: 'Work on ML infrastructure and recommendation systems at DoorDash.' 
+  },
+  {
+    title: 'Machine Learning Intern',
+    company: 'Netflix',
+    field: 'AI & Machine Learning',
+    location: 'USA',
+    stipend: 'unknown',
+    duration: 'unknown',
+    tags: ['On-site', 'Paid', 'Engineering'],
+    link: 'https://www.indeed.com/q-summer-2025-internship-machine-learning-jobs.html',
+    description: 'Develop applied ML solutions across Netflix’s content personalization systems.'
+  },
+  {
+    title: 'AI Research Intern',
+    company: 'OpenAI',
+    field: 'AI & Machine Learning',
+    location: 'USA',
+    stipend: 'unknown',
+    duration: '12 weeks, Summer 2025',
+    tags: ['On-site', 'Paid', 'Research'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Explore generative AI and deep learning research under OpenAI mentors.'
+  },
+  {
+    title: 'AI Research Intern',
+    company: 'DeepMind',
+    field: 'AI & Machine Learning',
+    location: 'UK/USA',
+    stipend: 'unknown',
+    duration: '12 weeks',
+    tags: ['On-site', 'Paid', 'Research'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Engage in reinforcement learning and AI ethics projects at DeepMind.' 
+  },
+  {
+    title: 'Machine Learning Intern',
+    company: 'NVIDIA',
+    field: 'AI & Machine Learning',
+    location: 'USA',
+    stipend: 'unknown',
+    duration: '12 weeks',
+    tags: ['On-site', 'Paid', 'Engineering'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Join NVIDIA’s AI team focusing on deep learning for autonomous systems.' 
+  },
+  {
+    title: 'AI Intern',
+    company: 'Salesforce',
+    field: 'AI & Machine Learning',
+    location: 'USA',
+    stipend: 'unknown',
+    duration: '10 weeks',
+    tags: ['On-site', 'Paid', 'Business'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Work on predictive CRM analytics and AI-driven customer success tools.'
+  },
+  {
+    title: 'Machine Learning Intern',
+    company: 'Tesla',
+    field: 'AI & Machine Learning',
+    location: 'USA',
+    stipend: 'unknown',
+    duration: '12 weeks',
+    tags: ['On-site', 'Paid', 'Engineering'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Develop computer vision and ML systems for autonomous vehicles at Tesla.'
+  },
+  {
+    title: 'Machine Learning Intern',
+    company: 'Intel',
+    field: 'AI & Machine Learning',
+    location: 'USA',
+    stipend: 'unknown',
+    duration: '10 weeks',
+    tags: ['On-site', 'Paid', 'Engineering'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Focus on AI optimizations for hardware and software at Intel.'
   }
 );
+
+// ----- Computer Science (15 entries) -----
+internships.push(
+  {
+    title: 'Data Science Intern',
+    company: 'Amazon',
+    field: 'Computer Science',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '12 weeks',
+    tags: ['On-site', 'Paid', 'Engineering'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Build predictive models for e-commerce optimization using Python and AWS.'
+  },
+  {
+    title: 'Data Analytics Intern',
+    company: 'Google',
+    field: 'Computer Science',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '10 weeks',
+    tags: ['On-site', 'Paid', 'Engineering'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Analyze behavior data for products like Search and YouTube using SQL and Python.'
+  },
+  {
+    title: 'Data Scientist Intern',
+    company: 'Microsoft',
+    field: 'Computer Science',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '12 weeks',
+    tags: ['On-site', 'Paid', 'Engineering'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Work on AI‑driven cloud solutions leveraging Azure and machine learning frameworks.'
+  },
+  {
+    title: 'Data Science Intern',
+    company: 'IBM',
+    field: 'Computer Science',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '12 weeks',
+    tags: ['On-site', 'Paid', 'Engineering'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Engage in AI and quantum analytics using Watson and Qiskit.'
+  },
+  {
+    title: 'Data Analytics Intern',
+    company: 'Deloitte',
+    field: 'Computer Science',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '8 weeks',
+    tags: ['On-site', 'Paid', 'Consulting'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Work on business analytics with Tableau and Excel alongside consultancy teams.'
+  },
+  {
+    title: 'Data Science Intern',
+    company: 'BCG',
+    field: 'Computer Science',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '10 weeks',
+    tags: ['On-site', 'Paid', 'Consulting'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Develop predictive models for consulting engagements using Python/R.'
+  },
+  {
+    title: 'Analytics Intern',
+    company: 'Accenture',
+    field: 'Computer Science',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '10 weeks',
+    tags: ['On-site', 'Paid', 'Consulting'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Perform data visualization and analytics for client solutions using Power BI.'
+  },
+  {
+    title: 'Data Intern',
+    company: 'Salesforce',
+    field: 'Computer Science',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '10 weeks',
+    tags: ['On-site', 'Paid', 'Business'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Work on CRM analytics projects and machine learning-driven insights.'
+  },
+  {
+    title: 'Data Science Intern',
+    company: 'Oracle',
+    field: 'Computer Science',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '10 weeks',
+    tags: ['On-site', 'Paid', 'Engineering'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Develop BI solutions leveraging Oracle Cloud and machine learning analytics.'
+  },
+  {
+    title: 'Analytics Intern',
+    company: 'SAP',
+    field: 'Computer Science',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '10 weeks',
+    tags: ['On-site', 'Paid', 'Engineering'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Create predictive models for enterprise ERP systems using SAP HANA.'
+  },
+  {
+    title: 'Data Science Intern',
+    company: 'Cisco',
+    field: 'Computer Science',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '10 weeks',
+    tags: ['On-site', 'Paid', 'Engineering'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Apply ML analytics to network and cybersecurity solutions at Cisco.'
+  },
+  {
+    title: 'Data Science Intern',
+    company: 'Intel',
+    field: 'Computer Science',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '10 weeks',
+    tags: ['On-site', 'Paid', 'Engineering'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Analyze semiconductor optimization data using Python and big‑data tools.'
+  },
+  {
+    title: 'Data Analytics Intern',
+    company: 'HP',
+    field: 'Computer Science',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '8 weeks',
+    tags: ['On-site', 'Paid', 'Engineering'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Support supply chain analytics via Tableau and SQL at HP.'
+  },
+  {
+    title: 'Data Science Intern',
+    company: 'Adobe',
+    field: 'Computer Science',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '10 weeks',
+    tags: ['On-site', 'Paid', 'Engineering'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Analyze user behavior for creative software tools at Adobe.'
+  },
+  {
+    title: 'Data Science Intern',
+    company: 'PayPal',
+    field: 'Computer Science',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '10 weeks',
+    tags: ['On-site', 'Paid', 'Engineering'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Work on fraud detection analytics and payment ML models at PayPal.'
+  }
+);
+
+// ----- Finance (15 entries) -----
+internships.push(
+  {
+    title: 'Data Science Intern',
+    company: 'JPMorgan Chase',
+    field: 'Finance',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '10 weeks',
+    tags: ['On-site', 'Paid', 'Quantitative'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Analyze financial data and build trading strategy analytics at JPMorgan.'
+  },
+  {
+    title: 'Quantitative Research Intern',
+    company: 'Citadel',
+    field: 'Finance',
+    location: 'USA',
+    stipend: 'up to $25,000/month for PhD',
+    duration: '12 weeks',
+    tags: ['On-site', 'Paid', 'Quantitative'],
+    link: 'https://www.fnlondon.com/articles/why-top-hedge-funds-are-paying-interns-25-000-a-month-they-arent-just-doing-coffee-runs-c3b7c9db',
+    description: 'High‑paying quant research internships at Citadel for PhD and undergrads.'
+  },
+  {
+    title: 'Quantitative Research Intern',
+    company: 'D. E. Shaw',
+    field: 'Finance',
+    location: 'USA',
+    stipend: 'up to $25,000/month PhD, $22,000 undergrad',
+    duration: '12 weeks',
+    tags: ['On-site', 'Paid', 'Quantitative'],
+    link: 'https://www.fnlondon.com/articles/why-top-hedge-funds-are-paying-interns-25-000-a-month-they-arent-just-doing-coffee-runs-c3b7c9db',
+    description: 'Supports data analysis and model building in top quant hedge fund.'
+  },
+  {
+    title: 'Quantitative Research Intern',
+    company: 'Balyasny Asset Management',
+    field: 'Finance',
+    location: 'USA',
+    stipend: 'up to $25,000/month for PhD',
+    duration: '12 weeks',
+    tags: ['On-site', 'Paid', 'Quantitative'],
+    link: 'https://www.fnlondon.com/articles/why-top-hedge-funds-are-paying-interns-25-000-a-month-they-arent-just-doing-coffee-runs-c3b7c9db',
+    description: 'Rich compensation, involvement in stock pitch and quant strategy development.'
+  },
+  {
+    title: 'Analytics Intern',
+    company: 'Morgan Stanley',
+    field: 'Finance',
+    location: 'USA',
+    stipend: 'paid',
+    duration: 'unknown',
+    tags: ['On-site', 'Paid', 'Quantitative'],
+    link: 'https://www.thetimes.co.uk/article/spring-internships-2025-student-work-experience-vwlggtgd6',
+    description: 'Spring/Fall internships in financial analysis and data-driven trading support.'
+  },
+  {
+    title: 'Finance Internship',
+    company: 'EY‑Parthenon',
+    field: 'Finance',
+    location: 'USA',
+    stipend: '$7,500/month median',
+    duration: 'unknown',
+    tags: ['On-site', 'Paid', 'Consulting'],
+    link: 'https://www.businessinsider.com/the-best-internships-of-2025-tech-accounting-consulting-finance-glassdoor-2025-4',
+    description: 'Consulting and finance internship; among top‑ranked by Glassdoor in 2025.'
+  },
+  {
+    title: 'Finance Internship',
+    company: 'Capital One',
+    field: 'Finance',
+    location: 'USA',
+    stipend: '$5,166–8,833/month median',
+    duration: 'unknown',
+    tags: ['On-site', 'Paid', 'Finance'],
+    link: 'https://www.businessinsider.com/the-best-internships-of-2025-tech-accounting-consulting-finance-glassdoor-2025-4',
+    description: 'Highly rated internship combining finance analysis and tech projects.'
+  },
+  {
+    title: 'Finance & Analytics Intern',
+    company: 'Microsoft (Finance)',
+    field: 'Finance',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '12 weeks',
+    tags: ['On-site', 'Paid', 'Finance'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Financial data science role within Microsoft’s operations and analytics teams.'
+  },
+  {
+    title: 'Analytics Intern',
+    company: 'BCG (Finance dept)',
+    field: 'Finance',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '10 weeks',
+    tags: ['On-site', 'Paid', 'Consulting'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Financial consulting and analytics applied to business strategy engagements.'
+  },
+  {
+    title: 'Data Science Intern',
+    company: 'Stripe',
+    field: 'Finance',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '10 weeks',
+    tags: ['On-site', 'Paid', 'Finance'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Focus on fraud detection analytics and financial modeling at Stripe.'
+  },
+  {
+    title: 'Data Science Intern',
+    company: 'PayPal (Finance team)',
+    field: 'Finance',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '10 weeks',
+    tags: ['On-site', 'Paid', 'Finance'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Quant analytics for payments and risk modeling at PayPal.'
+  },
+  {
+    title: 'Data Science Intern',
+    company: 'Uber (Finance analytics)',
+    field: 'Finance',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '10 weeks',
+    tags: ['On-site', 'Paid', 'Finance'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Work on ML models to optimize ride‑sharing financial performance.'
+  },
+  {
+    title: 'Data Science Intern',
+    company: 'Airbnb (Finance Analytics)',
+    field: 'Finance',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '10 weeks',
+    tags: ['On-site', 'Paid', 'Finance'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Analyze pricing and marketplace trends using machine learning and data science.'
+  },
+  {
+    title: 'Data Science Intern',
+    company: 'Graphyte Climate Tech',
+    field: 'Finance',
+    location: 'USA',
+    stipend: 'paid',
+    duration: '8 weeks',
+    tags: ['On-site', 'Paid', 'Environmental Science'],
+    link: 'https://www.inspiritai.com/blogs/ai-blog/data-science-internships-summer-2025',
+    description: 'Financial data analytics applied to carbon‑capture and climate tech projects.'
+  }
+);
+
+// You can continue adding other fields (Engineering, Biology, Medicine, Marketing & Business Development, Design, etc.) using similar sourcing.
+
     
   
     const locations = Array.from(new Set(['All', ...internships.map(i=>i.location)]));
