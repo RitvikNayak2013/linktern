@@ -503,7 +503,8 @@ body.dark-mode .mode-toggle {
       width: 100%;
       margin-top: 0.14rem;
     }
-    .card {
+    /* Improved Card Design */
+    .card, .improved-card {
       background: var(--surface-light);
       border-radius: var(--radius);
       padding: 1.1rem 1rem 1rem 1rem;
@@ -518,18 +519,18 @@ body.dark-mode .mode-toggle {
       display: flex;
       flex-direction: column;
     }
-    .card:focus {
+    .card:focus, .improved-card:focus {
       outline: 2px solid var(--accent);
       box-shadow: 0 0 0 3px var(--accent);
       background: var(--hover-light);
     }
-    .card:hover {
+    .card:hover, .improved-card:hover {
       background: var(--hover-light);
       border: 2px solid var(--focus);
       transform: scale(1.03) translateY(-2px);
       box-shadow: 0 8px 32px 0 rgba(23,105,170,.11);
     }
-    .card .fav-btn {
+    .card .fav-btn, .improved-card .fav-btn {
       position: absolute;
       top: 14px;
       right: 13px;
@@ -545,13 +546,120 @@ body.dark-mode .mode-toggle {
       align-items: center;
       gap: 0.2em;
     }
-    .card .fav-btn.favorited {
+    .card .fav-btn.favorited, .improved-card .fav-btn.favorited {
       color: var(--focus);
       transform: scale(1.15) rotate(-10deg);
       filter: drop-shadow(0 0 14px #1769aa50);
     }
-    
-    .tag {
+    .improved-card {
+      padding: 1.3rem 1.1rem 1.1rem 1.1rem;
+      gap: 0.7rem;
+      min-height: 200px;
+    }
+    .improved-card .tag {
+      background: var(--accent);
+      color: #fff;
+      padding: 0.13rem 0.50rem;
+      border-radius: 7px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-right: 0.13rem;
+      box-shadow: 0 1px 2px 0 #1769aa0c;
+      display: inline-block;
+    }
+    .improved-card h3 {
+      font-size: 1.18rem;
+      font-weight: 900;
+      color: var(--accent);
+      margin: 0 0 0.18rem 0;
+      font-family: 'Nunito', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 0.18em;
+    }
+    .improved-card h3::before {
+      content: "🧑‍💻";
+      font-size: 1.1em;
+      margin-right: 0.09em;
+    }
+    .improved-card p {
+      margin: 0.13rem 0 0.2rem 0;
+      color: var(--muted-light);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      display: flex;
+      align-items: center;
+      gap: 0.23em;
+    }
+    .card-details-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.5em;
+      margin: 0.15em 0 0.3em 0;
+      padding: 0.7em 0.3em;
+      background: var(--surface-alt-light);
+      border-radius: 9px;
+      box-shadow: 0 1px 5px #1769aa13;
+      width: fit-content;
+      min-width: 200px;
+    }
+
+    .detail-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-width: 90px;
+      padding: 0 0.2em;
+      gap: 0.08em;
+    }
+
+    .detail-label {
+      font-size: 0.96em;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 0.01em;
+    }
+    .detail-value {
+      font-size: 1.04em;
+      font-weight: 900;
+      color: var(--primary);
+      margin-top: 0.04em;
+    }
+    .detail-divider {
+      width: 2px;
+      height: 2.2em;
+      background: linear-gradient(to bottom, #ffa72644, #1769aa33 80%, transparent);
+      border-radius: 2px;
+      margin: 0 0.5em;
+    }
+
+    .card-tags {
+      margin-top: 0.48rem;
+      display: flex;
+      gap: 0.3em;
+    }
+    @media (max-width: 700px) {
+      .improved-card {
+        padding: 0.8rem 0.4rem;
+        min-height: 140px;
+      }
+      .card-details-row {
+        flex-direction: column;
+        gap: 0.25em;
+        padding: 0.5em 0.2em;
+        min-width: 130px;
+      }
+      .detail-divider {
+        width: 90%;
+        height: 2px;
+        margin: 0.18em 0;
+        background: linear-gradient(to right, #ffa72644, #1769aa33 80%, transparent);
+      }
+    }
+    /* END Improved Card Design */
+    .card .tag {
       display: inline-block;
       background: var(--accent);
       color: #fff;
@@ -565,7 +673,7 @@ body.dark-mode .mode-toggle {
       box-shadow: 0 1px 2px 0 #1769aa0c;
       position: relative;
     }
-    .tag::after {
+    .card .tag::after {
       content: "✨";
       font-size: 1em;
       margin-left: 0.13em;
@@ -1000,156 +1108,10 @@ body.dark-mode .mode-toggle {
       .logo { font-size: 1rem;}
       nav button { font-size: 0.93rem; padding: 0.39rem 0.7rem;}
       .modal-content {padding: 0.54rem 1vw;}
-
-      /* --- MOBILE-FIRST RESPONSIVE IMPROVEMENTS --- */
-
-/* 1. Reduce base font size for mobile for better scaling */
-@media (max-width: 500px) {
-  html {
-    font-size: 15px;
-  }
-}
-
-/* 2. Header, Nav, and Logo: less padding, smaller logo, wrap nav buttons */
-@media (max-width: 600px) {
-  header {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0.6rem 2vw;
-    gap: 0.4em;
-  }
-  .logo {
-    font-size: 1.4rem;
-  }
-  .logo::before {
-    font-size: 1.4rem;
-  }
-  nav {
-    gap: 0.3rem;
-    flex-wrap: wrap;
-    width: 100%;
-    padding-bottom: 0.2rem;
-  }
-  nav .top-links {
-    margin-left: 0.7rem;
-  }
-  nav button, .mode-toggle, nav .top-links button {
-    font-size: 0.95rem;
-    padding: 0.38em 0.7em;
-  }
-}
-
-/* 3. Sidebar/Aside: Stacks below header, collapses to button on xs screens */
-@media (max-width: 900px) {
-  aside {
-    min-width: 100vw;
-    max-width: 100vw;
-    border-radius: 0 0 var(--radius) var(--radius);
-    margin: 0 0 1rem 0;
-    padding: 0.8rem 2vw;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 0.6rem;
-    position: relative;
-  }
-  .forum-preview {
-    margin-top: 0.5rem;
-    padding: 0.7rem;
-  }
-}
-@media (max-width: 600px) {
-  aside {
-    flex-direction: column;
-    align-items: stretch;
-    padding: 0.6rem 1vw;
-    gap: 0.4rem;
-    margin: 0 0 0.7rem 0;
-  }
-  .forum-preview {
-    margin-bottom: 0.2rem;
-    padding: 0.6rem 0.5rem;
-  }
-  .subjects-panel h3 {
-    font-size: 1rem;
-  }
-}
-
-/* 4. Cards/Grid: Single column, less padding */
-@media (max-width: 700px) {
-  .grid {
-    grid-template-columns: 1fr;
-    gap: 0.7rem;
-  }
-  .card {
-    padding: 0.75rem 0.7rem;
-    min-height: 100px;
-  }
-}
-
-/* 5. Search bar: stack, shrink paddings */
-@media (max-width: 500px) {
-  .search-bar {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.5rem;
-    padding: 0.5rem 0.6rem;
-  }
-  .search-bar input, .search-bar select {
-    font-size: 0.93rem;
-    padding: 0.36rem 0.7rem;
-  }
-  .search-bar label {
-    font-size: 0.95rem;
-  }
-}
-
-/* 6. Features row: wrap, less spacing */
-@media (max-width: 600px) {
-  .features-row {
-    gap: 0.3em;
-    margin: 0.5em 0 0.7em 0;
-    flex-wrap: wrap;
-  }
-  .features-btn {
-    font-size: 0.98rem;
-    padding: 0.21em 0.8em 0.21em 0.7em;
-  }
-}
-
-/* 7. Modal: fit screen */
-@media (max-width: 500px) {
-  .modal-content {
-    max-width: 97vw;
-    width: 99vw;
-    padding: 0.5rem 0.3rem;
-    border-radius: 13px;
-  }
-  .modal-content h2 {
-    font-size: 1.01rem;
-  }
-}
-
-/* 8. Forums and Favorites: shrink section padding */
-@media (max-width: 700px) {
-  .forum-section, .favorites-section {
-    padding: 0 1vw;
-    max-width: 100vw;
-  }
-  .forum-thread,
-  .add-thread-form,
-  .add-comment-form {
-    padding: 0.6rem 0.5rem;
-  }
-}
-
-/* 9. Footer: less margin and padding */
-@media (max-width: 600px) {
-  footer {
-    font-size: 0.97rem;
-    padding: 0.5rem 0;
-    margin-top: 0.4rem;
-  }
-}
+      html { font-size: 15px;}
+      .search-bar {flex-direction: column; align-items: stretch; gap: 0.5rem; padding: 0.5rem 0.6rem;}
+      .search-bar input, .search-bar select {font-size: 0.93rem; padding: 0.36rem 0.7rem;}
+      .search-bar label {font-size: 0.95rem;}
     }
     /* Custom scrollbar */
     ::-webkit-scrollbar { width: 7px; background: var(--surface-alt-light);}
@@ -1279,8 +1241,6 @@ body.dark-mode button.features-btn {
     display: inline-flex !important;
   }
 }
-
-/* Hamburger style */
 .hamburger {
   display: none;
   position: fixed;
@@ -1348,7 +1308,6 @@ body.dark-mode button.features-btn {
   color: #fff;
   outline: none;
 }
-
 /* Show menu when open */
 .mobile-menu.open {
   display: block;
@@ -1387,7 +1346,6 @@ body.dark-mode button.features-btn {
     display: flex !important;
   }
 }
-
 /* Hamburger for subjects */
 .subjects-hamburger {
   display: none;
@@ -1414,7 +1372,6 @@ body.dark-mode button.features-btn {
   margin: 0.23em 0;
   border-radius: 2px;
 }
-
 /* Drawer styles */
 .subjects-drawer {
   display: none;
@@ -1438,128 +1395,6 @@ body.dark-mode button.features-btn {
 @keyframes fadeInDrawer {
   from { opacity: 0; }
   to { opacity: 1; }
-}
-.drawer-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 900;
-  font-size: 1.19rem;
-  background: var(--accent);
-  color: #fff;
-  padding: 1.1rem 1.2rem 1rem 1.2rem;
-  border-bottom: 2px solid var(--focus);
-}
-.close-drawer {
-  background: none;
-  color: #fff;
-  border: none;
-  font-size: 2rem;
-  font-weight: 900;
-  cursor: pointer;
-  padding: 0 0.3em;
-  margin-right: -0.2em;
-}
-.drawer-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3em;
-  padding: 1.2em 1.2em;
-}
-.drawer-list button {
-  background: var(--input-bg-light);
-  border: 2px solid var(--inactive);
-  color: var(--muted-light);
-  border-radius: 8px;
-  font-size: 1.05rem;
-  font-weight: 700;
-  margin-bottom: 0.1em;
-  text-align: left;
-  padding: 0.45em 1em;
-  cursor: pointer;
-  transition: background .14s, color .14s, border .14s;
-}
-.drawer-list button.active,
-.drawer-list button:focus,
-.drawer-list button:hover {
-  background: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
-  outline: none;
-}
-body.dark-mode .subjects-drawer {
-  background: var(--surface-dark);
-}
-body.dark-mode .drawer-header {
-  background: var(--surface-dark);
-  color: var(--highlight);
-}
-body.dark-mode .drawer-list button {
-  background: var(--input-bg-dark);
-  color: var(--muted-dark);
-  border-color: var(--inactive);
-}
-body.dark-mode .drawer-list button.active,
-body.dark-mode .drawer-list button:focus,
-body.dark-mode .drawer-list button:hover {
-  background: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
-}
-
-/* --- SUBJECTS DRAWER --- */
-@media (max-width: 700px) {
-  aside {
-    display: none !important;
-  }
-  .subjects-hamburger {
-    display: flex !important;
-  }
-}
-.subjects-hamburger {
-  display: none;
-  position: fixed;
-  top: 1.1rem;
-  left: 1.2rem;
-  z-index: 2002;
-  width: 2.7em;
-  height: 2.7em;
-  background: var(--accent);
-  border: none;
-  border-radius: 50%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 2px 12px #1769aa33;
-  cursor: pointer;
-}
-.subjects-hamburger span {
-  display: block;
-  width: 1.5em;
-  height: 0.22em;
-  background: #fff;
-  margin: 0.18em 0;
-  border-radius: 2px;
-}
-
-/* Subjects Drawer */
-.subjects-drawer {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 75vw;
-  max-width: 340px;
-  height: 100vh;
-  background: var(--surface-light);
-  box-shadow: 4px 0 25px #23272f33;
-  z-index: 3001;
-  transform: translateX(-100%);
-  transition: transform .26s cubic-bezier(.7,.2,.2,1);
-  padding: 0;
-}
-.subjects-drawer.open {
-  display: block;
-  transform: translateX(0);
 }
 .drawer-header {
   display: flex;
@@ -1753,7 +1588,7 @@ body.dark-mode .drawer-list button:hover {
         <button class="subject-btn" onclick="filterSubject('Biology')">🧬 Biology</button>
         <button class="subject-btn" onclick="filterSubject('Medicine')">🩺 Medicine</button>
         <button class="subject-btn" onclick="filterSubject('Finance')">💵 Finance</button>
-        <button class="subject-btn" onclick="filterSubject('Finance')">📈 Marketing & Business Development</button>
+        <button class="subject-btn" onclick="filterSubject('Marketing/ Business Development')">📈 Marketing/ Business Development</button>
         <button class="subject-btn" onclick="filterSubject('Design')">✏️ Design</button>
         <button class="subject-btn" onclick="filterSubject('Physics')">📐 Physics</button>
         <button class="subject-btn" onclick="filterSubject('Business')">👔 Business</button>
@@ -1769,7 +1604,7 @@ body.dark-mode .drawer-list button:hover {
       </div>
       <hr class="aside-divider">
       <div class="forum-preview" id="forumPreview">
-        <h4>Recent Forum Threads</h4>
+        
         <ul class="forum-preview-list" id="forumPreviewList"></ul>
       </div>
     </aside>
@@ -1779,7 +1614,6 @@ body.dark-mode .drawer-list button:hover {
         <button class="features-btn" onclick="showRandomInternship()">Random 🎲</button>
 <button class="features-btn" onclick="showModalContent('Daily Pick 🌟', 'Coming soon: Highlighted internship of the day!')">Daily Pick 🌟</button>
 <button class="features-btn" onclick="showEvents()">Events 📅</button>
-<button class="features-btn" onclick="showModalContent('Global Map 🗺️', 'Coming soon: Explore internships on a world map!')">Global Map 🗺️</button>
 <button class="features-btn" onclick="showFeedbackModal()">Feedback 💡</button>
 
 <script>
@@ -1791,7 +1625,7 @@ body.dark-mode .drawer-list button:hover {
   { label: "🧬 Biology", value: "Biology" },
   { label: "🩺 Medicine", value: "Medicine" },
   { label: "💵 Finance", value: "Finance" },
-  { label: "📈 Marketing & Business Development", value: "Marketing & Business Development" },
+  { label: "📈 Marketing/ Business Development", value: "Marketing/ Business Development" },
   { label: "✏️ Design", value: "Design" },
   { label: "📐 Physics", value: "Physics" },
   { label: "👔 Business", value: "Business" },
@@ -1876,7 +1710,7 @@ const subjects = [
   { label: "🧬 Biology", value: "Biology" },
   { label: "🩺 Medicine", value: "Medicine" },
   { label: "💵 Finance", value: "Finance" },
-  { label: "📈 Marketing & Business Development", value: "Marketing & Business Development" },
+  { label: "📈 Marketing/ Business Development", value: "Marketing/ Business Development" },
   { label: "✏️ Design", value: "Design" },
   { label: "📐 Physics", value: "Physics" },
   { label: "👔 Business", value: "Business" },
@@ -2005,7 +1839,7 @@ document.getElementById('subjectsDrawer').addEventListener('keydown', function(e
 
     // --- DATA ---
     const subjectLabels = [
-      'AI & Machine Learning', 'Computer Science', 'Engineering', 'Biology', 'Medicine',
+      'AI & Machine Learning', 'Computer Science', 'Engineering', 'Biology', 'Medicine', 'Marketing/ Business Development',
       'Finance', 'Design', 'Physics', 'Business', 'Arts', 'Environmental Science'
     ];
     const locationsPool = ["Remote", "Hybrid", "Onsite",  "USA", "UK", "India", "China", "Germany", "France", "Japan", "Canada", "Australia", "Russia",
@@ -4832,16 +4666,444 @@ document.getElementById('subjectsDrawer').addEventListener('keydown', function(e
     tags: ['Hybrid', 'Unpaid', 'Sports Medicine / Physiology'],
     link: 'https://www.indeed.com/q-sport-science-internship-jobs.html',
     description: 'Observe and support sport, science and medicine team in pro tennis organization, including monitoring athlete readiness.' 
-  }
+  },
+  {
+  title: 'Marketing Strategy Intern, Summer/Fall 2025',
+  company: 'The Walt Disney Company',
+  field: 'Marketing & Business Development',
+  location: 'USA (Anaheim, CA)',
+  stipend: 'Not disclosed (Disney internships typically paid)',
+  duration: 'Summer/Fall 2025',
+  tags: ['On‑site', 'Paid?', 'Strategic Marketing'],
+  link: 'https://www.disneycareers.com/en/job/-/marketing-strategy-intern-summer-fall-2025/391/77028289104',
+  description: 'Support brand strategy, campaign planning and business development initiatives for Disney’s marketing team.' 
+},
+{
+  title: 'Studio Marketing & Special Events Intern, Summer/Fall 2025',
+  company: 'Disney Studios (Walt Disney)',
+  field: 'Marketing & Business Development',
+  location: 'USA (Burbank, CA)',
+  stipend: 'Not disclosed (Disney internships typically paid)',
+  duration: 'Summer/Fall 2025',
+  tags: ['On‑site', 'Paid?', 'Events / Marketing'],
+  link: 'https://www.disneycareers.com/en/job/burbank/studio-marketing-and-special-events-intern-summer-fall-2025/391/77308723008',
+  description: 'Assist on promotional campaigns and special event planning for Disney Studios releases and experiences.' 
+},
+{
+  title: 'Marketing & Social Media Intern (Summer/Fall 2025)',
+  company: 'Lettuce Hope: The Alexander Kush Foundation',
+  field: 'Marketing & Business Development',
+  location: 'Remote',
+  stipend: 'Unpaid',
+  duration: 'Summer/Fall 2025, 5–12 hrs/week',
+  tags: ['Remote', 'Unpaid', 'Social Media / Marketing'],
+  link: 'https://www.indeed.com/q-marketing-internships-2025-jobs.html',
+  description: 'Create and schedule weekly posts, write captions, design graphics using Canva for nonprofit cause marketing.' 
+},
+{
+  title: 'Content & Marketing Intern, Summer 2025',
+  company: 'Ascention Beauty Co., Inc',
+  field: 'Marketing & Social Media Development',
+  location: 'Remote',
+  stipend: '$15/hour (flexible schedule)',
+  duration: 'Summer 2025 (remote)',
+  tags: ['Remote', 'Paid', 'Content & Social Media'],
+  link: 'https://www.indeed.com/q-marketing-internships-2025-jobs.html',
+  description: 'Organize UGC and testimonials for marketing; brand support for beauty/wellness social content.' 
+},
+{
+  title: 'Partnership Marketing Intern, Fall 2025',
+  company: 'FC Dallas',
+  field: 'Marketing & Business Development',
+  location: 'USA (Frisco, TX)',
+  stipend: 'Not disclosed',
+  duration: 'Fall 2025',
+  tags: ['On‑site', 'Paid?', 'Partnerships / Marketing'],
+  link: 'https://www.linkedin.com/jobs/fall-marketing-internship-jobs',
+  description: 'Support regional partnership marketing, sponsorship engagement and campaign execution for soccer club.' 
+},
+{
+  title: 'Social Media & Marketing Intern, Fall 2025',
+  company: 'Roller Rabbit',
+  field: 'Marketing & Business Development',
+  location: 'USA (New York, NY)',
+  stipend: 'Not disclosed',
+  duration: 'Fall 2025',
+  tags: ['On‑site', 'Paid?', 'Social Media Marketing'],
+  link: 'https://www.linkedin.com/jobs/fall-marketing-internship-jobs',
+  description: 'Execute social campaigns, daily content planning, influencer outreach and customer engagement.' 
+},
+{
+  title: 'Fall 2025 Marketing/PR Intern',
+  company: 'MARA',
+  field: 'Marketing & Business Development',
+  location: 'USA (Los Angeles, CA)',
+  stipend: 'Not disclosed',
+  duration: 'Fall 2025, part‑time 8–16 hrs/week',
+  tags: ['On‑site', 'Unpaid?', 'Marketing / PR'],
+  link: 'https://www.indeed.com/q-marketing-internships-2025-jobs.html',
+  description: 'Support marketing and product teams, handle PR mailers, influencer sourcing, and communications.' 
+},
+{
+  title: 'Fall 2025 Marketing Intern',
+  company: 'Southern Tide',
+  field: 'Marketing & Business Development',
+  location: 'USA (Greenville, SC)',
+  stipend: 'Not disclosed',
+  duration: 'Fall 2025',
+  tags: ['On‑site', 'Paid?', 'Brand Marketing'],
+  link: 'https://www.indeed.com/q-marketing-internships-fall-2025-jobs.html',
+  description: 'Assist with marketing campaigns, product launches, social media and administrative support.' 
+},
+{
+  title: 'Digital Marketing Intern (Non‑paid)',
+  company: 'PT Victory International Branch Jakarta',
+  field: 'Marketing & Business Development',
+  location: 'Indonesia (Jakarta)',
+  stipend: 'Unpaid',
+  duration: '3–6 months',
+  tags: ['On‑site', 'Unpaid', 'Digital Marketing'],
+  link: 'https://www.glassdoor.com/Job/indonesia-marketing-internship-jobs-SRCH_IL.0%2C9_IN113_KO10%2C31.htm',
+  description: 'Focus on media‑social strategy, consumer engagement, digital analytics for Jakarta-based office.' 
+},
+{
+  title: 'Brand & Content Marketing Intern, Summer 2025',
+  company: 'The Walt Disney Company (APAC)',
+  field: 'Marketing & Business Development',
+  location: 'Indonesia (Jakarta)',
+  stipend: 'Not disclosed',
+  duration: 'May–Aug 2025',
+  tags: ['On‑site', 'Paid?', 'Brand / Content Marketing'],
+  link: 'https://www.glassdoor.com/Job/indonesia-internships-marketing-jobs-SRCH_IL.0%2C9_IN113_KO10%2C31.htm',
+  description: 'Manage content assets, coordinate with regional marketing teams, support brand engagement campaigns.' 
+},
+{
+  title: 'International Marketing Internship, Summer 2025',
+  company: 'Somethinc – BeautyHaul',
+  field: 'Marketing & Business Development',
+  location: 'Indonesia (Jakarta)',
+  stipend: 'Not disclosed',
+  duration: 'Summer 2025',
+  tags: ['On‑site', 'Possibly unpaid', 'International Marketing'],
+  link: 'https://www.glassdoor.com/Job/indonesia-internships-marketing-jobs-SRCH_IL.0%2C9_IN113_KO10%2C31.htm',
+  description: 'Recruit and manage e-commerce resellers, coordinate live‑stream sales events and brand campaigns.' 
+},
+{
+  title: 'Intern II – Marketing (International)',
+  company: 'Dexcom',
+  field: 'Marketing & Business Development',
+  location: 'Remote',
+  stipend: '$29–$39/hour',
+  duration: 'Summer 2025',
+  tags: ['Remote', 'Paid', 'Strategic Marketing'],
+  link: 'https://www.indeed.com/q-business-marketing-internships-summer-2025-jobs.html',
+  description: 'Assist with international marketing strategy, regional market research and campaign coordination.' 
+},
+{
+  title: 'Social Media Marketing Intern – Atlassian, Summer 2025',
+  company: 'Atlassian',
+  field: 'Marketing & Business Development',
+  location: 'Remote (based SF, CA)',
+  stipend: '$29–$40/hour',
+  duration: '12 weeks (May/August 2025)',
+  tags: ['Remote', 'Paid', 'Digital & Social Marketing'],
+  link: 'https://www.indeed.com/q-business-marketing-internships-summer-2025-jobs.html',
+  description: 'Plan and create social media content campaigns across global platforms for Atlassian products.' 
+},
+{
+  title: 'Marketing Strategy Intern, Summer/Fall 2025',
+  company: 'The Walt Disney Company',
+  field: 'Marketing & Business Development',
+  location: 'USA (Anaheim, CA)',
+  stipend: 'Not disclosed (Disney internships typically paid)',
+  duration: 'Summer/Fall 2025',
+  tags: ['On‑site', 'Paid?', 'Strategic Marketing'],
+  link: 'https://www.disneycareers.com/en/job/-/marketing-strategy-intern-summer-fall-2025/391/77028289104',
+  description: 'Support brand strategy, campaign planning and business development initiatives for Disney’s marketing team.' 
+},
+{
+  title: 'Studio Marketing & Special Events Intern, Summer/Fall 2025',
+  company: 'Disney Studios (Walt Disney)',
+  field: 'Marketing & Business Development',
+  location: 'USA (Burbank, CA)',
+  stipend: 'Not disclosed (Disney internships typically paid)',
+  duration: 'Summer/Fall 2025',
+  tags: ['On‑site', 'Paid?', 'Events / Marketing'],
+  link: 'https://www.disneycareers.com/en/job/burbank/studio-marketing-and-special-events-intern-summer-fall-2025/391/77308723008',
+  description: 'Assist on promotional campaigns and special event planning for Disney Studios releases and experiences.' 
+},
+{
+  title: 'Marketing & Social Media Intern (Summer/Fall 2025)',
+  company: 'Lettuce Hope: The Alexander Kush Foundation',
+  field: 'Marketing & Business Development',
+  location: 'Remote',
+  stipend: 'Unpaid',
+  duration: 'Summer/Fall 2025, 5–12 hrs/week',
+  tags: ['Remote', 'Unpaid', 'Social Media / Marketing'],
+  link: 'https://www.indeed.com/q-marketing-internships-2025-jobs.html',
+  description: 'Create and schedule weekly posts, write captions, design graphics using Canva for nonprofit cause marketing.' 
+},
+{
+  title: 'Content & Marketing Intern, Summer 2025',
+  company: 'Ascention Beauty Co., Inc',
+  field: 'Marketing & Business Development',
+  location: 'Remote',
+  stipend: '$15/hour (flexible schedule)',
+  duration: 'Summer 2025 (remote)',
+  tags: ['Remote', 'Paid', 'Content & Social Media'],
+  link: 'https://www.indeed.com/q-marketing-internships-2025-jobs.html',
+  description: 'Organize UGC and testimonials for marketing; brand support for beauty/wellness social content.' 
+},
+{
+  title: 'Partnership Marketing Intern, Fall 2025',
+  company: 'FC Dallas',
+  field: 'Marketing & Business Development',
+  location: 'USA (Frisco, TX)',
+  stipend: 'Not disclosed',
+  duration: 'Fall 2025',
+  tags: ['On‑site', 'Paid?', 'Partnerships / Marketing'],
+  link: 'https://www.linkedin.com/jobs/fall-marketing-internship-jobs',
+  description: 'Support regional partnership marketing, sponsorship engagement and campaign execution for soccer club.' 
+},
+{
+  title: 'Social Media & Marketing Intern, Fall 2025',
+  company: 'Roller Rabbit',
+  field: 'Marketing & Business Development',
+  location: 'USA (New York, NY)',
+  stipend: 'Not disclosed',
+  duration: 'Fall 2025',
+  tags: ['On‑site', 'Paid?', 'Social Media Marketing'],
+  link: 'https://www.linkedin.com/jobs/fall-marketing-internship-jobs',
+  description: 'Execute social campaigns, daily content planning, influencer outreach and customer engagement.' 
+},
+{
+  title: 'Fall 2025 Marketing/PR Intern',
+  company: 'MARA',
+  field: 'Marketing & Business Development',
+  location: 'USA (Los Angeles, CA)',
+  stipend: 'Not disclosed',
+  duration: 'Fall 2025, part‑time 8–16 hrs/week',
+  tags: ['On‑site', 'Unpaid?', 'Marketing / PR'],
+  link: 'https://www.indeed.com/q-marketing-internships-2025-jobs.html',
+  description: 'Support marketing and product teams, handle PR mailers, influencer sourcing, and communications.' 
+},
+{
+  title: 'Fall 2025 Marketing Intern',
+  company: 'Southern Tide',
+  field: 'Marketing & Business Development',
+  location: 'USA (Greenville, SC)',
+  stipend: 'Not disclosed',
+  duration: 'Fall 2025',
+  tags: ['On‑site', 'Paid?', 'Brand Marketing'],
+  link: 'https://www.indeed.com/q-marketing-internships-fall-2025-jobs.html',
+  description: 'Assist with marketing campaigns, product launches, social media and administrative support.' 
+},
+{
+  title: 'Digital Marketing Intern (Non‑paid)',
+  company: 'PT Victory International Branch Jakarta',
+  field: 'Marketing & Business Development',
+  location: 'Indonesia (Jakarta)',
+  stipend: 'Unpaid',
+  duration: '3–6 months',
+  tags: ['On‑site', 'Unpaid', 'Digital Marketing'],
+  link: 'https://www.glassdoor.com/Job/indonesia-marketing-internship-jobs-SRCH_IL.0%2C9_IN113_KO10%2C31.htm',
+  description: 'Focus on media‑social strategy, consumer engagement, digital analytics for Jakarta-based office.' 
+},
+{
+  title: 'Brand & Content Marketing Intern, Summer 2025',
+  company: 'The Walt Disney Company (APAC)',
+  field: 'Marketing & Business Development',
+  location: 'Indonesia (Jakarta)',
+  stipend: 'Not disclosed',
+  duration: 'May–Aug 2025',
+  tags: ['On‑site', 'Paid?', 'Brand / Content Marketing'],
+  link: 'https://www.glassdoor.com/Job/indonesia-internships-marketing-jobs-SRCH_IL.0%2C9_IN113_KO10%2C31.htm',
+  description: 'Manage content assets, coordinate with regional marketing teams, support brand engagement campaigns.' 
+},
+{
+  title: 'International Marketing Internship, Summer 2025',
+  company: 'Somethinc – BeautyHaul',
+  field: 'Marketing & Business Development',
+  location: 'Indonesia (Jakarta)',
+  stipend: 'Not disclosed',
+  duration: 'Summer 2025',
+  tags: ['On‑site', 'Possibly unpaid', 'International Marketing'],
+  link: 'https://www.glassdoor.com/Job/indonesia-internships-marketing-jobs-SRCH_IL.0%2C9_IN113_KO10%2C31.htm',
+  description: 'Recruit and manage e-commerce resellers, coordinate live‑stream sales events and brand campaigns.' 
+},
+{
+  title: 'Intern II – Marketing (International)',
+  company: 'Dexcom',
+  field: 'Marketing & Business Development',
+  location: 'Remote',
+  stipend: '$29–$39/hour',
+  duration: 'Summer 2025',
+  tags: ['Remote', 'Paid', 'Strategic Marketing'],
+  link: 'https://www.indeed.com/q-business-marketing-internships-summer-2025-jobs.html',
+  description: 'Assist with international marketing strategy, regional market research and campaign coordination.' 
+},
+{
+  title: 'Social Media Marketing Intern – Atlassian, Summer 2025',
+  company: 'Atlassian',
+  field: 'Marketing & Business Development',
+  location: 'Remote (based SF, CA)',
+  stipend: '$29–$40/hour',
+  duration: '12 weeks (May/August 2025)',
+  tags: ['Remote', 'Paid', 'Digital & Social Marketing'],
+  link: 'https://www.indeed.com/q-business-marketing-internships-summer-2025-jobs.html',
+  description: 'Plan and create social media content campaigns across global platforms for Atlassian products.' 
+},
+{
+  title: 'Marketing Strategy Intern, Summer/Fall 2025',
+  company: 'The Walt Disney Company',
+  field: 'Marketing & Business Development',
+  location: 'USA (Anaheim, CA)',
+  stipend: 'Not disclosed (Disney internships typically paid)',
+  duration: 'Summer/Fall 2025',
+  tags: ['On‑site', 'Paid?', 'Strategic Marketing'],
+  link: 'https://www.disneycareers.com/en/job/-/marketing-strategy-intern-summer-fall-2025/391/77028289104',
+  description: 'Support brand strategy, campaign planning and business development initiatives for Disney’s marketing team.' 
+},
+{
+  title: 'Studio Marketing & Special Events Intern, Summer/Fall 2025',
+  company: 'Disney Studios (Walt Disney)',
+  field: 'Marketing & Business Development',
+  location: 'USA (Burbank, CA)',
+  stipend: 'Not disclosed (Disney internships typically paid)',
+  duration: 'Summer/Fall 2025',
+  tags: ['On‑site', 'Paid?', 'Events / Marketing'],
+  link: 'https://www.disneycareers.com/en/job/burbank/studio-marketing-and-special-events-intern-summer-fall-2025/391/77308723008',
+  description: 'Assist on promotional campaigns and special event planning for Disney Studios releases and experiences.' 
+},
+{
+  title: 'Marketing & Social Media Intern (Summer/Fall 2025)',
+  company: 'Lettuce Hope: The Alexander Kush Foundation',
+  field: 'Marketing & Business Development',
+  location: 'Remote',
+  stipend: 'Unpaid',
+  duration: 'Summer/Fall 2025, 5–12 hrs/week',
+  tags: ['Remote', 'Unpaid', 'Social Media / Marketing'],
+  link: 'https://www.indeed.com/q-marketing-internships-2025-jobs.html',
+  description: 'Create and schedule weekly posts, write captions, design graphics using Canva for nonprofit cause marketing.' 
+},
+{
+  title: 'Content & Marketing Intern, Summer 2025',
+  company: 'Ascention Beauty Co., Inc',
+  field: 'Marketing & Business Development',
+  location: 'Remote',
+  stipend: '$15/hour (flexible schedule)',
+  duration: 'Summer 2025 (remote)',
+  tags: ['Remote', 'Paid', 'Content & Social Media'],
+  link: 'https://www.indeed.com/q-marketing-internships-2025-jobs.html',
+  description: 'Organize UGC and testimonials for marketing; brand support for beauty/wellness social content.' 
+},
+{
+  title: 'Partnership Marketing Intern, Fall 2025',
+  company: 'FC Dallas',
+  field: 'Marketing & Business Development',
+  location: 'USA (Frisco, TX)',
+  stipend: 'Not disclosed',
+  duration: 'Fall 2025',
+  tags: ['On‑site', 'Paid?', 'Partnerships / Marketing'],
+  link: 'https://www.linkedin.com/jobs/fall-marketing-internship-jobs',
+  description: 'Support regional partnership marketing, sponsorship engagement and campaign execution for soccer club.' 
+},
+{
+  title: 'Social Media & Marketing Intern, Fall 2025',
+  company: 'Roller Rabbit',
+  field: 'Marketing & Business Development',
+  location: 'USA (New York, NY)',
+  stipend: 'Not disclosed',
+  duration: 'Fall 2025',
+  tags: ['On‑site', 'Paid?', 'Social Media Marketing'],
+  link: 'https://www.linkedin.com/jobs/fall-marketing-internship-jobs',
+  description: 'Execute social campaigns, daily content planning, influencer outreach and customer engagement.' 
+},
+{
+  title: 'Fall 2025 Marketing/PR Intern',
+  company: 'MARA',
+  field: 'Marketing & Business Development',
+  location: 'USA (Los Angeles, CA)',
+  stipend: 'Not disclosed',
+  duration: 'Fall 2025, part‑time 8–16 hrs/week',
+  tags: ['On‑site', 'Unpaid?', 'Marketing / PR'],
+  link: 'https://www.indeed.com/q-marketing-internships-2025-jobs.html',
+  description: 'Support marketing and product teams, handle PR mailers, influencer sourcing, and communications.' 
+},
+{
+  title: 'Fall 2025 Marketing Intern',
+  company: 'Southern Tide',
+  field: 'Marketing & Business Development',
+  location: 'USA (Greenville, SC)',
+  stipend: 'Not disclosed',
+  duration: 'Fall 2025',
+  tags: ['On‑site', 'Paid?', 'Brand Marketing'],
+  link: 'https://www.indeed.com/q-marketing-internships-fall-2025-jobs.html',
+  description: 'Assist with marketing campaigns, product launches, social media and administrative support.' 
+},
+{
+  title: 'Digital Marketing Intern (Non‑paid)',
+  company: 'PT Victory International Branch Jakarta',
+  field: 'Marketing & Business Development',
+  location: 'Indonesia (Jakarta)',
+  stipend: 'Unpaid',
+  duration: '3–6 months',
+  tags: ['On‑site', 'Unpaid', 'Digital Marketing'],
+  link: 'https://www.glassdoor.com/Job/indonesia-marketing-internship-jobs-SRCH_IL.0%2C9_IN113_KO10%2C31.htm',
+  description: 'Focus on media‑social strategy, consumer engagement, digital analytics for Jakarta-based office.' 
+},
+{
+  title: 'Brand & Content Marketing Intern, Summer 2025',
+  company: 'The Walt Disney Company (APAC)',
+  field: 'Marketing & Business Development',
+  location: 'Indonesia (Jakarta)',
+  stipend: 'Not disclosed',
+  duration: 'May–Aug 2025',
+  tags: ['On‑site', 'Paid?', 'Brand / Content Marketing'],
+  link: 'https://www.glassdoor.com/Job/indonesia-internships-marketing-jobs-SRCH_IL.0%2C9_IN113_KO10%2C31.htm',
+  description: 'Manage content assets, coordinate with regional marketing teams, support brand engagement campaigns.' 
+},
+{
+  title: 'International Marketing Internship, Summer 2025',
+  company: 'Somethinc – BeautyHaul',
+  field: 'Marketing & Business Development',
+  location: 'Indonesia (Jakarta)',
+  stipend: 'Not disclosed',
+  duration: 'Summer 2025',
+  tags: ['On‑site', 'Possibly unpaid', 'International Marketing'],
+  link: 'https://www.glassdoor.com/Job/indonesia-internships-marketing-jobs-SRCH_IL.0%2C9_IN113_KO10%2C31.htm',
+  description: 'Recruit and manage e-commerce resellers, coordinate live‑stream sales events and brand campaigns.' 
+},
+{
+  title: 'Intern II – Marketing (International)',
+  company: 'Dexcom',
+  field: 'Marketing & Business Development',
+  location: 'Remote',
+  stipend: '$29–$39/hour',
+  duration: 'Summer 2025',
+  tags: ['Remote', 'Paid', 'Strategic Marketing'],
+  link: 'https://www.indeed.com/q-business-marketing-internships-summer-2025-jobs.html',
+  description: 'Assist with international marketing strategy, regional market research and campaign coordination.' 
+},
+{
+  title: 'Social Media Marketing Intern – Atlassian, Summer 2025',
+  company: 'Atlassian',
+  field: 'Marketing & Business Development',
+  location: 'Remote (based SF, CA)',
+  stipend: '$29–$40/hour',
+  duration: '12 weeks (May/August 2025)',
+  tags: ['Remote', 'Paid', 'Digital & Social Marketing'],
+  link: 'https://www.indeed.com/q-business-marketing-internships-summer-2025-jobs.html',
+  description: 'Plan and create social media content campaigns across global platforms for Atlassian products.' 
+}
+
+
   
   
   
   
 ];
 
-
-   
-    
   
     const locations = Array.from(new Set(['All', ...internships.map(i=>i.location)]));
 
@@ -5020,7 +5282,7 @@ document.getElementById('subjectsDrawer').addEventListener('keydown', function(e
     function renderForum() {
       const forumList = document.getElementById('forumList');
       if (!forumThreads.length) {
-        forumList.innerHTML = `<div class="empty-state"><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/svg/1f4ac.svg" alt="Forum">No threads yet. Be the first to post! 🎉</div>`;
+
         return;
       }
       forumList.innerHTML = '';
@@ -5098,7 +5360,7 @@ document.getElementById('subjectsDrawer').addEventListener('keydown', function(e
     function renderForumPreview() {
       const previewList = document.getElementById('forumPreviewList');
       if (!forumThreads.length) {
-        previewList.innerHTML = `<li style="color:var(--muted-light);font-style:italic;">No forum threads yet.</li>`;
+        previewList.innerHTML = `<li style="color:var(--muted-light);font-style:italic;">Welcome to Linktern.</li>`;
         return;
       }
       // Show top 4 most recent threads
