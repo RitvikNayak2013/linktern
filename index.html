@@ -5585,11 +5585,14 @@ const locations = Array.from(
 
     // --- INTERNHIPS ---
     function filterSubject(subj) {
-      subjectFilter = subj;
-      document.querySelectorAll('.subject-btn').forEach(btn => btn.classList.remove('active'));
-      Array.from(document.querySelectorAll('.subject-btn')).find(btn => btn.textContent.trim() === (subj==='All'?'All':subj.split(' ')[0]))?.classList.add('active');
-      renderInternships();
-    }
+  subjectFilter = subj;
+  document.querySelectorAll('.subject-btn').forEach(btn => btn.classList.remove('active'));
+  Array.from(document.querySelectorAll('.subject-btn'))
+    .find(btn => btn.textContent.trim().includes(subj))
+    ?.classList.add('active');
+  renderInternships();
+}
+
 
     function sortInternships(arr) {
       if (sortBy === 'stipend') {
