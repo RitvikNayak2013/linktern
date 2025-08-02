@@ -15,7 +15,8 @@
    <link rel="icon" type="image/x-icon" href="Untitled 4.png">
   <title>Linktern | Explore Internships ✨</title>
   <!-- Modern font family for professional look -->
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --primary: #23272f;
@@ -855,14 +856,14 @@ body.dark-mode .mode-toggle {
       margin-left: 0.13em;
       opacity: 0.8;
     }
-    .apply-btn:hover, .apply-btn:focus {
-      background: var(--focus);
-      transform: scale(1.04) translateY(-1px);
-      box-shadow: 0 7px 18px #1769aa08;
-      color: #fff;
-      filter: brightness(1.07);
-      outline: none;
-    }
+    .apply-btn:hover,
+.apply-btn:focus {
+  background: blue;
+  color: #fff;
+  transform: scale(1.04) translateY(-1px);
+  box-shadow: 0 7px 18px #1769aa08;
+  outline: none;
+}
     .apply-btn:active {
       background: var(--accent);
       color: #fff;
@@ -1854,12 +1855,14 @@ document.getElementById('subjectsDrawer').addEventListener('keydown', function(e
       'AI & Machine Learning', 'Computer Science', 'Engineering', 'Biology', 'Medicine', 'Marketing/ Business Development',
       'Finance', 'Design', 'Physics', 'Business', 'Arts', 'Environmental Science'
     ];
-    const locationsPool = ["Remote", "Hybrid", "Onsite",  "USA", "UK", "India", "China", "Germany", "France", "Japan", "Canada", "Australia", "Russia",
-"Italy", "Brazil", "South Korea", "Spain", "Mexico", "Saudi Arabia", "UAE", "Switzerland", "Netherlands", "Singapore",
-"Sweden", "Norway", "South Africa", "Turkey", "Argentina", "Indonesia", "Israel", "Ukraine", "Thailand", "New Zealand",
-"Nigeria", "Egypt", "Vietnam", "Malaysia", "Pakistan", , 
-
+    const locationsList = [
+  { label: "🌐 All", value: "All" },
+  { label: "🇮🇩 Indonesia", value: "Indonesia" },
+  { label: "🇲🇾 Malaysia", value: "Malaysia" },
+  { label: "🇹🇭 Thailand", value: "Thailand" },
+  { label: "🌏 Remote", value: "Remote" }
 ];
+
     const tagsPool = [
       "Remote", "Paid", "Unpaid", "Research", "Portfolio", "On-site", "Flexible", "Experience", "NGO", "Museum"
     ];
@@ -5116,8 +5119,19 @@ document.getElementById('subjectsDrawer').addEventListener('keydown', function(e
   
 ];
 
+
   
-    const locations = Array.from(new Set(['All', ...internships.map(i=>i.location)]));
+   function normalizeLocation(loc) {
+  if (loc.includes("USA")) return "United States";
+  if (loc.includes("China")) return "China";
+  if (loc.includes("Singapore")) return "Singapore";
+  return "Other";
+}
+
+const locations = Array.from(
+  new Set(['All', ...internships.map(i => normalizeLocation(i.location))])
+);
+
 
     // --- FILTERS ---
     function populateFilters() {
@@ -5231,7 +5245,8 @@ document.getElementById('subjectsDrawer').addEventListener('keydown', function(e
             </button>
             <h3>${i.title}</h3>
             <p>${i.company} • ${i.location}</p>
-            <p class="card-details">Stipend: <b>${i.stipend}</b> &nbsp;•&nbsp; Duration: ${i.duration}</p>
+            <p class="card-details">Stipend: <b>${i.stipend}</b></p>
+
             <div class="card-tags">${i.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
           </div>
         `).join('');
