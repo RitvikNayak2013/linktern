@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard | Linktern+</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="Untitled.png" />
+  <meta name="color-scheme" content="light dark" />
+  <style>
+    :root{
+      --accent:#675CFF;--accent2:#12D2AC;--accent3:#FF92C2;--accent4:#FFD86E;
+      --ink-1:#19182D;--ink-2:#31304a;--ink-3:#656476;--ink-4:#b2b2c9;
+      --bg:#f8faff;--surface:#fff;--glass:rgba(255,255,255,.18);--blur:18px;
+      --radius:20px;--header-h:72px;--container:1120px;--shadow:0 8px 30px rgba(60,70,120,.14);
+      --gradient:linear-gradient(120deg,#675CFF 0%,#12D2AC 100%);
+      --gradient-soft:linear-gradient(120deg,#f0efff 0%,#e8fcf7 100%);
+      --bd:#ececf0;
+    }
+    :root[data-theme="dark"]{
+      --bg:#19182D;--surface:#232346;--ink-1:#e8eaf6;--ink-2:#dde3ee;--ink-3:#b2b2c9;--ink-4:#7c8aa3;
+      --glass:rgba(34,35,42,.36);--bd:#2e3150;--shadow:0 8px 30px rgba(10,12,40,.35);
+      --gradient:linear-gradient(120deg,#232346 0%,#675CFF 100%);
+      --gradient-soft:linear-gradient(120deg,#232346 0%,#1d2d2a 100%);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink-1)}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    /* reduced motion */
+    @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+    /* Header */
+    header{
+      height:var(--header-h);background:var(--glass);backdrop-filter:blur(var(--blur));
+      border-bottom:1.5px solid var(--bd);display:flex;align-items:center;justify-content:space-between;
+      padding:0 24px;box-shadow:var(--shadow);position:sticky;top:0;z-index:100;
+    }
+    .brand{display:flex;align-items:center;gap:12px;font-weight:900;font-size:1.35rem;color:var(--accent)}
+    .brand img{width:40px;height:40px;filter:drop-shadow(0 2px 8px #675cff33)}
+    nav{display:flex;gap:10px;align-items:center}
+    .nav-btn{
+      background:transparent;color:var(--ink-2);border:1.5px solid transparent;border-radius:14px;
+      font-weight:700;font-size:1rem;padding:.55em .9em;cursor:pointer;transition:background .15s,border-color .15s;
+    }
+    .nav-btn.active{color:var(--accent);border-color:var(--bd);background:var(--surface)}
+    .nav-btn:focus-visible{outline:3px solid #8fb8ff55}
+    .theme-toggle{margin-left:6px;background:transparent;border:none;cursor:pointer;padding:6px;border-radius:10px}
+    .theme-toggle:focus-visible{outline:3px solid #8fb8ff55}
+    .theme-icon{width:24px;height:24px;vertical-align:middle}
+    .container{max-width:var(--container);margin:auto;padding:28px 16px}
+    h1{font-size:2.2rem;font-weight:900;margin:12px 0 18px;color:var(--accent)}
+    h2{font-size:1.25rem;font-weight:800;margin:0 0 12px;color:var(--ink-2)}
+    .subtle{color:var(--ink-4);font-size:.95rem}
+    /* Cards */
+    .grid{display:grid;gap:22px}
+    .grid-2{grid-template-columns:2.2fr 1.2fr}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    .grid-4{grid-template-columns:repeat(4,1fr)}
+    @media(max-width:1100px){.grid-4{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:repeat(2,1fr)}.grid-2{grid-template-columns:1fr}}
+    @media(max-width:700px){.grid-4,.grid-3{grid-template-columns:1fr}}
+    .card{
+      background:var(--surface);border:1.5px solid var(--bd);border-radius:var(--radius);box-shadow:var(--shadow);
+      padding:18px;transition:box-shadow .15s,border-color .15s;
+    }
+    .card:hover{box-shadow:0 12px 36px rgba(60,70,120,.18)}
+    .muted{color:var(--ink-3)}
+    .tag{display:inline-block;padding:.26rem .55rem;border-radius:999px;background:var(--gradient-soft);font-weight:600;color:var(--ink-2);border:1px solid var(--bd);font-size:.85rem}
+    .pill{display:inline-flex;align-items:center;gap:6px;padding:.36rem .6rem;border-radius:999px;border:1.5px solid var(--bd);font-weight:600}
+    .btn{
+      appearance:none;border:none;background:var(--accent);color:#fff;padding:.55rem .9rem;border-radius:12px;font-weight:800;cursor:pointer;
+      transition:filter .12s;box-shadow:0 1px 6px #675cff33
+    }
+    .btn.secondary{background:var(--surface);color:var(--accent);border:1.5px solid var(--accent)}
+    .btn.ghost{background:transparent;color:var(--ink-2);border:1.5px solid var(--bd)}
+    .btn:focus-visible{outline:3px solid #8fb8ff55}
+    .btn:hover{filter:brightness(1.05)}
+    input[type=text],input[type=date],input[type=url],textarea,select{
+      width:100%;padding:.65rem .75rem;border-radius:12px;border:1.5px solid var(--bd);background:var(--surface);
+      color:var(--ink-1);font-size:1rem;transition:border-color .12s,background .12s
+    }
+    textarea{min-height:120px;resize:vertical}
+    input:focus-visible,textarea:focus-visible,select:focus-visible{outline:none;border-color:#9ab6ff}
+    .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .row> *{flex:1}
+    .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .kpi{padding:14px;border-radius:16px;border:1.5px solid var(--bd);background:var(--surface)}
+    .kpi .v{font-weight:900;font-size:1.6rem;color:var(--accent)}
+    .kpi small{color:var(--ink-4)}
+    .list{display:grid;gap:12px}
+    .table{width:100%;border-collapse:separate;border-spacing:0 10px}
+    .table th{font-size:.9rem;color:var(--ink-4);text-align:left;padding:0 10px}
+    .table td{background:var(--surface);border:1.5px solid var(--bd);padding:10px;border-radius:10px}
+    .divider{height:1px;background:var(--bd);margin:10px 0}
+    footer{margin-top:36px;padding:16px 0;border-top:1.5px solid var(--bd);color:var(--ink-4);text-align:center}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+  </style>
+</head>
+<body>
+  <header>
+    <a class="brand" href="index.html" aria-label="Go to internships">
+      <img src="Untitled.png" alt="" />
+      <span>Linktern+</span>
+    </a>
+    <nav>
+      <a class="nav-btn" href="index.html">Internships</a>
+      <a class="nav-btn active" href="dashboard.html" aria-current="page">Dashboard</a>
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme"><span id="themeIcon"></span></button>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>Dashboard</h1>
+
+    <!-- PROFILE + QUICK ACTIONS -->
+    <section class="grid grid-2">
+      <div class="card" id="profileCard" aria-labelledby="profileHeading">
+        <h2 id="profileHeading">Profile</h2>
+        <div class="row" style="align-items:flex-start">
+          <div style="flex:0 0 120px">
+            <img id="profileImg" style="width:110px;height:110px;border-radius:50%;object-fit:cover;border:3px solid var(--accent2);box-shadow:0 2px 14px #12d2ac22" alt="Profile photo">
+            <input type="file" id="profilePhotoInput" accept="image/*" aria-label="Upload profile photo" style="margin-top:8px">
+          </div>
+          <div class="row" style="flex:1">
+            <div>
+              <label for="profileNameInput" class="subtle">Name</label>
+              <input type="text" id="profileNameInput" placeholder="Your name">
+            </div>
+            <div>
+              <label for="profileMajorInput" class="subtle">Major</label>
+              <input type="text" id="profileMajorInput" placeholder="Your major">
+            </div>
+          </div>
+        </div>
+        <div class="row" style="margin-top:10px">
+          <div>
+            <label for="profileHeadlineInput" class="subtle">Headline</label>
+            <input type="text" id="profileHeadlineInput" placeholder="e.g., Data science + product-minded engineer">
+          </div>
+          <div>
+            <label for="profileLocationInput" class="subtle">Location</label>
+            <input type="text" id="profileLocationInput" placeholder="City, Country">
+          </div>
+        </div>
+        <div class="row" style="margin-top:10px">
+          <div>
+            <label for="profileLinkedInInput" class="subtle">LinkedIn URL</label>
+            <input type="url" id="profileLinkedInInput" placeholder="https://www.linkedin.com/in/...">
+          </div>
+          <div>
+            <label for="profileWebsiteInput" class="subtle">Website</label>
+            <input type="url" id="profileWebsiteInput" placeholder="https://your.site">
+          </div>
+        </div>
+        <div class="row" style="margin-top:12px">
+          <button class="btn" id="profileSaveBtn">Save Profile</button>
+          <button class="btn ghost" id="profileResetBtn">Reset</button>
+        </div>
+      </div>
+
+      <div class="card" aria-labelledby="qaHeading">
+        <h2 id="qaHeading">Quick Actions</h2>
+        <div class="list">
+          <div class="row">
+            <button class="btn" id="exportBtn">Export data (.json)</button>
+            <label class="btn secondary" style="cursor:pointer">
+              Import data
+              <input id="importInput" type="file" accept="application/json" class="sr-only" aria-label="Import dashboard json">
+            </label>
+          </div>
+          <div class="row">
+            <button class="btn ghost" id="clearActivityBtn">Clear recent activity</button>
+            <button class="btn ghost" id="clearAllBtn">Reset dashboard</button>
+          </div>
+          <div class="divider"></div>
+          <div class="kpis">
+            <div class="kpi"><div class="muted">Open Listings</div><div class="v" id="kpiOpen">0</div><small>from data</small></div>
+            <div class="kpi"><div class="muted">Remote Friendly</div><div class="v" id="kpiRemote">0</div><small>internships</small></div>
+            <div class="kpi"><div class="muted">Favorites</div><div class="v" id="kpiFavs">0</div><small>saved</small></div>
+            <div class="kpi"><div class="muted">Upcoming</div><div class="v" id="kpiRems">0</div><small>reminders</small></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REMINDERS + NOTES/TODOS -->
+    <section class="grid grid-2" style="margin-top:10px">
+      <div class="card" aria-labelledby="remHeading">
+        <h2 id="remHeading">Reminders & Deadlines</h2>
+        <form class="row" id="reminderForm" aria-label="Add reminder">
+          <input type="date" id="reminderDate" required>
+          <input type="text" id="reminderText" placeholder="Type your reminder..." required>
+          <button class="btn" type="submit">Add</button>
+        </form>
+        <div id="remindersList" class="list" style="margin-top:10px"></div>
+      </div>
+
+      <div class="card" aria-labelledby="notesHeading">
+        <h2 id="notesHeading">Notes & Todos</h2>
+        <textarea id="notesArea" placeholder="Scratchpad... autosaves"></textarea>
+        <div class="row" style="margin-top:10px">
+          <input type="text" id="todoInput" placeholder="Add a todo item">
+          <button class="btn secondary" id="todoAddBtn">Add</button>
+        </div>
+        <div id="todoList" class="list" style="margin-top:6px"></div>
+      </div>
+    </section>
+
+    <!-- SAVED SEARCHES + ASSETS VAULT -->
+    <section class="grid grid-2" style="margin-top:10px">
+      <div class="card" aria-labelledby="savedSearchHeading">
+        <h2 id="savedSearchHeading">Saved Searches</h2>
+        <form class="row" id="savedSearchForm" aria-label="Add saved search">
+          <input type="text" id="savedSearchInput" placeholder="e.g., frontend intern remote europe">
+          <button class="btn" type="submit">Save</button>
+        </form>
+        <div id="savedSearchList" class="list" style="margin-top:8px"></div>
+      </div>
+
+      <div class="card" aria-labelledby="assetsHeading">
+        <h2 id="assetsHeading">Assets Vault</h2>
+        <div class="subtle">Keep track of your files (names only). Useful before applying.</div>
+        <form class="row" id="assetForm" style="margin-top:8px">
+          <input type="text" id="assetName" placeholder="e.g., Resume_v7.pdf">
+          <input type="text" id="assetType" placeholder="Type: Resume/Cover/Portfolio">
+          <button class="btn secondary" type="submit">Add</button>
+        </form>
+        <div id="assetList" class="list" style="margin-top:8px"></div>
+      </div>
+    </section>
+
+    <!-- FAVORITES -->
+    <section class="card" style="margin-top:14px" aria-labelledby="favHeading">
+      <h2 id="favHeading">My Favorites</h2>
+      <div class="row" style="margin-bottom:8px">
+        <input type="text" id="favSearch" placeholder="Search favorites (title, company, field, location)">
+        <select id="favFieldFilter" aria-label="Filter by field">
+          <option value="">All fields</option>
+          <option>Software</option><option>Data</option><option>Product</option><option>Design</option><option>Research</option>
+        </select>
+        <select id="favLocationFilter" aria-label="Filter by location">
+          <option value="">All locations</option>
+          <option>Remote</option><option>USA</option><option>Europe</option><option>Asia</option>
+        </select>
+        <select id="favSort" aria-label="Sort favorites">
+          <option value="">Sort: None</option>
+          <option value="title">Title A→Z</option>
+          <option value="company">Company A→Z</option>
+          <option value="stipend">Stipend High→Low</option>
+        </select>
+      </div>
+      <div id="favoritesList" class="list"></div>
+      <div id="favoritesEmpty" class="muted" style="margin-top:6px">No favorites yet. Save internships from the main page.</div>
+    </section>
+
+    <!-- APPLICATION TRACKER -->
+    <section class="card" style="margin-top:14px" aria-labelledby="trkHeading">
+      <h2 id="trkHeading">Application Tracker</h2>
+      <form class="row" id="trackerForm" aria-label="Add application">
+        <input type="text" id="trkTitle" placeholder="Role title" required>
+        <input type="text" id="trkCompany" placeholder="Company" required>
+        <input type="date" id="trkDate" required>
+        <select id="trkStatus">
+          <option>Wishlist</option><option>Preparing</option><option>Applied</option><option>Online Assessment</option>
+          <option>Interview</option><option>Offer</option><option>Rejected</option>
+        </select>
+        <button class="btn" type="submit">Add</button>
+      </form>
+      <table class="table" aria-describedby="trkHeading">
+        <thead>
+          <tr><th>Role</th><th>Company</th><th>Date</th><th>Status</th><th>Notes</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="trackerBody"></tbody>
+      </table>
+    </section>
+  </div>
+
+  <footer>
+    &copy; <span id="year"></span> Linktern+. All rights reserved.
+  </footer>
+
+  <script>
+    /* =================== THEME =================== */
+    function getTheme(){
+      return localStorage.getItem('lt-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    }
+    function applyTheme(mode){
+      document.documentElement.setAttribute('data-theme', mode);
+      localStorage.setItem('lt-theme', mode);
+      document.getElementById('themeIcon').innerHTML = mode==='dark'
+        ? '<svg class="theme-icon" fill="none" viewBox="0 0 24 24" aria-hidden="true"><path stroke="#fff" stroke-width="2" d="M21.64 13A9 9 0 1 1 12 3v0a7 7 0 0 0 9.64 10z"/></svg>'
+        : '<svg class="theme-icon" fill="none" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5" stroke="#675CFF" stroke-width="2"/><path stroke="#675CFF" stroke-width="2" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+    }
+    document.getElementById('themeToggle').onclick=()=>applyTheme(getTheme()==='dark'?'light':'dark');
+    applyTheme(getTheme());
+
+    /* =================== DATA =================== */
+    const read = (k,def)=>JSON.parse(localStorage.getItem(k)||def);
+    const write = (k,v)=>localStorage.setItem(k,JSON.stringify(v));
+    let internships = read("lt-data","[]");        // from main page
+    let favorites   = read("lt-favs","[]");
+    let reminders   = read("lt-reminders","[]");
+    let activity    = read("lt-activity","[]");
+    let profile     = read("lt-profile",'{"name":"Guest","major":"Undeclared","headline":"","location":"","img":"https://avatars.dicebear.com/api/initials/Guest.svg","linkedin":"","website":""}');
+    let notes       = read("lt-notes",'""');
+    let todos       = read("lt-todos","[]");
+    let searches    = read("lt-saved-searches","[]");
+    let assets      = read("lt-assets","[]");
+    let tracker     = read("lt-tracker","[]");
+
+    const toast=(msg)=>{ /* minimal unobtrusive */
+      const id="lt-toast"; let t=document.getElementById(id);
+      if(!t){ t=document.createElement("div"); t.id=id; t.setAttribute("role","status");
+        t.style.cssText="position:fixed;right:24px;bottom:24px;background:var(--surface);border:1.5px solid var(--bd);padding:12px 14px;border-radius:12px;box-shadow:var(--shadow);opacity:0;transition:opacity .15s";
+        document.body.appendChild(t);
+      }
+      t.textContent=msg; t.style.opacity="1"; setTimeout(()=>t.style.opacity="0",1600);
+    };
+    const log=(action)=>{ activity.push({action,date:new Date()}); if(activity.length>50) activity=activity.slice(-50); write("lt-activity",activity); };
+
+    /* =================== PROFILE =================== */
+    const $ = (id)=>document.getElementById(id);
+    function renderProfile(){
+      $('profileImg').src = profile.img || "https://avatars.dicebear.com/api/initials/Guest.svg";
+      $('profileNameInput').value = profile.name || "Guest";
+      $('profileMajorInput').value = profile.major || "Undeclared";
+      $('profileHeadlineInput').value = profile.headline || "";
+      $('profileLocationInput').value = profile.location || "";
+      $('profileLinkedInInput').value = profile.linkedin || "";
+      $('profileWebsiteInput').value = profile.website || "";
+    }
+    $('profileSaveBtn').onclick=()=>{
+      const p = {
+        name: $('profileNameInput').value.trim() || "Guest",
+        major: $('profileMajorInput').value.trim() || "Undeclared",
+        headline: $('profileHeadlineInput').value.trim(),
+        location: $('profileLocationInput').value.trim(),
+        linkedin: $('profileLinkedInInput').value.trim(),
+        website: $('profileWebsiteInput').value.trim(),
+        img: profile.img || "https://avatars.dicebear.com/api/initials/Guest.svg"
+      };
+      const file=$('profilePhotoInput').files[0];
+      if(file){
+        const reader=new FileReader();
+        reader.onload=(ev)=>{ p.img=ev.target.result; profile=p; write("lt-profile",profile); renderProfile(); toast("Profile updated"); log("Updated profile"); };
+        reader.readAsDataURL(file);
+      }else{
+        profile=p; write("lt-profile",profile); renderProfile(); toast("Profile updated"); log("Updated profile");
+      }
+    };
+    $('profileResetBtn').onclick=()=>{
+      profile = {name:"Guest",major:"Undeclared",headline:"",location:"",img:"https://avatars.dicebear.com/api/initials/Guest.svg",linkedin:"",website:""};
+      write("lt-profile",profile); renderProfile(); toast("Profile reset");
+    };
+    renderProfile();
+
+    /* =================== KPIs =================== */
+    function renderKPIs(){
+      $('kpiOpen').textContent = internships.length ? (internships.length + (internships.length>440?'+':'')) : '0';
+      $('kpiRemote').textContent = internships.filter(i=> (i.location||'').toLowerCase().includes('remote')).length;
+      $('kpiFavs').textContent = favorites.length;
+      $('kpiRems').textContent = reminders.length;
+    }
+
+    /* =================== REMINDERS =================== */
+    function renderReminders(){
+      const list=$('remindersList');
+      if(!reminders.length){ list.innerHTML='<div class="muted">No reminders yet.</div>'; renderKPIs(); return; }
+      list.innerHTML = reminders.map((r,i)=>`
+        <div class="row" style="align-items:center">
+          <div class="pill"><span>${new Date(r.date).toLocaleDateString()}</span></div>
+          <div style="flex:1">${r.text}</div>
+          <button class="btn ghost" aria-label="Remove reminder" onclick="removeReminder(${i})">Remove</button>
+        </div>
+      `).join('');
+      renderKPIs();
+    }
+    $('reminderForm').onsubmit=(e)=>{
+      e.preventDefault();
+      const date=$('reminderDate').value; const text=$('reminderText').value.trim();
+      if(!date||!text) return;
+      reminders.push({date,text}); write("lt-reminders",reminders); $('reminderForm').reset();
+      renderReminders(); toast("Reminder added"); log("Added reminder");
+    };
+    window.removeReminder=(i)=>{ reminders.splice(i,1); write("lt-reminders",reminders); renderReminders(); toast("Reminder removed"); log("Removed reminder"); };
+    renderReminders();
+
+    /* =================== NOTES / TODOS =================== */
+    $('notesArea').value = notes || "";
+    $('notesArea').addEventListener('input',()=>{ notes=$('notesArea').value; write("lt-notes",notes); });
+    function renderTodos(){
+      const list=$('todoList');
+      if(!todos.length){ list.innerHTML='<div class="muted">No todos yet.</div>'; return; }
+      list.innerHTML = todos.map((t,i)=>`
+        <div class="row">
+          <label class="row" style="flex:1;gap:10px">
+            <input type="checkbox" ${t.done?'checked':''} onchange="toggleTodo(${i})" aria-label="Mark todo done">
+            <span ${t.done?'style="text-decoration:line-through;color:var(--ink-4)"':''}>${t.text}</span>
+          </label>
+          <button class="btn ghost" onclick="delTodo(${i})" aria-label="Delete todo">Delete</button>
+        </div>
+      `).join('');
+    }
+    $('todoAddBtn').onclick=()=>{
+      const text=$('todoInput').value.trim(); if(!text) return;
+      todos.push({text,done:false}); write("lt-todos",todos); $('todoInput').value=""; renderTodos();
+    };
+    window.toggleTodo=(i)=>{ todos[i].done=!todos[i].done; write("lt-todos",todos); renderTodos(); };
+    window.delTodo=(i)=>{ todos.splice(i,1); write("lt-todos",todos); renderTodos(); };
+    renderTodos();
+
+    /* =================== SAVED SEARCHES =================== */
+    function renderSavedSearches(){
+      const box=$('savedSearchList');
+      if(!searches.length){ box.innerHTML='<div class="muted">No saved searches.</div>'; return; }
+      box.innerHTML = searches.map((s,i)=>`
+        <div class="row">
+          <span class="tag">${s}</span>
+          <div style="flex:1"></div>
+          <a class="btn secondary" href="index.html?q=${encodeURIComponent(s)}">Open</a>
+          <button class="btn ghost" onclick="delSavedSearch(${i})" aria-label="Delete saved search">Delete</button>
+        </div>
+      `).join('');
+    }
+    $('savedSearchForm').onsubmit=(e)=>{
+      e.preventDefault(); const q=$('savedSearchInput').value.trim(); if(!q) return;
+      searches.push(q); write("lt-saved-searches",searches); $('savedSearchForm').reset(); renderSavedSearches(); toast("Saved search added"); log("Saved a search");
+    };
+    window.delSavedSearch=(i)=>{ searches.splice(i,1); write("lt-saved-searches",searches); renderSavedSearches(); };
+    renderSavedSearches();
+
+    /* =================== ASSETS VAULT =================== */
+    function renderAssets(){
+      const box=$('assetList');
+      if(!assets.length){ box.innerHTML='<div class="muted">No assets yet.</div>'; return; }
+      box.innerHTML = assets.map((a,i)=>`
+        <div class="row">
+          <span class="pill"><strong>${a.type||'File'}</strong></span>
+          <div style="flex:1">${a.name}</div>
+          <button class="btn ghost" onclick="delAsset(${i})">Remove</button>
+        </div>
+      `).join('');
+    }
+    $('assetForm').onsubmit=(e)=>{
+      e.preventDefault();
+      const name=$('assetName').value.trim(); const type=$('assetType').value.trim();
+      if(!name) return;
+      assets.push({name,type}); write("lt-assets",assets); e.target.reset(); renderAssets(); toast("Asset added"); log("Added asset");
+    };
+    window.delAsset=(i)=>{ assets.splice(i,1); write("lt-assets",assets); renderAssets(); };
+    renderAssets();
+
+    /* =================== FAVORITES =================== */
+    function favMatches(f,q){ q=q.toLowerCase(); return [f.title,f.company,f.field,f.location].filter(Boolean).some(v=>String(v).toLowerCase().includes(q)); }
+    function favFieldOK(f,v){ return !v || (f.field||'').toLowerCase().includes(v.toLowerCase()); }
+    function favLocOK(f,v){
+      if(!v) return true;
+      const loc=(f.location||'').toLowerCase();
+      if(v==='Remote') return loc.includes('remote');
+      return loc.includes(v.toLowerCase());
+    }
+    function favSortFn(arr,mode){
+      if(mode==='title') arr.sort((a,b)=>a.title.localeCompare(b.title));
+      else if(mode==='company') arr.sort((a,b)=>a.company.localeCompare(b.company));
+      else if(mode==='stipend'){
+        const n=v=>parseInt(String(v||'').replace(/[^0-9]/g,''))||0;
+        arr.sort((a,b)=>n(b.stipend)-n(a.stipend));
+      }
+    }
+    function renderFavorites(){
+      const list=$('favoritesList'); const empty=$('favoritesEmpty');
+      if(!favorites.length){ list.innerHTML=""; empty.style.display=""; return; }
+      empty.style.display="none";
+      const q=$('favSearch').value.trim(); const field=$('favFieldFilter').value; const loc=$('favLocationFilter').value; const sort=$('favSort').value;
+      let items = favorites.filter(f=>(!q||favMatches(f,q)) && favFieldOK(f,field) && favLocOK(f,loc));
+      favSortFn(items,sort);
+      list.innerHTML = items.map((f,i)=>`
+        <div class="card" style="padding:14px">
+          <div class="row" style="align-items:flex-start">
+            <div style="flex:1;min-width:220px">
+              <div style="font-weight:900">${f.title}</div>
+              <div class="muted">${f.company} · ${f.location||'n/a'} · ${f.field||'n/a'}</div>
+              <div class="subtle">Stipend: ${f.stipend||'n/a'} · Duration: ${f.duration||'n/a'}</div>
+            </div>
+            <div class="row" style="flex:0 0 auto">
+              <a class="btn secondary" href="${f.link||'#'}" target="_blank" rel="noopener">Apply</a>
+              <button class="btn ghost" onclick="shareFavorite('${(f.title||'').replace(/'/g,'&#39;')}','${(f.company||'').replace(/'/g,'&#39;')}')">Copy link</button>
+              <button class="btn ghost" onclick="removeFavorite(${i})">Remove</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      renderKPIs();
+    }
+    $('favSearch').addEventListener('input',renderFavorites);
+    $('favFieldFilter').addEventListener('change',renderFavorites);
+    $('favLocationFilter').addEventListener('change',renderFavorites);
+    $('favSort').addEventListener('change',renderFavorites);
+    window.removeFavorite=(i)=>{ favorites.splice(i,1); write("lt-favs",favorites); renderFavorites(); toast("Removed from favorites"); log("Removed favorite"); };
+    window.shareFavorite=(title,company)=>{
+      const slug=(title+"-"+company).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+      const url=`${location.origin}/#job=${slug}`;
+      navigator.clipboard.writeText(`${title} at ${company} — ${url}`).then(()=>toast("Copied link"));
+      log("Shared favorite");
+    };
+    renderFavorites();
+
+    /* =================== TRACKER =================== */
+    function renderTracker(){
+      const body=$('trackerBody');
+      if(!tracker.length){ body.innerHTML='<tr><td colspan="6" class="muted" style="padding:12px;border:none">No applications tracked yet.</td></tr>'; return; }
+      body.innerHTML = tracker.map((t,i)=>`
+        <tr>
+          <td>${t.title}</td>
+          <td>${t.company}</td>
+          <td>${new Date(t.date).toLocaleDateString()}</td>
+          <td>
+            <select onchange="updateStatus(${i},this.value)">
+              ${['Wishlist','Preparing','Applied','Online Assessment','Interview','Offer','Rejected'].map(s=>`<option ${s===t.status?'selected':''}>${s}</option>`).join('')}
+            </select>
+          </td>
+          <td><input type="text" value="${(t.notes||'').replace(/"/g,'&quot;')}" onblur="updateNotes(${i},this.value)" placeholder="Notes..."></td>
+          <td>
+            <button class="btn ghost" onclick="delTrack(${i})">Delete</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+    $('trackerForm').onsubmit=(e)=>{
+      e.preventDefault();
+      const title=$('trkTitle').value.trim(), company=$('trkCompany').value.trim(), date=$('trkDate').value, status=$('trkStatus').value;
+      if(!title||!company||!date) return;
+      tracker.push({title,company,date,status,notes:""}); write("lt-tracker",tracker); e.target.reset(); renderTracker(); toast("Application added"); log("Added to tracker");
+    };
+    window.updateStatus=(i,v)=>{ tracker[i].status=v; write("lt-tracker",tracker); toast("Status updated"); };
+    window.updateNotes=(i,v)=>{ tracker[i].notes=v; write("lt-tracker",tracker); };
+    window.delTrack=(i)=>{ tracker.splice(i,1); write("lt-tracker",tracker); renderTracker(); };
+    renderTracker();
+
+    /* =================== EXPORT / IMPORT / RESET =================== */
+    $('exportBtn').onclick=()=>{
+      const blob=new Blob([JSON.stringify({
+        profile,favorites,reminders,activity,notes,todos,searches,assets,tracker,internships
+      },null,2)],{type:'application/json'});
+      const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+      a.download=`linktern_dashboard_${new Date().toISOString().slice(0,10)}.json`; a.click();
+      URL.revokeObjectURL(a.href); toast("Exported");
+    };
+    $('importInput').addEventListener('change',(e)=>{
+      const file=e.target.files[0]; if(!file) return;
+      const reader=new FileReader();
+      reader.onload=ev=>{
+        try{
+          const d=JSON.parse(ev.target.result);
+          profile=d.profile||profile; favorites=d.favorites||favorites; reminders=d.reminders||reminders; activity=d.activity||activity;
+          notes=d.notes||notes; todos=d.todos||todos; searches=d.searches||searches; assets=d.assets||assets; tracker=d.tracker||tracker; internships=d.internships||internships;
+          write("lt-profile",profile); write("lt-favs",favorites); write("lt-reminders",reminders); write("lt-activity",activity);
+          write("lt-notes",notes); write("lt-todos",todos); write("lt-saved-searches",searches); write("lt-assets",assets); write("lt-tracker",tracker); write("lt-data",internships);
+          renderProfile(); renderReminders(); renderTodos(); renderSavedSearches(); renderAssets(); renderFavorites(); renderTracker(); renderKPIs();
+          toast("Imported");
+        }catch(err){ toast("Invalid file"); }
+      };
+      reader.readAsText(file);
+      e.target.value="";
+    });
+    $('clearActivityBtn').onclick=()=>{ activity=[]; write("lt-activity",activity); toast("Activity cleared"); };
+    $('clearAllBtn').onclick=()=>{
+      if(!confirm("Reset all dashboard data?")) return;
+      ['lt-profile','lt-favs','lt-reminders','lt-activity','lt-notes','lt-todos','lt-saved-searches','lt-assets','lt-tracker'].forEach(k=>localStorage.removeItem(k));
+      profile={name:"Guest",major:"Undeclared",headline:"",location:"",img:"https://avatars.dicebear.com/api/initials/Guest.svg",linkedin:"",website:""};
+      favorites=[]; reminders=[]; activity=[]; notes=""; todos=[]; searches=[]; assets=[]; tracker=[];
+      renderProfile(); renderReminders(); renderTodos(); renderSavedSearches(); renderAssets(); renderFavorites(); renderTracker(); renderKPIs();
+      toast("Dashboard reset");
+    };
+
+    /* =================== INIT & SYNC =================== */
+    $('year').textContent = new Date().getFullYear();
+    function initKPIsFirst(){
+      // if internships missing stipend/location fields, KPIs still degrade gracefully
+      renderKPIs();
+    }
+    initKPIsFirst();
+
+    // listen for changes from index.html (favorites/data updates)
+    window.addEventListener('storage',e=>{
+      if(e.key==='lt-data') internships=read('lt-data','[]');
+      if(e.key==='lt-favs') favorites=read('lt-favs','[]');
+      if(e.key==='lt-reminders') reminders=read('lt-reminders','[]');
+      renderFavorites(); renderReminders(); renderKPIs();
+    });
+  </script>
+</body>
+</html>
