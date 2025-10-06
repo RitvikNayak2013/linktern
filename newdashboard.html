@@ -27,8 +27,8 @@
     html,body{margin:0;height:100%;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink-1)}
     a{color:inherit;text-decoration:none}
     img{max-width:100%;display:block}
-    /* reduced motion */
     @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
     /* Header */
     header{
       height:var(--header-h);background:var(--glass);backdrop-filter:blur(var(--blur));
@@ -51,7 +51,8 @@
     h1{font-size:2.2rem;font-weight:900;margin:12px 0 18px;color:var(--accent)}
     h2{font-size:1.25rem;font-weight:800;margin:0 0 12px;color:var(--ink-2)}
     .subtle{color:var(--ink-4);font-size:.95rem}
-    /* Cards */
+
+    /* Cards and layout */
     .grid{display:grid;gap:22px}
     .grid-2{grid-template-columns:2.2fr 1.2fr}
     .grid-3{grid-template-columns:repeat(3,1fr)}
@@ -83,7 +84,7 @@
     .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
     .row> *{flex:1}
     .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-    .kpi{padding:14px;border-radius:16px;border:1.5px solid var(--bd);background:var(--surface)}
+    .kpi{padding:14px;border-radius:16px;border:1.5px solid var(--bd);background:var(--surface);cursor:default}
     .kpi .v{font-weight:900;font-size:1.6rem;color:var(--accent)}
     .kpi small{color:var(--ink-4)}
     .list{display:grid;gap:12px}
@@ -93,6 +94,11 @@
     .divider{height:1px;background:var(--bd);margin:10px 0}
     footer{margin-top:36px;padding:16px 0;border-top:1.5px solid var(--bd);color:var(--ink-4);text-align:center}
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+
+    /* Small UX touches */
+    .hint{font-size:.85rem;color:var(--ink-4)}
+    .kpi .hint{display:block;margin-top:4px}
+    .draggable{user-select:none}
   </style>
 </head>
 <body>
@@ -123,11 +129,11 @@
           <div class="row" style="flex:1">
             <div>
               <label for="profileNameInput" class="subtle">Name</label>
-              <input type="text" id="profileNameInput" placeholder="Your name">
+              <input type="text" id="profileNameInput" placeholder="Your name" autocomplete="name">
             </div>
             <div>
               <label for="profileMajorInput" class="subtle">Major</label>
-              <input type="text" id="profileMajorInput" placeholder="Your major">
+              <input type="text" id="profileMajorInput" placeholder="Your major" autocomplete="organization-title">
             </div>
           </div>
         </div>
@@ -138,7 +144,7 @@
           </div>
           <div>
             <label for="profileLocationInput" class="subtle">Location</label>
-            <input type="text" id="profileLocationInput" placeholder="City, Country">
+            <input type="text" id="profileLocationInput" placeholder="City, Country" autocomplete="address-level2">
           </div>
         </div>
         <div class="row" style="margin-top:10px">
@@ -155,29 +161,41 @@
           <button class="btn" id="profileSaveBtn">Save Profile</button>
           <button class="btn ghost" id="profileResetBtn">Reset</button>
         </div>
+        <div class="hint" style="margin-top:6px">Photo now saves instantly when you select a file.</div>
       </div>
 
       <div class="card" aria-labelledby="qaHeading">
         <h2 id="qaHeading">Quick Actions</h2>
         <div class="list">
           <div class="row">
-           
-            <label class="btn secondary" style="cursor:pointer">
-              
-              <input id="importInput" type="file" accept="application/json" class="sr-only" aria-label="Import dashboard json">
-            </label>
-          </div>
-          <div class="row">
             <button class="btn ghost" id="clearActivityBtn">Clear recent activity</button>
             <button class="btn ghost" id="clearAllBtn">Reset dashboard</button>
           </div>
           <div class="divider"></div>
+          <!-- KPIs -->
           <div class="kpis">
-            <div class="kpi"><div class="muted">Open Listings</div><div class="v" id="kpiOpen">460+</div><small>from data</small></div>
-            <div class="kpi"><div class="muted">Remote Friendly</div><div class="v" id="kpiRemote">400+</div><small>internships</small></div>
-            <div class="kpi"><div class="muted">Countries</div><div class="v" id="kpiFavs">52</div><small>saved</small></div>
-            <div class="kpi"><div class="muted">Upcoming</div><div class="v" id="kpiRems">582</div><small>internships</small></div>
+            <div class="kpi" id="kpiOpenCard" title="Total internships available from your data">
+              <div class="muted">Open Listings</div>
+              <div class="v" id="kpiOpen">450+</div>
+              <small class="hint">from data</small>
+            </div>
+            <div class="kpi" id="kpiRemoteCard" title="Internships with 'remote' in location">
+              <div class="muted">Remote Friendly</div>
+              <div class="v" id="kpiRemote">350+</div>
+              <small class="hint">internships</small>
+            </div>
+            <div class="kpi" id="kpiCountriesCard" title="Number of countries represented by internships">
+              <div class="muted">Countries</div>
+              <div class="v" id="kpiCountries">52</div>
+              <small class="hint"></small>
+            </div>
+            <div class="kpi" id="kpiRemsCard" title="Upcoming reminders and deadlines">
+              <div class="muted">Upcoming</div>
+              <div class="v" id="kpiRems">719</div>
+              <small class="hint">reminders</small>
+            </div>
           </div>
+          <div class="hint"></div>
         </div>
       </div>
     </section>
@@ -191,6 +209,7 @@
           <input type="text" id="reminderText" placeholder="Type your reminder..." required>
           <button class="btn" type="submit">Add</button>
         </form>
+        <div class="hint">Drag to reorder. Double-click text to edit.</div>
         <div id="remindersList" class="list" style="margin-top:10px"></div>
       </div>
 
@@ -198,9 +217,10 @@
         <h2 id="notesHeading">Notes & Todos</h2>
         <textarea id="notesArea" placeholder="Scratchpad... autosaves"></textarea>
         <div class="row" style="margin-top:10px">
-          <input type="text" id="todoInput" placeholder="Add a todo item">
+          <input type="text" id="todoInput" placeholder="Add a todo item (press Enter)">
           <button class="btn secondary" id="todoAddBtn">Add</button>
         </div>
+        <div class="hint">Click checkbox to complete. Double-click to edit. Drag to reorder.</div>
         <div id="todoList" class="list" style="margin-top:6px"></div>
       </div>
     </section>
@@ -293,10 +313,22 @@
     document.getElementById('themeToggle').onclick=()=>applyTheme(getTheme()==='dark'?'light':'dark');
     applyTheme(getTheme());
 
-    /* =================== DATA =================== */
+    /* =================== UTIL =================== */
+    const $ = (id)=>document.getElementById(id);
     const read = (k,def)=>JSON.parse(localStorage.getItem(k)||def);
     const write = (k,v)=>localStorage.setItem(k,JSON.stringify(v));
-    let internships = read("lt-data","[]");        // from main page
+    const toast=(msg)=>{ /* minimal unobtrusive */
+      const id="lt-toast"; let t=document.getElementById(id);
+      if(!t){ t=document.createElement("div"); t.id=id; t.setAttribute("role","status");
+        t.style.cssText="position:fixed;right:24px;bottom:24px;background:var(--surface);border:1.5px solid var(--bd);padding:12px 14px;border-radius:12px;box-shadow:var(--shadow);opacity:0;transition:opacity .15s;z-index:1000";
+        document.body.appendChild(t);
+      }
+      t.textContent=msg; t.style.opacity="1"; setTimeout(()=>t.style.opacity="0",1600);
+    };
+    const log=(action)=>{ activity.push({action,date:new Date()}); if(activity.length>50) activity=activity.slice(-50); write("lt-activity",activity); };
+
+    /* =================== DATA =================== */
+    let internships = read("lt-data","[]");        // from main page (index.html)
     let favorites   = read("lt-favs","[]");
     let reminders   = read("lt-reminders","[]");
     let activity    = read("lt-activity","[]");
@@ -307,18 +339,7 @@
     let assets      = read("lt-assets","[]");
     let tracker     = read("lt-tracker","[]");
 
-    const toast=(msg)=>{ /* minimal unobtrusive */
-      const id="lt-toast"; let t=document.getElementById(id);
-      if(!t){ t=document.createElement("div"); t.id=id; t.setAttribute("role","status");
-        t.style.cssText="position:fixed;right:24px;bottom:24px;background:var(--surface);border:1.5px solid var(--bd);padding:12px 14px;border-radius:12px;box-shadow:var(--shadow);opacity:0;transition:opacity .15s";
-        document.body.appendChild(t);
-      }
-      t.textContent=msg; t.style.opacity="1"; setTimeout(()=>t.style.opacity="0",1600);
-    };
-    const log=(action)=>{ activity.push({action,date:new Date()}); if(activity.length>50) activity=activity.slice(-50); write("lt-activity",activity); };
-
     /* =================== PROFILE =================== */
-    const $ = (id)=>document.getElementById(id);
     function renderProfile(){
       $('profileImg').src = profile.img || "https://avatars.dicebear.com/api/initials/Guest.svg";
       $('profileNameInput').value = profile.name || "Guest";
@@ -328,7 +349,35 @@
       $('profileLinkedInInput').value = profile.linkedin || "";
       $('profileWebsiteInput').value = profile.website || "";
     }
+
+    // Instant photo preview + save to localStorage (fix)
+    const MAX_IMG_BYTES = 3 * 1024 * 1024; // 3MB guard for localStorage data URLs
+    $('profilePhotoInput').addEventListener('change', (e)=>{
+      const file = e.target.files && e.target.files[0];
+      if(!file){ return; }
+      if(!file.type.startsWith('image/')){ toast('Please choose an image file.'); e.target.value=''; return; }
+      if(file.size > MAX_IMG_BYTES){
+        toast('Image is large. Please choose a file under ~3MB.');
+        e.target.value=''; return;
+      }
+      const reader = new FileReader();
+      reader.onload = (ev)=>{
+        try{
+          profile.img = ev.target.result;            // data URL
+          write('lt-profile', profile);
+          $('profileImg').src = profile.img;         // instant preview
+          toast('Profile photo updated');
+          log('Updated profile photo');
+        }catch(err){
+          toast('Could not save photo (storage full). Try a smaller image.');
+        }
+      };
+      reader.onerror = ()=>toast('Failed to read image file.');
+      reader.readAsDataURL(file);
+    });
+
     $('profileSaveBtn').onclick=()=>{
+      // Save text fields; photo already handled by change event above.
       const p = {
         name: $('profileNameInput').value.trim() || "Guest",
         major: $('profileMajorInput').value.trim() || "Undeclared",
@@ -338,40 +387,87 @@
         website: $('profileWebsiteInput').value.trim(),
         img: profile.img || "https://avatars.dicebear.com/api/initials/Guest.svg"
       };
-      const file=$('profilePhotoInput').files[0];
-      if(file){
-        const reader=new FileReader();
-        reader.onload=(ev)=>{ p.img=ev.target.result; profile=p; write("lt-profile",profile); renderProfile(); toast("Profile updated"); log("Updated profile"); };
-        reader.readAsDataURL(file);
-      }else{
-        profile=p; write("lt-profile",profile); renderProfile(); toast("Profile updated"); log("Updated profile");
-      }
+      profile = p;
+      write("lt-profile", profile);
+      renderProfile();
+      // clear file input so same file can be re-selected later if desired
+      $('profilePhotoInput').value = "";
+      toast("Profile updated");
+      log("Updated profile");
     };
+
     $('profileResetBtn').onclick=()=>{
       profile = {name:"Guest",major:"Undeclared",headline:"",location:"",img:"https://avatars.dicebear.com/api/initials/Guest.svg",linkedin:"",website:""};
-      write("lt-profile",profile); renderProfile(); toast("Profile reset");
+      write("lt-profile",profile);
+      renderProfile();
+      $('profilePhotoInput').value = "";
+      toast("Profile reset");
     };
     renderProfile();
 
     /* =================== KPIs =================== */
-    function renderKPIs(){
-      $('kpiOpen').textContent = internships.length ? (internships.length + (internships.length>440?'+':'')) : '0';
-      $('kpiRemote').textContent = internships.filter(i=> (i.location||'').toLowerCase().includes('remote')).length;
-      $('kpiFavs').textContent = favorites.length;
-      $('kpiRems').textContent = reminders.length;
+    function countryFromLocation(loc){
+      if(!loc) return null;
+      const parts = String(loc).split(',').map(s=>s.trim()).filter(Boolean);
+      return parts.length ? parts[parts.length-1] : null;
     }
 
+    function renderKPIs(){
+      // If everything is empty, keep placeholder numbers in HTML
+      const hasAnyData = internships.length || favorites.length || reminders.length;
+      if(!hasAnyData) return;
+
+      // Open listings
+      $('kpiOpen').textContent = internships.length || 0;
+
+      // Remote friendly
+      const remoteCount = internships.filter(i => (i.location||'').toLowerCase().includes('remote')).length;
+      $('kpiRemote').textContent = remoteCount || 0;
+
+      // Countries (unique)
+      const countries = new Set(
+        internships
+          .map(i => countryFromLocation(i.location))
+          .filter(Boolean)
+      );
+      $('kpiCountries').textContent = countries.size || 0;
+
+      // Upcoming reminders
+      const today = new Date(); today.setHours(0,0,0,0);
+      const upcoming = reminders.filter(r=>{
+        const d=new Date(r.date); d.setHours(0,0,0,0);
+        return !isNaN(d) && d>=today;
+      }).length;
+      $('kpiRems').textContent = upcoming || 0;
+    }
+
+    // KPI quick navigation
+    $('kpiOpenCard').onclick = ()=>location.assign('index.html');
+    $('kpiRemoteCard').onclick = ()=>location.assign('index.html?q=remote');
+    document.getElementById('kpiCountriesCard').onclick = ()=>location.assign('index.html');
+    $('kpiRemsCard').onclick = ()=>document.getElementById('remHeading').scrollIntoView({behavior:'smooth',block:'start'});
+
     /* =================== REMINDERS =================== */
+    function reminderRow(r,i){
+      const dateStr = r.date ? new Date(r.date).toLocaleDateString() : '—';
+      return `
+        <div class="row draggable" draggable="true" data-idx="${i}" style="align-items:center">
+          <div class="pill" title="Drag handle"><span>☰</span><span>${dateStr}</span></div>
+          <div style="flex:1">
+            <span class="rem-text" data-idx="${i}" tabindex="0">${r.text}</span>
+          </div>
+          <button class="btn ghost" aria-label="Remove reminder" onclick="removeReminder(${i})">Remove</button>
+        </div>`;
+    }
     function renderReminders(){
       const list=$('remindersList');
       if(!reminders.length){ list.innerHTML='<div class="muted">No reminders yet.</div>'; renderKPIs(); return; }
-      list.innerHTML = reminders.map((r,i)=>`
-        <div class="row" style="align-items:center">
-          <div class="pill"><span>${new Date(r.date).toLocaleDateString()}</span></div>
-          <div style="flex:1">${r.text}</div>
-          <button class="btn ghost" aria-label="Remove reminder" onclick="removeReminder(${i})">Remove</button>
-        </div>
-      `).join('');
+      list.innerHTML = reminders.map(reminderRow).join('');
+      enableDragSort('remindersList','lt-reminders','reminders');
+      list.querySelectorAll('.rem-text').forEach(el=>{
+        el.ondblclick=()=>editInline(el,'reminders');
+        el.onkeydown=(e)=>{ if(e.key==='Enter'){ e.preventDefault(); editInline(el,'reminders'); } };
+      });
       renderKPIs();
     }
     $('reminderForm').onsubmit=(e)=>{
@@ -382,31 +478,38 @@
       renderReminders(); toast("Reminder added"); log("Added reminder");
     };
     window.removeReminder=(i)=>{ reminders.splice(i,1); write("lt-reminders",reminders); renderReminders(); toast("Reminder removed"); log("Removed reminder"); };
-    renderReminders();
 
     /* =================== NOTES / TODOS =================== */
     $('notesArea').value = notes || "";
     $('notesArea').addEventListener('input',()=>{ notes=$('notesArea').value; write("lt-notes",notes); });
+
+    function todoRow(t,i){
+      return `
+        <div class="row draggable" draggable="true" data-idx="${i}">
+          <label class="row" style="flex:1;gap:10px">
+            <input type="checkbox" ${t.done?'checked':''} onchange="toggleTodo(${i})" aria-label="Mark todo done">
+            <span class="todo-text" data-idx="${i}" ${t.done?'style="text-decoration:line-through;color:var(--ink-4)"':''} tabindex="0">${t.text}</span>
+          </label>
+          <button class="btn ghost" onclick="delTodo(${i})" aria-label="Delete todo">Delete</button>
+        </div>`;
+    }
     function renderTodos(){
       const list=$('todoList');
       if(!todos.length){ list.innerHTML='<div class="muted">No todos yet.</div>'; return; }
-      list.innerHTML = todos.map((t,i)=>`
-        <div class="row">
-          <label class="row" style="flex:1;gap:10px">
-            <input type="checkbox" ${t.done?'checked':''} onchange="toggleTodo(${i})" aria-label="Mark todo done">
-            <span ${t.done?'style="text-decoration:line-through;color:var(--ink-4)"':''}>${t.text}</span>
-          </label>
-          <button class="btn ghost" onclick="delTodo(${i})" aria-label="Delete todo">Delete</button>
-        </div>
-      `).join('');
+      list.innerHTML = todos.map(todoRow).join('');
+      enableDragSort('todoList','lt-todos','todos');
+      list.querySelectorAll('.todo-text').forEach(el=>{
+        el.ondblclick=()=>editInline(el,'todos');
+        el.onkeydown=(e)=>{ if(e.key==='Enter'){ e.preventDefault(); editInline(el,'todos'); } };
+      });
     }
     $('todoAddBtn').onclick=()=>{
       const text=$('todoInput').value.trim(); if(!text) return;
       todos.push({text,done:false}); write("lt-todos",todos); $('todoInput').value=""; renderTodos();
     };
+    $('todoInput').addEventListener('keydown',(e)=>{ if(e.key==='Enter'){ e.preventDefault(); $('todoAddBtn').click(); } });
     window.toggleTodo=(i)=>{ todos[i].done=!todos[i].done; write("lt-todos",todos); renderTodos(); };
     window.delTodo=(i)=>{ todos.splice(i,1); write("lt-todos",todos); renderTodos(); };
-    renderTodos();
 
     /* =================== SAVED SEARCHES =================== */
     function renderSavedSearches(){
@@ -426,7 +529,6 @@
       searches.push(q); write("lt-saved-searches",searches); $('savedSearchForm').reset(); renderSavedSearches(); toast("Saved search added"); log("Saved a search");
     };
     window.delSavedSearch=(i)=>{ searches.splice(i,1); write("lt-saved-searches",searches); renderSavedSearches(); };
-    renderSavedSearches();
 
     /* =================== ASSETS VAULT =================== */
     function renderAssets(){
@@ -435,10 +537,16 @@
       box.innerHTML = assets.map((a,i)=>`
         <div class="row">
           <span class="pill"><strong>${a.type||'File'}</strong></span>
-          <div style="flex:1">${a.name}</div>
+          <div style="flex:1">
+            <span class="asset-text" data-idx="${i}" tabindex="0">${a.name}</span>
+          </div>
           <button class="btn ghost" onclick="delAsset(${i})">Remove</button>
         </div>
       `).join('');
+      box.querySelectorAll('.asset-text').forEach(el=>{
+        el.ondblclick=()=>editInline(el,'assets','name');
+        el.onkeydown=(e)=>{ if(e.key==='Enter'){ e.preventDefault(); editInline(el,'assets','name'); } };
+      });
     }
     $('assetForm').onsubmit=(e)=>{
       e.preventDefault();
@@ -447,7 +555,6 @@
       assets.push({name,type}); write("lt-assets",assets); e.target.reset(); renderAssets(); toast("Asset added"); log("Added asset");
     };
     window.delAsset=(i)=>{ assets.splice(i,1); write("lt-assets",assets); renderAssets(); };
-    renderAssets();
 
     /* =================== FAVORITES =================== */
     function favMatches(f,q){ q=q.toLowerCase(); return [f.title,f.company,f.field,f.location].filter(Boolean).some(v=>String(v).toLowerCase().includes(q)); }
@@ -477,8 +584,8 @@
         <div class="card" style="padding:14px">
           <div class="row" style="align-items:flex-start">
             <div style="flex:1;min-width:220px">
-              <div style="font-weight:900">${f.title}</div>
-              <div class="muted">${f.company} · ${f.location||'n/a'} · ${f.field||'n/a'}</div>
+              <div style="font-weight:900">${f.title||'Untitled'}</div>
+              <div class="muted">${f.company||'—'} · ${(f.location||'n/a')} · ${(f.field||'n/a')}</div>
               <div class="subtle">Stipend: ${f.stipend||'n/a'} · Duration: ${f.duration||'n/a'}</div>
             </div>
             <div class="row" style="flex:0 0 auto">
@@ -498,11 +605,11 @@
     window.removeFavorite=(i)=>{ favorites.splice(i,1); write("lt-favs",favorites); renderFavorites(); toast("Removed from favorites"); log("Removed favorite"); };
     window.shareFavorite=(title,company)=>{
       const slug=(title+"-"+company).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
-      const url=`${location.origin}/#job=${slug}`;
+      const origin = location.origin || (location.protocol + '//' + location.host);
+      const url=`${origin}/#job=${slug}`;
       navigator.clipboard.writeText(`${title} at ${company} — ${url}`).then(()=>toast("Copied link"));
       log("Shared favorite");
     };
-    renderFavorites();
 
     /* =================== TRACKER =================== */
     function renderTracker(){
@@ -534,51 +641,64 @@
     window.updateStatus=(i,v)=>{ tracker[i].status=v; write("lt-tracker",tracker); toast("Status updated"); };
     window.updateNotes=(i,v)=>{ tracker[i].notes=v; write("lt-tracker",tracker); };
     window.delTrack=(i)=>{ tracker.splice(i,1); write("lt-tracker",tracker); renderTracker(); };
-    renderTracker();
 
-    /* =================== EXPORT / IMPORT / RESET =================== */
-    $('exportBtn').onclick=()=>{
-      const blob=new Blob([JSON.stringify({
-        profile,favorites,reminders,activity,notes,todos,searches,assets,tracker,internships
-      },null,2)],{type:'application/json'});
-      const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
-      a.download=`linktern_dashboard_${new Date().toISOString().slice(0,10)}.json`; a.click();
-      URL.revokeObjectURL(a.href); toast("Exported");
-    };
-    $('importInput').addEventListener('change',(e)=>{
-      const file=e.target.files[0]; if(!file) return;
-      const reader=new FileReader();
-      reader.onload=ev=>{
-        try{
-          const d=JSON.parse(ev.target.result);
-          profile=d.profile||profile; favorites=d.favorites||favorites; reminders=d.reminders||reminders; activity=d.activity||activity;
-          notes=d.notes||notes; todos=d.todos||todos; searches=d.searches||searches; assets=d.assets||assets; tracker=d.tracker||tracker; internships=d.internships||internships;
-          write("lt-profile",profile); write("lt-favs",favorites); write("lt-reminders",reminders); write("lt-activity",activity);
-          write("lt-notes",notes); write("lt-todos",todos); write("lt-saved-searches",searches); write("lt-assets",assets); write("lt-tracker",tracker); write("lt-data",internships);
-          renderProfile(); renderReminders(); renderTodos(); renderSavedSearches(); renderAssets(); renderFavorites(); renderTracker(); renderKPIs();
-          toast("Imported");
-        }catch(err){ toast("Invalid file"); }
-      };
-      reader.readAsText(file);
-      e.target.value="";
-    });
+    /* =================== CLEAR / RESET =================== */
     $('clearActivityBtn').onclick=()=>{ activity=[]; write("lt-activity",activity); toast("Activity cleared"); };
     $('clearAllBtn').onclick=()=>{
       if(!confirm("Reset all dashboard data?")) return;
       ['lt-profile','lt-favs','lt-reminders','lt-activity','lt-notes','lt-todos','lt-saved-searches','lt-assets','lt-tracker'].forEach(k=>localStorage.removeItem(k));
       profile={name:"Guest",major:"Undeclared",headline:"",location:"",img:"https://avatars.dicebear.com/api/initials/Guest.svg",linkedin:"",website:""};
       favorites=[]; reminders=[]; activity=[]; notes=""; todos=[]; searches=[]; assets=[]; tracker=[];
-      renderProfile(); renderReminders(); renderTodos(); renderSavedSearches(); renderAssets(); renderFavorites(); renderTracker(); renderKPIs();
+      rerenderAll();
       toast("Dashboard reset");
     };
 
-    /* =================== INIT & SYNC =================== */
-    $('year').textContent = new Date().getFullYear();
-    function initKPIsFirst(){
-      // if internships missing stipend/location fields, KPIs still degrade gracefully
-      renderKPIs();
+    /* =================== INLINE EDIT + DRAG SORT =================== */
+    function editInline(el, collection, field='text'){
+      const idx=parseInt(el.dataset.idx,10);
+      const prev=el.textContent;
+      const inp=document.createElement('input');
+      inp.type='text'; inp.value=prev; inp.style.width='100%';
+      el.replaceWith(inp); inp.focus(); inp.select();
+      const commit=()=>{
+        const val=inp.value.trim();
+        if(collection==='todos'){ if(val) todos[idx][field]=val; write('lt-todos',todos); renderTodos(); }
+        else if(collection==='reminders'){ if(val) reminders[idx].text=val; write('lt-reminders',reminders); renderReminders(); }
+        else if(collection==='assets'){ if(val) assets[idx][field]=val; write('lt-assets',assets); renderAssets(); }
+      };
+      inp.addEventListener('blur',commit);
+      inp.addEventListener('keydown',(e)=>{ if(e.key==='Enter') commit(); if(e.key==='Escape'){ inp.value=prev; commit(); }});
     }
-    initKPIsFirst();
+
+    function enableDragSort(listId, storageKey, arrName){
+      const list=$(listId);
+      let dragIdx=null;
+      list.querySelectorAll('[draggable="true"]').forEach(item=>{
+        item.addEventListener('dragstart',ev=>{
+          dragIdx=parseInt(item.dataset.idx,10);
+          ev.dataTransfer.effectAllowed='move';
+        });
+        item.addEventListener('dragover',ev=>{ ev.preventDefault(); ev.dataTransfer.dropEffect='move'; });
+        item.addEventListener('drop',ev=>{
+          ev.preventDefault();
+          const dropIdx=parseInt(item.dataset.idx,10);
+          if(dragIdx===null || dropIdx===dragIdx) return;
+          const arr = (arrName==='todos') ? todos : (arrName==='reminders') ? reminders : [];
+          const [moved]=arr.splice(dragIdx,1);
+          arr.splice(dropIdx,0,moved);
+          write(storageKey,arr);
+          if(arrName==='todos') renderTodos(); else if(arrName==='reminders') renderReminders();
+          dragIdx=null;
+        });
+      });
+    }
+
+    /* =================== INIT & SYNC =================== */
+    function rerenderAll(){
+      renderProfile(); renderReminders(); renderTodos(); renderSavedSearches(); renderAssets(); renderFavorites(); renderTracker(); renderKPIs();
+    }
+    $('year').textContent = new Date().getFullYear();
+    rerenderAll();
 
     // listen for changes from index.html (favorites/data updates)
     window.addEventListener('storage',e=>{
