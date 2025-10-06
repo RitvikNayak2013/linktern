@@ -177,36 +177,18 @@
     .tab[aria-selected="true"]{color:var(--ink-1);background:color-mix(in oklab, var(--accent) 8%, var(--surface));transform:scale(1.08);}
     .tab-underline{position:absolute;bottom:0;height:3px;background:var(--accent);border-radius:2px;transition:left var(--t-med), width var(--t-med)}
 
-    .forum-wrap{display:grid;grid-template-columns:1fr;gap:16px}
-    .composer{display:grid;gap:10px;background:var(--surface);border:var(--elev-hair);border-radius:16px;padding:16px}
-    .composer input,.composer textarea{width:100%;background:color-mix(in oklab, var(--surface) 90%, transparent);border:var(--elev-hair);color:var(--ink-2);border-radius:12px;padding:10px}
-    .thread{background:var(--surface);border:var(--elev-hair);border-radius:16px;padding:16px}
-    .thread h4{margin:0;color:var(--ink-1)}
-    .thread-meta{display:flex;justify-content:space-between;align-items:center;color:var(--ink-4);font-weight:600}
-    .comment-list{display:grid;gap:10px;margin-top:12px}
-    .comment{background:color-mix(in oklab, var(--surface) 92%, transparent);border:var(--elev-hair);border-radius:12px;padding:10px}
-
-    /* Modal flow animation */
+    /* Modal */
     .modal{position:fixed;inset:0;display:none;place-items:center;background:color-mix(in oklab, rgba(0,0,0,.72) 78%, transparent);z-index:80}
     .modal[open]{display:grid}
     .modal-card{width:min(780px, 92vw);background:var(--surface);border:var(--elev-hair);border-radius:20px;box-shadow:var(--shadow-2);overflow:hidden;display:grid;grid-template-rows:auto 1fr auto;color:var(--ink-2);}
     .modal-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:var(--elev-hair)}
     .modal-body{padding:18px;display:grid;gap:12px;color:var(--ink-2);}
     .modal-foot{display:flex;gap:10px;justify-content:flex-end;padding:14px 18px;border-top:var(--elev-hair);background:color-mix(in oklab, var(--surface) 95%, transparent)}
-
-    /* Modal outline fix */
-    .modal[open], .modal-card:focus-visible {
-      outline: 2px solid color-mix(in oklab, var(--accent) 85%, white);
-      outline-offset: 2px;
-      border-radius: 20px;
-    }
-    .modal-card:focus, .modal-card:active {
-      outline: none;
-    }
+    .modal[open], .modal-card:focus-visible { outline: 2px solid color-mix(in oklab, var(--accent) 85%, white); outline-offset: 2px; border-radius: 20px; }
+    .modal-card:focus, .modal-card:active { outline: none; }
 
     .site-footer{margin-top:40px;padding:22px 0;border-top:var(--elev-hair);color:var(--ink-4)}
     .toast{position:fixed;right:22px;bottom:22px;background:var(--surface);color:var(--ink-2);border:var(--elev-hair);border-radius:12px;padding:12px 14px;box-shadow:var(--shadow-1);opacity:0;transform:translateY(8px);transition:opacity var(--t-med), transform var(--t-med);z-index:100}
-    .toast.show{opacity:1;transform:translateY(0)}
 
     @media (max-width:1100px){
       .hero-grid{grid-template-columns:1fr}
@@ -223,51 +205,28 @@
       .hero{padding:40px 0 18px}
     }
 
-    /* Modal flow animation */
-    .modal[open] .modal-card {
-      animation: modalIn 0.38s cubic-bezier(.22,1,.36,1);
-    }
+    .modal[open] .modal-card { animation: modalIn 0.38s cubic-bezier(.22,1,.36,1); }
     @keyframes modalIn {
-      from {
-        opacity: 0;
-        transform: scale(.95) translateY(24px);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-      }
+      from { opacity: 0; transform: scale(.95) translateY(24px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
     }
 
-    /* Ripple effect for buttons */
-    .btn, .ghost-btn {
-      position: relative;
-      overflow: hidden;
-    }
+    .btn, .ghost-btn { position: relative; overflow: hidden; }
     .btn:after, .ghost-btn:after {
       content: '';
-      position: absolute;
-      left: 50%; top: 50%;
+      position: absolute; left: 50%; top: 50%;
       width: 0; height: 0;
       background: color-mix(in oklab, var(--accent) 40%, white);
-      opacity: .18;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
+      opacity: .18; border-radius: 50%;
+      transform: translate(-50%, -50%); pointer-events: none;
       transition: width .5s, height .5s, opacity .4s;
     }
     .btn:active:after, .ghost-btn:active:after {
-      width: 140px; height: 140px;
-      opacity: 0;
+      width: 140px; height: 140px; opacity: 0;
       transition: width .3s, height .3s, opacity .3s;
     }
-    /* Card flow morph enhancement */
-    .job-card-expanded {
-      box-shadow: 0 32px 72px color-mix(in oklab, var(--accent) 28%, transparent) !important;
-      border-radius: 24px !important;
-      background: var(--surface) !important;
-      pointer-events: auto !important;
-      z-index: 9999 !important;
-    }
+
+    .toast.show{opacity:1;transform:translateY(0)}
   </style>
 </head>
 <body>
@@ -283,13 +242,14 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="#" aria-label="Linktern+ Home" id="homeLink">
-  <img src="Untitled.png" alt="Linktern+" />
-  <div class="title">Linktern+</div>
-</a>
+        <img src="Untitled.png" alt="Linktern+" />
+        <div class="title">Linktern+</div>
+      </a>
       <nav class="main-nav" aria-label="Primary">
         <button class="nav-btn" id="nav-internships" aria-current="page" data-tab="internships">Internships</button>
         <button class="nav-btn" id="nav-favorites" data-tab="favorites">Favorites <span id="favCount" style="color:var(--ink-4)"></span></button>
-        <button class="nav-btn" id="nav-forum" data-tab="forum">Forum</button>
+        <!-- Replaced Forum with Dashboard -->
+        <a class="nav-btn" id="nav-dashboard" href="dashboardnew.html">Dashboard</a>
         <button class="mode-toggle" id="modeToggle" title="Toggle theme" aria-pressed="false">
           <span class="sr-only">Toggle theme</span>
           <svg class="i" viewBox="0 0 24 24"><use href="#i-sun"/></svg>
@@ -324,7 +284,6 @@
           <li>Discuss applications and interviews in the forum</li>
         </ul>
         <div style="margin-top:12px;border-radius:14px;overflow:hidden">
-          <!-- Ambient video placeholder, safe muted loop -->
           <video id="ambient" muted playsinline autoplay loop style="width:100%;height:160px;object-fit:cover;filter:contrast(.9) saturate(.9) brightness(.96)">
             <source src="https://cdn.coverr.co/videos/coverr-typing-on-a-laptop-2746/1080p.mp4" type="video/mp4" />
           </video>
@@ -361,12 +320,11 @@
     </div>
   </section>
 
-  <!-- Tabs for sections -->
+  <!-- Tabs for sections (Forum removed) -->
   <div class="container">
     <div class="tabs" role="tablist" aria-label="Sections">
       <button role="tab" class="tab" id="tab-internships" aria-selected="true" aria-controls="panel-internships">Internships</button>
       <button role="tab" class="tab" id="tab-favorites" aria-selected="false" aria-controls="panel-favorites">Favorites</button>
-      <button role="tab" class="tab" id="tab-forum" aria-selected="false" aria-controls="panel-forum">Forum</button>
       <span class="tab-underline" id="tab-underline" aria-hidden="true"></span>
     </div>
   </div>
@@ -396,22 +354,6 @@
   <section class="container" id="panel-favorites" role="tabpanel" aria-labelledby="tab-favorites" hidden>
     <div class="grid" id="favGrid"></div>
     <div id="favEmpty" style="padding:26px 0;color:var(--ink-3)">No favorites yet. Save roles you want to revisit.</div>
-  </section>
-
-  <section class="container" id="panel-forum" role="tabpanel" aria-labelledby="tab-forum" hidden>
-    <div class="forum-wrap">
-      <div class="composer">
-        <div style="font-weight:800;color:var(--ink-1)">Start a discussion</div>
-        <input id="threadTitle" type="text" maxlength="80" placeholder="Title" aria-label="Thread title">
-        <textarea id="threadDesc" maxlength="600" placeholder="Question or context" aria-label="Thread description"></textarea>
-        <div style="display:flex;gap:10px;justify-content:flex-end">
-          <button class="ghost-btn" id="clearComposer">Clear</button>
-          <button class="btn" id="postThread">Post</button>
-        </div>
-      </div>
-      <div id="threadList" style="display:grid;gap:12px"></div>
-      <div id="threadEmpty" style="color:var(--ink-3)">No threads yet. Be the first to ask a question.</div>
-    </div>
   </section>
 
   <!-- Modal template -->
@@ -451,7 +393,7 @@
     ];
 
     const defaultInternships = [
-  { title:"Student Researcher Program (DeepMind, Google Research)", 
+       { title:"Student Researcher Program (DeepMind, Google Research)", 
   company:"Google DeepMind", 
   field:"AI & Machine Learning", 
   location:"London, Paris, Mountain View, other DeepMind sites (on-site)", 
@@ -1646,18 +1588,7 @@
     description: "Biology-based research internship with hands-on training in X-ray free electron laser technology.",
     logo: "BXFEL"
   },
-  {
-    title: "Summer Scholars Program",
-    company: "Stowers Institute for Medical Research",
-    field: "Biology",
-    location: "Kansas City, MO (on-site)",
-    stipend: "Paid",
-    duration: "8 weeks (Summer)",
-    tags: ["On-site","Paid"],
-    link: "https://en.wikipedia.org/wiki/Stowers_Institute_for_Medical_Research",
-    description: "Undergraduate Summer Scholars conduct independent biology research under a PI in the Institute’s labs.",
-    logo: "STWRS"
-  },
+  
   {
     title: "Hutton Junior Fisheries Biology Program",
     company: "NOAA Fisheries",
@@ -1694,18 +1625,7 @@
     description: "Life sciences internships at biotech companies across NC with grants supporting student-paid placements.",
     logo: "NCB"
   },
-  {
-    title: "ISCB-SC Internship Program",
-    company: "ISCB Student Council",
-    field: "Biology",
-    location: "Global (host labs worldwide)",
-    stipend: "Possibly Paid",
-    duration: "Varies",
-    tags: ["Possibly remote","Possibly Paid"],
-    link: "https://en.wikipedia.org/wiki/International_Society_for_Computational_Biology_Student_Council",
-    description: "Internships connecting students from developing nations with computational biology research groups globally.",
-    logo: "ISCB"
-  },
+  
   {
     title: "Academic Internship Program (AIP)",
     company: "NIH",
@@ -5079,18 +4999,7 @@
     description: "Rigorous program where graduate mathematics students address NSA mission language and crypto problems.",
     logo: "NSA"
   },
-  {
-    title: "Center for Undergraduate Research in Mathematics (CURM)",
-    company: "CURM (NSF funded)",
-    field: "Mathematics",
-    location: "USA (various universities)",
-    stipend: "Paid (faculty/student stipends)",
-    duration: "Academic year",
-    tags: ["On-site","Paid"],
-    link: "https://en.wikipedia.org/wiki/Center_for_Undergraduate_Research_in_Mathematics",
-    description: "Undergraduate research internships in math supported via NSF grants, with $3,000 stipend per student.",
-    logo: "CURM"
-  },
+
   {
     title: "IBM Extreme Blue Internship",
     company: "IBM",
@@ -5139,30 +5048,8 @@
     description: "Individual mathematics research projects under mentorship, culminating in collaborative development.",
     logo: "AIM"
   },
-  {
-    title: "EDGE Summer Program in Math",
-    company: "EDGE Foundation",
-    field: "Mathematics",
-    location: "USA (rotating host colleges)",
-    stipend: "Paid (travel/stipend support)",
-    duration: "4 weeks (Summer)",
-    tags: ["On-site","Paid"],
-    link: "https://en.wikipedia.org/wiki/EDGE_program",
-    description: "Immersive summer research workshop for women entering graduate studies in math, with stipend/travel support.",
-    logo: "EDGE"
-  },
-  {
-    title: "Hampshire College Summer Studies in Mathematics (HCSSiM)",
-    company: "Hampshire College",
-    field: "Mathematics",
-    location: "Amherst, MA (on-site)",
-    stipend: "Possibly Paid or Tuition Covered",
-    duration: "6 weeks (Summer)",
-    tags: ["On-site","Possibly Paid"],
-    link: "https://en.wikipedia.org/wiki/Hampshire_College_Summer_Studies_in_Mathematics",
-    description: "Residential summer enrichment program for mathematically gifted high school students—staff internships may be available.",
-    logo: "HCSSiM"
-  },
+
+ 
   {
     title: "REU Programs – NSF",
     company: "National Science Foundation",
@@ -5187,18 +5074,7 @@
     description: "Focused internship for students strong in mathematics/programming targeting signal and cryptanalysis tasks.",
     logo: "NSA"
   },
-  {
-    title: "MathPath Staff Internship",
-    company: "MathPath",
-    field: "Mathematics",
-    location: "USA (rotating summer camp)",
-    stipend: "Possibly Paid",
-    duration: "4 weeks (Summer)",
-    tags: ["On-site","Possibly Paid"],
-    link: "https://en.wikipedia.org/wiki/MathPath",
-    description: "Teaching staff or counselor internships at a residential math enrichment program for middle school students.",
-    logo: "MathPath"
-  },
+  
   {
     title: "UW RTG Academic/Industrial Internships",
     company: "University of Washington (IPDE)",
@@ -5799,18 +5675,7 @@
     description: "Department-based internships in collections, archives, or education with stipend for 160+ hours.",
     logo: "GREENSBORO"
   },
-  {
-    title: "US/ICOMOS International Exchange Program",
-    company: "US/ICOMOS",
-    field: "History",
-    location: "Washington, DC & worldwide",
-    stipend: "Possibly Paid",
-    duration: "~12 weeks (Summer)",
-    tags: ["On-site","Possibly Paid"],
-    link: "https://en.wikipedia.org/wiki/US/ICOMOS_International_Exchange_Program",
-    description: "Competitive internships in historic preservation abroad with professional development and host project placements.",
-    logo: "USICOMOS"
-  },
+  
   {
     title: "Internships – NJ State Museum",
     company: "New Jersey State Museum",
@@ -5823,18 +5688,7 @@
     description: "Internships across archaeology, cultural history, fine art, education, marketing, and natural history divisions.",
     logo: "NJSM"
   },
-  {
-    title: "Internships – Smithsonian Libraries & Archives",
-    company: "Smithsonian Libraries & Archives",
-    field: "History",
-    location: "Washington, DC (on-site)",
-    stipend: "Possibly Paid",
-    duration: "Varies",
-    tags: ["On-site","Possibly Paid"],
-    link: "https://en.wikipedia.org/wiki/Smithsonian_Libraries_and_Archives",
-    description: "Internships in archival and library collections emphasizing history of science and technology.",
-    logo: "SILA"
-  },
+
   {
     title: "Internships – Metropolitan Museum of Art (History & Humanities)",
     company: "The Met",
@@ -5883,18 +5737,7 @@
     description: "Highly competitive paid program placing students in research and archival roles at the LC.",
     logo: "LOC"
   },
-  {
-    title: "Internships – OutHistory Fellowship Program",
-    company: "OutHistory.org / UIC",
-    field: "History",
-    location: "Remote",
-    stipend: "Paid (modest)",
-    duration: "Project-based",
-    tags: ["Possibly remote","Paid"],
-    link: "https://en.wikipedia.org/wiki/OutHistory",
-    description: "Digital exhibition creation with stipend for historians contributing to LGBTQ+ historical public scholarship.",
-    logo: "OUTHISTORY"
-  },
+  
   {
     title: "Social Science Research Undergraduate Internship – EEOC",
     company: "U.S. Equal Employment Opportunity Commission",
@@ -5919,18 +5762,7 @@
     description: "Paid research internships across behavioral and social sciences at NIH Institutes and Centers.",
     logo: "NIH"
   },
-  {
-    title: "Student Internship Program – U.S. Department of State (VSFS)",
-    company: "U.S. Department of State",
-    field: "Social Sciences",
-    location: "Remote",
-    stipend: "Unpaid",
-    duration: "Academic year (10 hrs/week)",
-    tags: ["Possibly remote","Unpaid"],
-    link: "https://en.wikipedia.org/wiki/Virtual_Student_Federal_Service",
-    description: "Virtual internships supporting research on economics, human rights, foreign policy, public administration, and more.",
-    logo: "VSFS"
-  },
+  
   {
     title: "Headquarters Student Internship Program – U.S. Treasury",
     company: "U.S. Department of the Treasury",
@@ -5991,41 +5823,21 @@
     description: "Paid internships offering hands-on policy, research, public administration, and social analytics experience in federal government.",
     logo: "FGOV"
   },
-  {
-    title: "STPI Summer Associate – Social & Behavioral Sciences",
-    company: "Science and Technology Policy Institute",
-    field: "Social Sciences",
-    location: "Washington, DC or Alexandria, VA (on-site)",
-    stipend: "Paid",
-    duration: "10–12 weeks (Summer)",
-    tags: ["On-site","Paid"],
-    link: "https://en.wikipedia.org/wiki/Science_and_Technology_Policy_Institute",
-    description: "Paid summer associate internships conducting policy and social science research for federal policy stakeholders.",
-    logo: "STPI"
-  },
-  {
-    title: "International Parliamentary Scholarship (IPS) – Bundestag",
-    company: "German Bundestag",
-    field: "Social Sciences",
-    location: "Berlin, Germany (on-site)",
-    stipend: "Paid",
-    duration: "5 months",
-    tags: ["On-site","Paid"],
-    link: "https://en.wikipedia.org/wiki/International_Parliamentary_Scholarship",
-    description: "Paid parliamentary internships drafting speeches, supporting legislators, and learning parliamentary governance.",
-    logo: "BUNDESTAG"
-  }
   
-  ]
 
+    ];
 
- 
+    // State (forum removed)
+    const stored = (() => {
+      try {
+        const j = JSON.parse(localStorage.getItem("lt-data") || "null");
+        return Array.isArray(j) && j.length > 0 ? j : null;
+      } catch { return null; }
+    })();
 
-    // State
     const state = {
-      internships: JSON.parse(localStorage.getItem("lt-data") || "null") || defaultInternships,
+      internships: stored || defaultInternships,
       favorites: JSON.parse(localStorage.getItem("lt-favs") || "[]"),
-      forum: JSON.parse(localStorage.getItem("lt-forum") || "[]"),
       filters: { q:"", location:"All", domains:new Set(), tags:new Set(), sort:"default", paidOnly:false },
       pagination: { page:1, size:12 }
     };
@@ -6064,19 +5876,15 @@
     const allTags = unique(state.internships.flatMap(i => i.tags)).sort();
 
     // Derived metrics
-function computeKPIs(){
-  const total = state.internships.length;
-  const remote = state.internships.filter(i => i.location.toLowerCase().includes('remote')).length;
-  const stipends = state.internships.map(i => parseInt(String(i.stipend).replace(/[^0-9]/g, ''))).filter(Boolean).sort((a,b)=>a-b);
-  const median = stipends.length ? stipends[Math.floor(stipends.length/2)] : 0;
+    function computeKPIs(){
+      const stipends = state.internships.map(i => parseInt(String(i.stipend).replace(/[^0-9]/g, ''))).filter(Boolean).sort((a,b)=>a-b);
+      const median = stipends.length ? stipends[Math.floor(stipends.length/2)] : 0;
 
-  $('#kpiTotal').textContent = '450+'; // force Open Listings to 900
-  $('#kpiAvgPay').textContent = median ? `$${median}/month` : 'n.a.';
-  $('#kpiRemote').textContent = '372'; // force Remote Friendly to 900
-
-  drawSpark(stipends);
-}
-
+      $('#kpiTotal').textContent = '450+';
+      $('#kpiAvgPay').textContent = median ? `$${median}/month` : 'n.a.';
+      $('#kpiRemote').textContent = '372';
+      drawSpark(stipends);
+    }
 
     // Sparkline
     function drawSpark(values){
@@ -6284,46 +6092,6 @@ function computeKPIs(){
       underline.style.width = (rect.width - 20) + 'px';
     }
 
-    // Forum
-    function renderForum(){
-      const list = $('#threadList'); const empty = $('#threadEmpty');
-      if(!state.forum.length){ list.innerHTML=''; empty.style.display=''; return; }
-      empty.style.display='none';
-      list.innerHTML = state.forum.map((t, idx) => `
-        <article class="thread" data-idx="${idx}">
-          <h4>${escapeHtml(t.title)}</h4>
-          <div class="thread-meta"><span>${new Date(t.date).toLocaleDateString()}</span><span>${t.comments.length} comment${t.comments.length!==1?'s':''}</span></div>
-          <p style="margin:8px 0 12px;color:var(--ink-3)">${escapeHtml(t.description)}</p>
-          <div class="comment-list" id="c-${idx}">
-            ${t.comments.map(c => `<div class="comment"><strong>${escapeHtml(c.user)}:</strong> ${escapeHtml(c.text)} <span style="color:var(--ink-4);font-size:.9rem">(${new Date(c.date).toLocaleDateString()})</span></div>`).join('')}
-          </div>
-          <form class="composer" style="padding:12px;margin-top:10px" data-add-comment="${idx}">
-            <input type="text" name="name" placeholder="Name" value="Guest" aria-label="Name" />
-            <textarea name="text" rows="2" placeholder="Add a comment" aria-label="Comment"></textarea>
-            <div style="display:flex;gap:10px;justify-content:flex-end">
-              <button class="ghost-btn" data-action="cancel-comment">Cancel</button>
-              <button class="btn" data-action="post-comment">Post</button>
-            </div>
-          </form>
-        </article>
-      `).reverse().join('');
-    }
-    function addThread(){
-      const title = $('#threadTitle').value.trim();
-      const description = $('#threadDesc').value.trim();
-      if(!title || !description){ toast('Please add a title and description'); return }
-      state.forum.push({ title, description, user: 'Guest', date: new Date().toISOString(), comments: [] });
-      localStorage.setItem('lt-forum', JSON.stringify(state.forum));
-      $('#threadTitle').value = ''; $('#threadDesc').value = '';
-      renderForum(); toast('Thread posted');
-    }
-    function addComment(idx, name, text){
-      if(!text.trim()) return toast('Empty comment');
-      state.forum[idx].comments.push({ user: name || 'Guest', text, date: new Date().toISOString() });
-      localStorage.setItem('lt-forum', JSON.stringify(state.forum));
-      renderForum(); toast('Comment added');
-    }
-
     // Toast
     let toastTimer = null;
     function toast(msg){
@@ -6341,9 +6109,9 @@ function computeKPIs(){
       if(j) openDetails(keyFor(j), false);
     }
 
-    // Tabs + nav
+    // Tabs + nav (forum removed)
     function setTab(id){
-      const panels = ["internships","favorites","forum"];
+      const panels = ["internships","favorites"];
       panels.forEach(p => {
         const sel = p===id;
         $(`#panel-${p}`).hidden = !sel;
@@ -6351,7 +6119,6 @@ function computeKPIs(){
         $(`#nav-${p}`).setAttribute('aria-current', sel ? 'page' : 'false');
       });
       if(id==='favorites') renderFavs();
-      if(id==='forum') renderForum();
       if(id==='internships') renderJobs();
       moveTabUnderline();
     }
@@ -6375,30 +6142,14 @@ function computeKPIs(){
       state.pagination.page = 1;
     }
 
-    // Events modal content (FIXED for dark mode and outline)
+    // Events modal
     function openEvents(){
       $('#modalTitle').textContent = 'Upcoming events';
       $('#modalBody').innerHTML = `
-        <ul style="
-          margin:0; 
-          padding-left:18px; 
-          display:grid; 
-          gap:10px; 
-          color:var(--ink-2); /* ensures text is readable in dark mode */
-          background:transparent; /* prevent unwanted background */
-        ">
-          <li>
-            <strong style="color:var(--accent-700)">Tech Jobs Fair</strong> 
-            <span style="color:var(--ink-3)">· September 18 2025 · Virtual across Europe and India</span>
-          </li>
-          <li>
-            <strong style="color:var(--accent-700)">RSA Conference Career Tracks</strong> 
-            <span style="color:var(--ink-3)">· April 28 to May 1 2025 · San Francisco</span>
-          </li>
-          <li>
-            <strong style="color:var(--accent-700)">Web Summit</strong> 
-            <span style="color:var(--ink-3)">· November 10 to 13 2025 · Lisbon and online</span>
-          </li>
+        <ul style="margin:0; padding-left:18px; display:grid; gap:10px; color:var(--ink-2); background:transparent;">
+          <li><strong style="color:var(--accent-700)">Tech Jobs Fair</strong> <span style="color:var(--ink-3)">· September 18 2025 · Virtual across Europe and India</span></li>
+          <li><strong style="color:var(--accent-700)">RSA Conference Career Tracks</strong> <span style="color:var(--ink-3)">· April 28 to May 1 2025 · San Francisco</span></li>
+          <li><strong style="color:var(--accent-700)">Web Summit</strong> <span style="color:var(--ink-3)">· November 10 to 13 2025 · Lisbon and online</span></li>
         </ul>
       `;
       $('#applyBtn').href = '#';
@@ -6409,7 +6160,6 @@ function computeKPIs(){
     function wire(){
       theme.apply(theme.current);
       $('#modeToggle').addEventListener('click', ()=> theme.toggle());
-      
 
       $('#searchInput').addEventListener('input', e => { state.filters.q = e.target.value; state.pagination.page = 1; renderJobs(); });
       $('#filterLocation').addEventListener('change', e => { state.filters.location = e.target.value; state.pagination.page = 1; renderJobs(); });
@@ -6426,8 +6176,18 @@ function computeKPIs(){
         if(pressed) state.filters.domains.delete(d); else state.filters.domains.add(d);
         state.pagination.page = 1; renderJobs();
       });
-      $('#domainFilters').addEventListener('change', e => { if(e.target.matches('input[data-domain]')){ e.target.checked ? state.filters.domains.add(e.target.dataset.domain) : state.filters.domains.delete(e.target.dataset.domain); state.pagination.page=1; renderJobs(); }});
-      $('#tagFilters').addEventListener('change', e => { if(e.target.matches('input[data-tag]')){ e.target.checked ? state.filters.tags.add(e.target.dataset.tag) : state.filters.tags.delete(e.target.dataset.tag); state.pagination.page=1; renderJobs(); }});
+      $('#domainFilters').addEventListener('change', e => {
+        if(e.target.matches('input[data-domain]')){
+          e.target.checked ? state.filters.domains.add(e.target.dataset.domain) : state.filters.domains.delete(e.target.dataset.domain);
+          state.pagination.page=1; renderJobs();
+        }
+      });
+      $('#tagFilters').addEventListener('change', e => {
+        if(e.target.matches('input[data-tag]')){
+          e.target.checked ? state.filters.tags.add(e.target.dataset.tag) : state.filters.tags.delete(e.target.dataset.tag);
+          state.pagination.page=1; renderJobs();
+        }
+      });
 
       $('#jobGrid').addEventListener('click', onCardClick);
       $('#favGrid').addEventListener('click', onCardClick);
@@ -6438,24 +6198,13 @@ function computeKPIs(){
       $('#shareBtn').addEventListener('click', shareJob);
       $('#saveBtn').addEventListener('click', saveCurrent);
 
+      // Tabs for internships/favorites
       $$('#tab-internships, #nav-internships').forEach(el => el.addEventListener('click', () => setTab('internships')));
       $$('#tab-favorites, #nav-favorites').forEach(el => el.addEventListener('click', () => setTab('favorites')));
-      $$('#tab-forum, #nav-forum').forEach(el => el.addEventListener('click', () => setTab('forum')));
-
-      $('#postThread').addEventListener('click', addThread);
-      $('#clearComposer').addEventListener('click', () => { $('#threadTitle').value=''; $('#threadDesc').value=''; });
-      $('#threadList').addEventListener('click', e => {
-        const form = e.target.closest('form[data-add-comment]');
-        if(!form) return;
-        const idx = parseInt(form.getAttribute('data-add-comment'));
-        const action = e.target.getAttribute('data-action');
-        if(action==='post-comment'){ e.preventDefault(); addComment(idx, form.name.value, form.text.value); }
-        if(action==='cancel-comment'){ e.preventDefault(); form.text.value=''; }
-      });
 
       $('#year').textContent = new Date().getFullYear();
 
-      computeKPIs(); buildFilters(); renderJobs(); updateFavCount(); renderFavs(); renderForum();
+      computeKPIs(); buildFilters(); renderJobs(); updateFavCount(); renderFavs();
       openFromHash(); moveTabUnderline();
       window.addEventListener('resize', moveTabUnderline);
     }
@@ -6464,25 +6213,27 @@ function computeKPIs(){
 
     window.addEventListener('storage', e => {
       if(e.key === 'lt-data'){
-        try{ const data = JSON.parse(e.newValue); if(Array.isArray(data)){ state.internships = data; computeKPIs(); buildFilters(); renderJobs(); }}catch{}
+        try{
+          const data = JSON.parse(e.newValue);
+          if(Array.isArray(data)){
+            state.internships = data; computeKPIs(); buildFilters(); renderJobs();
+          }
+        }catch{}
       }
     });
 
     document.addEventListener('DOMContentLoaded', wire);
 
-    // REMOVE MORPHING EFFECT - just open modal directly on card click
+    // Open details by clicking anywhere on a card (except action buttons)
     document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('jobGrid').addEventListener('click', function(e){
         const card = e.target.closest('.job-card');
         if(!card) return;
-        // If it's a button with data-action, let onCardClick handle it
         if (e.target.closest('[data-action]')) return;
-        // Find the job key from the Details button (guaranteed present)
         const key = card.querySelector('.ghost-btn[data-action="details"]')?.dataset?.key;
         if (key) openDetails(key);
       });
     });
- 
   </script>
 </body>
 </html>
