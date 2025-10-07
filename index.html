@@ -250,6 +250,8 @@
         <button class="nav-btn" id="nav-favorites" data-tab="favorites">Favorites <span id="favCount" style="color:var(--ink-4)"></span></button>
         <!-- Replaced Forum with Dashboard -->
         <a class="nav-btn" id="nav-dashboard" href="newdashboard.html">Dashboard</a>
+        <!-- NEW: Profile button (only addition to the header) -->
+        <button class="nav-btn" id="nav-profile">Profile</button>
         <button class="mode-toggle" id="modeToggle" title="Toggle theme" aria-pressed="false">
           <span class="sr-only">Toggle theme</span>
           <svg class="i" viewBox="0 0 24 24"><use href="#i-sun"/></svg>
@@ -356,7 +358,7 @@
     <div id="favEmpty" style="padding:26px 0;color:var(--ink-3)">No favorites yet. Save roles you want to revisit.</div>
   </section>
 
-  <!-- Modal template -->
+  <!-- Details Modal (unchanged) -->
   <dialog class="modal" id="modal">
     <div class="modal-card">
       <div class="modal-head">
@@ -368,6 +370,40 @@
         <a class="btn" id="applyBtn" target="_blank" rel="noopener">Apply</a>
         <button class="ghost-btn" id="shareBtn">Copy link</button>
         <button class="ghost-btn" id="saveBtn">Save</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- NEW: Profile Modal (only addition below) -->
+  <dialog class="modal" id="profileModal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div style="font-weight:900;color:var(--ink-1)">Your profile</div>
+        <button class="ghost-btn" id="closeProfile">Close</button>
+      </div>
+      <div class="modal-body">
+        <div class="select">
+          <label class="sr-only" for="eduLevel">Education level</label>
+          <select id="eduLevel">
+            <option value="hs">High school</option>
+            <option value="ug">Undergraduate (enrolled)</option>
+            <option value="grad">Graduate (enrolled)</option>
+            <option value="degree">College degree completed</option>
+          </select>
+        </div>
+
+        <div>
+          <div style="font-weight:800;color:var(--ink-1);margin:8px 0 6px">Interested fields</div>
+          <div class="filters" id="profileFields"></div>
+        </div>
+
+        <div>
+          <div style="font-weight:800;color:var(--ink-1);margin:8px 0 6px">Preferred locations</div>
+          <div class="filters" id="profileLocations"></div>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" id="saveProfile">Save</button>
       </div>
     </div>
   </dialog>
@@ -393,7 +429,8 @@
     ];
 
     const defaultInternships = [
-       { title:"Student Researcher Program (DeepMind, Google Research)", 
+    
+{ title:"Student Researcher Program (DeepMind, Google Research)", 
   company:"Google DeepMind", 
   field:"AI & Machine Learning", 
   location:"London, Paris, Mountain View, other DeepMind sites (on-site)", 
@@ -5823,6 +5860,8 @@
     description: "Paid internships offering hands-on policy, research, public administration, and social analytics experience in federal government.",
     logo: "FGOV"
   },
+
+
   
 
     ];
@@ -5839,7 +5878,9 @@
       internships: stored || defaultInternships,
       favorites: JSON.parse(localStorage.getItem("lt-favs") || "[]"),
       filters: { q:"", location:"All", domains:new Set(), tags:new Set(), sort:"default", paidOnly:false },
-      pagination: { page:1, size:12 }
+      pagination: { page:1, size:12 },
+      // NEW: profile (saved to localStorage)
+      profile: loadProfile()
     };
 
     // Utilities
@@ -5922,9 +5963,17 @@
       tagFilters.innerHTML = allTags.map(t => `
         <label class="check"><input type="checkbox" data-tag="${t}"> <span>${t}</span></label>
       `).join('');
+
+      // NEW: populate profile modal checkboxes (fields & locations)
+      const pf = $('#profileFields');
+      pf.innerHTML = subjectLabels.map(l => `<label class="check"><input type="checkbox" data-pfield="${l}"> <span>${l}</span></label>`).join('');
+      const pl = $('#profileLocations');
+      const uniqLocs = unique(state.internships.map(i => normalizeLocation(i.location))).filter(Boolean);
+      pl.innerHTML = uniqLocs.map(l => `<label class="check"><input type="checkbox" data-ploc="${l}"> <span>${l}</span></label>`).join('');
+      applyProfileToModal();
     }
 
-    // Matching and sorting
+    // Matching and sorting (unchanged)
     function matchesFilters(job){
       const q = state.filters.q.trim().toLowerCase();
       const locOk = state.filters.location === 'All' || normalizeLocation(job.location) === state.filters.location;
@@ -6156,6 +6205,25 @@
       $('#modal').showModal();
     }
 
+    // ===== NEW: PROFILE STORAGE & UI (only addition in JS) =====
+    function loadProfile(){
+      try{ return JSON.parse(localStorage.getItem('lt-profile')||'{}'); }catch{ return {}; }
+    }
+    function saveProfileToStorage(){
+      localStorage.setItem('lt-profile', JSON.stringify(state.profile||{}));
+    }
+    function applyProfileToModal(){
+      const p = state.profile || {};
+      const edu = p.eduLevel || 'hs';
+      const fields = new Set(p.fields || []);
+      const locs = new Set(p.locations || []);
+      const eduSel = $('#eduLevel'); if(eduSel) eduSel.value = edu;
+      $$('#profileFields input').forEach(i => i.checked = fields.has(i.dataset.pfield));
+      $$('#profileLocations input').forEach(i => i.checked = locs.has(i.dataset.ploc));
+    }
+    function openProfile(){ applyProfileToModal(); $('#profileModal').showModal(); }
+    function closeProfile(){ $('#profileModal').close(); }
+
     // Wire everything
     function wire(){
       theme.apply(theme.current);
@@ -6198,6 +6266,19 @@
       $('#shareBtn').addEventListener('click', shareJob);
       $('#saveBtn').addEventListener('click', saveCurrent);
 
+      // NEW: profile events
+      $('#nav-profile').addEventListener('click', openProfile);
+      $('#closeProfile').addEventListener('click', closeProfile);
+      $('#saveProfile').addEventListener('click', ()=>{
+        const eduLevel = $('#eduLevel').value;
+        const fields = $$('#profileFields input:checked').map(i=>i.dataset.pfield);
+        const locations = $$('#profileLocations input:checked').map(i=>i.dataset.ploc);
+        state.profile = { eduLevel, fields, locations };
+        saveProfileToStorage();
+        closeProfile();
+        toast('Profile saved.');
+      });
+
       // Tabs for internships/favorites
       $$('#tab-internships, #nav-internships').forEach(el => el.addEventListener('click', () => setTab('internships')));
       $$('#tab-favorites, #nav-favorites').forEach(el => el.addEventListener('click', () => setTab('favorites')));
@@ -6209,7 +6290,12 @@
       window.addEventListener('resize', moveTabUnderline);
     }
 
-    window.addEventListener('keydown', e => { if(e.key==='Escape' && $('#modal').open) closeModal(); });
+    window.addEventListener('keydown', e => { 
+      if(e.key==='Escape'){
+        if($('#modal')?.open) closeModal();
+        if($('#profileModal')?.open) closeProfile();
+      }
+    });
 
     window.addEventListener('storage', e => {
       if(e.key === 'lt-data'){
@@ -6218,6 +6304,12 @@
           if(Array.isArray(data)){
             state.internships = data; computeKPIs(); buildFilters(); renderJobs();
           }
+        }catch{}
+      }
+      if(e.key === 'lt-profile'){
+        try{
+          state.profile = JSON.parse(e.newValue||'{}');
+          applyProfileToModal();
         }catch{}
       }
     });
