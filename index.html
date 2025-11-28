@@ -1,0 +1,3127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H9KDS5VDQV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-H9KDS5VDQV');
+  </script>
+
+  <meta charset="UTF-8" />
+  <title>Linktern — Free Internship OS for Students & Teams</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Font & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
+
+  <style>
+    /* ============ RESET ============ */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      scroll-behavior: smooth;
+    }
+
+    /* ============ TOKENS ============ */
+    :root {
+      /* Core surfaces */
+      --body-bg: radial-gradient(circle at top left, #23154a 0, #07001f 45%, #020010 100%);
+      --bg-main: #050016;
+      --bg-elevated: rgba(12, 10, 36, 0.96);
+      --bg-soft: rgba(10, 9, 34, 0.96);
+      --bg-chip: rgba(7, 6, 30, 0.92);
+      --bg-badge: rgba(9, 9, 32, 0.96);
+      --bg-card-strong: rgba(7, 4, 26, 0.98);
+      --bg-hero-card: rgba(4, 3, 20, 0.96);
+      --bg-hero-side: rgba(5, 4, 22, 0.96);
+      --bg-footer: radial-gradient(circle at 0 0, rgba(125, 92, 255, 0.26), transparent 50%), rgba(5, 0, 16, 0.98);
+
+      /* Accent */
+      --accent-1: #7d5cff;
+      --accent-2: #4dd6ff;
+      --accent-3: #ff7ae0;
+      --accent-gold: #ffdd7a;
+
+      /* Text */
+      --text-main: #f8f7ff;
+      --text-muted: #a8afc7;
+      --text-soft: #858bb0;
+
+      /* Border & shadow */
+      --border-soft: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --radius-lg: 20px;
+      --radius-xl: 24px;
+      --shadow-soft: 0 22px 60px rgba(0, 0, 0, 0.8);
+      --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.9);
+      --blur-glass: 18px;
+      --transition-fast: 0.18s cubic-bezier(.16, .84, .44, 1);
+      --transition-med: 0.35s cubic-bezier(.16, .84, .44, 1);
+      --nav-height: 76px;
+      --section-spacing: 3.6rem;
+      --divider-color: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Light theme overrides */
+    body[data-theme="light"] {
+      --body-bg: radial-gradient(circle at top left, #ffffff 0, #e7f0ff 40%, #d6e3ff 100%);
+      --bg-main: #f5f7ff;
+      --bg-elevated: rgba(255, 255, 255, 0.96);
+      --bg-soft: rgba(245, 248, 255, 0.96);
+      --bg-chip: rgba(236, 240, 255, 0.96);
+      --bg-badge: rgba(235, 240, 255, 0.96);
+      --bg-card-strong: rgba(245, 248, 255, 0.98);
+      --bg-hero-card: rgba(242, 245, 255, 0.96);
+      --bg-hero-side: rgba(240, 244, 255, 0.96);
+      --bg-footer: radial-gradient(circle at 0 0, rgba(125, 92, 255, 0.12), transparent 50%), #eef2ff;
+
+      --text-main: #0f172a;
+      --text-muted: #5b647b;
+      --text-soft: #7a8196;
+
+      --border-soft: rgba(15, 23, 42, 0.06);
+      --border-strong: rgba(15, 23, 42, 0.12);
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.3);
+      --shadow-card: 0 16px 32px rgba(15, 23, 42, 0.24);
+      --divider-color: rgba(15, 23, 42, 0.08);
+    }
+
+    body {
+      font-family: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--body-bg);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    img,
+    svg {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+
+    /* Keyboard focus styles */
+    a:focus-visible,
+    button:focus-visible,
+    [role="tab"]:focus-visible {
+      outline: 2px solid var(--accent-2);
+      outline-offset: 3px;
+    }
+
+    /* ============ BACKGROUND GLOW & ORBS ============ */
+    .cursor-glow {
+      position: fixed;
+      width: 260px;
+      height: 260px;
+      pointer-events: none;
+      border-radius: 50%;
+      background: radial-gradient(circle at center,
+          rgba(125, 92, 255, 0.85),
+          rgba(10, 0, 40, 0.01));
+      filter: blur(4px);
+      mix-blend-mode: screen;
+      opacity: 0;
+      z-index: 0;
+      transform: translate3d(-999px, -999px, 0);
+      transition: opacity 0.45s ease-out;
+    }
+
+    body[data-theme="light"] .cursor-glow {
+      background: radial-gradient(circle at center,
+          rgba(125, 92, 255, 0.32),
+          rgba(255, 255, 255, 0.01));
+      mix-blend-mode: multiply;
+    }
+
+    .orb {
+      position: fixed;
+      pointer-events: none;
+      border-radius: 50%;
+      filter: blur(32px);
+      opacity: 0.5;
+      mix-blend-mode: screen;
+      z-index: 0;
+    }
+
+    .orb--1 {
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle at 20% 20%, #7d5cff, rgba(5, 0, 30, 0.1));
+      top: -40px;
+      left: -40px;
+      animation: float-orb-1 22s ease-in-out infinite alternate;
+    }
+
+    .orb--2 {
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle at 70% 80%, #4dd6ff, rgba(3, 10, 40, 0.15));
+      bottom: 12%;
+      right: 6%;
+      animation: float-orb-2 26s ease-in-out infinite alternate;
+    }
+
+    body[data-theme="light"] .orb--1,
+    body[data-theme="light"] .orb--2 {
+      opacity: 0.28;
+      filter: blur(40px);
+    }
+
+    @keyframes float-orb-1 {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+
+      100% {
+        transform: translate3d(30px, 40px, 0);
+      }
+    }
+
+    @keyframes float-orb-2 {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+
+      100% {
+        transform: translate3d(-30px, -30px, 0);
+      }
+    }
+
+    /* ============ LAYOUT ============ */
+    .page-shell {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      color: var(--text-main);
+      background: radial-gradient(circle at top left, rgba(35, 21, 74, 0.6) 0, rgba(5, 0, 22, 0.98) 45%, #020010 100%);
+    }
+
+    body[data-theme="light"] .page-shell {
+      background: linear-gradient(to bottom, #eef2ff 0, #f9fafb 45%, #e5edff 100%);
+    }
+
+    .inner {
+      width: min(1120px, 100% - 2.5rem);
+      margin: 0 auto;
+    }
+
+    .section-divider {
+      border-top: 1px solid var(--divider-color);
+      margin: 0 auto;
+      width: min(1120px, 100% - 2.5rem);
+    }
+
+    /* ============ NAVBAR ============ */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(20px);
+      background: linear-gradient(to bottom,
+          rgba(5, 0, 20, 0.96),
+          rgba(5, 0, 20, 0.85),
+          transparent);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      transition: background 0.4s ease, border-color 0.4s ease;
+    }
+
+    body[data-theme="light"] .nav {
+      background: linear-gradient(to bottom,
+          rgba(244, 245, 255, 0.98),
+          rgba(244, 245, 255, 0.92),
+          transparent);
+      border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+    }
+
+    .nav-inner {
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 14px;
+      background:
+        radial-gradient(circle at 20% 20%, #ffffff, transparent 55%),
+        conic-gradient(from 200deg, #4dd6ff, #7d5cff, #ff7ae0, #4dd6ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18),
+        0 16px 40px rgba(0, 0, 0, 0.8);
+    }
+
+    body[data-theme="light"] .logo-mark {
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.06),
+        0 12px 28px rgba(15, 23, 42, 0.2);
+    }
+
+    .logo-mark span {
+      font-size: 15px;
+      font-weight: 800;
+      color: #050014;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.05rem;
+    }
+
+    .logo-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .logo-sub {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-soft);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.6rem;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      position: relative;
+      color: var(--text-soft);
+      font-weight: 500;
+      padding-bottom: 2px;
+      opacity: 0.92;
+      transition: color var(--transition-fast), opacity var(--transition-fast);
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #7d5cff, #4dd6ff);
+      transition: width var(--transition-fast);
+    }
+
+    .nav-links a:hover {
+      color: #ffffff;
+      opacity: 1;
+    }
+
+    body[data-theme="light"] .nav-links a:hover {
+      color: #111827;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-pill {
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-soft);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--bg-elevated);
+      white-space: nowrap;
+    }
+
+    body[data-theme="light"] .nav-pill {
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    .nav-pill i {
+      font-size: 0.9rem;
+      color: var(--accent-gold);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 999px;
+      padding: 0.6rem 1.15rem;
+      transition: transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast),
+        color var(--transition-fast),
+        border-color var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background:
+        radial-gradient(circle at 0 0, #ffffff, #e7dfff 6%, transparent 40%),
+        linear-gradient(120deg, var(--accent-gold), var(--accent-3), var(--accent-2));
+      color: #050014;
+      box-shadow: 0 18px 46px rgba(0, 0, 0, 0.9);
+      position: relative;
+      overflow: hidden;
+    }
+
+    body[data-theme="light"] .btn-primary {
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.25);
+    }
+
+    .btn-primary::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.4), transparent 40%, rgba(255, 255, 255, 0.4), transparent 70%);
+      opacity: 0;
+      transform: translateX(-120%);
+      pointer-events: none;
+    }
+
+    .btn-primary:hover::after {
+      opacity: 1;
+      animation: btn-shine 1.4s ease-out;
+    }
+
+    @keyframes btn-shine {
+      to {
+        transform: translateX(120%);
+      }
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.98);
+    }
+
+    body[data-theme="light"] .btn-primary:hover {
+      box-shadow: 0 20px 48px rgba(15, 23, 42, 0.32);
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-main);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    body[data-theme="light"] .btn-ghost {
+      background: rgba(255, 255, 255, 0.9);
+      color: #111827;
+      border-color: rgba(15, 23, 42, 0.1);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.06);
+      transform: translateY(-1px);
+    }
+
+    body[data-theme="light"] .btn-ghost:hover {
+      background: #eef2ff;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-soft);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    body[data-theme="light"] .btn-outline {
+      border-color: rgba(15, 23, 42, 0.12);
+    }
+
+    .btn-outline:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateY(-1px);
+    }
+
+    body[data-theme="light"] .btn-outline:hover {
+      color: #111827;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .btn i {
+      font-size: 1rem;
+    }
+
+    .theme-toggle {
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      background: rgba(7, 6, 30, 0.96);
+      transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .theme-toggle-icon {
+      font-size: 1rem;
+    }
+
+    body[data-theme="light"] .theme-toggle {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(15, 23, 42, 0.1);
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 960px) {
+      .nav-right .btn-outline {
+        display: none;
+      }
+    }
+
+    @media (max-width: 840px) {
+      .nav-inner {
+        justify-content: space-between;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-pill {
+        display: none;
+      }
+    }
+
+    /* ============ HERO ============ */
+    .hero {
+      padding: 3.1rem 0 var(--section-spacing);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.05fr);
+      gap: 2.6rem;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 2.8rem;
+      }
+    }
+
+    .announcement-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.32rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: var(--bg-chip);
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      margin-bottom: 1rem;
+    }
+
+    body[data-theme="light"] .announcement-bar {
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    .announcement-pill {
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(125, 92, 255, 0.2);
+      color: #efe9ff;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+    }
+
+    body[data-theme="light"] .announcement-pill {
+      background: rgba(125, 92, 255, 0.14);
+      color: #3b1f7a;
+    }
+
+    .hero-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.32rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: var(--bg-chip);
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    body[data-theme="light"] .hero-pill {
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    .hero-pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      box-shadow: 0 0 12px var(--accent-2);
+    }
+
+    .hero-badge {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 3.9vw, 3.4rem);
+      line-height: 1.05;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      margin-bottom: 0.9rem;
+    }
+
+    .hero-title span.gradient {
+      background: linear-gradient(120deg, var(--accent-gold), var(--accent-3), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      line-height: 1.65;
+      color: var(--text-muted);
+      max-width: 32rem;
+      margin-bottom: 1.7rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      align-items: center;
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-microcopy {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.82rem;
+      color: var(--text-soft);
+    }
+
+    .hero-microcopy i {
+      color: var(--accent-2);
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.7rem;
+      padding-top: 1.1rem;
+    }
+
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .hero-stat-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-soft);
+    }
+
+    .hero-stat-number {
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    .trusted-strip {
+      margin-top: 2rem;
+      padding: 0.75rem 1rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: var(--bg-badge);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--text-soft);
+    }
+
+    body[data-theme="light"] .trusted-strip {
+      border-color: rgba(15, 23, 42, 0.06);
+    }
+
+    .trusted-strip span {
+      font-weight: 500;
+      color: #d7dcff;
+    }
+
+    body[data-theme="light"] .trusted-strip span {
+      color: #1f2937;
+    }
+
+    .trusted-logos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      font-size: 0.78rem;
+    }
+
+    .trusted-pill {
+      padding: 0.22rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.7rem;
+      color: var(--text-soft);
+    }
+
+    body[data-theme="light"] .trusted-pill {
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    /* ============ HERO VISUAL ============ */
+    .hero-visual-wrap {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1200px;
+    }
+
+    .hero-visual {
+      position: relative;
+      width: min(430px, 100%);
+      aspect-ratio: 4 / 5;
+      border-radius: var(--radius-xl);
+      background:
+        radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.18), transparent 40%),
+        radial-gradient(circle at 100% 0, rgba(77, 214, 255, 0.55), transparent 55%),
+        linear-gradient(150deg, #0b061f, #050015);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: var(--shadow-soft);
+      padding: 1.2rem;
+      transform-style: preserve-3d;
+      transition: transform 0.4s ease-out, box-shadow 0.4s ease-out, background 0.4s ease-out, border-color 0.4s ease-out;
+    }
+
+    body[data-theme="light"] .hero-visual {
+      background:
+        radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.95), transparent 40%),
+        radial-gradient(circle at 100% 0, rgba(77, 214, 255, 0.2), transparent 55%),
+        linear-gradient(150deg, #eef2ff, #ffffff);
+      border-color: rgba(15, 23, 42, 0.06);
+    }
+
+    .hero-visual.is-tilted {
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.95);
+    }
+
+    body[data-theme="light"] .hero-visual.is-tilted {
+      box-shadow: 0 26px 60px rgba(15, 23, 42, 0.32);
+    }
+
+    .hero-visual-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-logo-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      background: var(--bg-hero-card);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      font-size: 0.78rem;
+      color: var(--text-soft);
+    }
+
+    body[data-theme="light"] .hero-logo-pill {
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    .hero-logo-pill span {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .hero-availability {
+      font-size: 0.7rem;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .hero-availability-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      box-shadow: 0 0 12px var(--accent-2);
+    }
+
+    .hero-visual-main {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .hero-card {
+      position: relative;
+      padding: 0.85rem 0.9rem;
+      border-radius: 18px;
+      background: var(--bg-hero-card);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+    }
+
+    body[data-theme="light"] .hero-card {
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    .hero-card-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.55rem;
+    }
+
+    .hero-card-title {
+      font-size: 0.86rem;
+      font-weight: 600;
+    }
+
+    .hero-card-chip {
+      font-size: 0.72rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(77, 214, 255, 0.7);
+      color: #b8ecff;
+      background: rgba(4, 20, 26, 0.75);
+    }
+
+    body[data-theme="light"] .hero-card-chip {
+      background: rgba(219, 246, 255, 0.85);
+      color: #064458;
+      border-color: rgba(34, 211, 238, 0.7);
+    }
+
+    .hero-opportunity-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.37rem;
+      margin-top: 0.35rem;
+    }
+
+    .hero-op {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.4rem 0.55rem;
+      border-radius: 0.9rem;
+      background: rgba(10, 10, 30, 0.96);
+      font-size: 0.8rem;
+    }
+
+    body[data-theme="light"] .hero-op {
+      background: rgba(243, 246, 255, 0.98);
+    }
+
+    .hero-op-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.08rem;
+      font-size: 0.8rem;
+    }
+
+    .hero-op-title {
+      font-weight: 600;
+    }
+
+    .hero-op-sub {
+      font-size: 0.7rem;
+      color: var(--text-soft);
+    }
+
+    .hero-op-tag {
+      font-size: 0.7rem;
+      padding: 0.16rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(125, 92, 255, 0.24);
+      color: #e2d9ff;
+    }
+
+    body[data-theme="light"] .hero-op-tag {
+      background: rgba(125, 92, 255, 0.14);
+      color: #3b1f7a;
+    }
+
+    .hero-side-card {
+      padding: 0.7rem 0.8rem;
+      border-radius: 18px;
+      background: var(--bg-hero-side);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(16px);
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    body[data-theme="light"] .hero-side-card {
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    .hero-progress-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+    }
+
+    .hero-progress-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.76rem;
+      color: var(--text-soft);
+    }
+
+    .hero-progress-bar {
+      width: 100%;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+      position: relative;
+    }
+
+    body[data-theme="light"] .hero-progress-bar {
+      background: rgba(148, 163, 184, 0.16);
+    }
+
+    .hero-progress-bar span {
+      position: absolute;
+      inset: 0;
+      width: 78%;
+      background: linear-gradient(90deg, var(--accent-2), var(--accent-1));
+      border-radius: inherit;
+      overflow: hidden;
+    }
+
+    .hero-progress-bar span::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.5), transparent 40%, rgba(255, 255, 255, 0.6), transparent 70%);
+      animation: shimmer 3.3s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes shimmer {
+      0% {
+        transform: translateX(-120%);
+      }
+
+      100% {
+        transform: translateX(120%);
+      }
+    }
+
+    .hero-mini-row {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-mini-pill {
+      flex: 1 1 45%;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.5rem;
+      border-radius: 0.8rem;
+      background: rgba(8, 8, 28, 0.96);
+      font-size: 0.76rem;
+      color: var(--text-soft);
+    }
+
+    body[data-theme="light"] .hero-mini-pill {
+      background: rgba(243, 246, 255, 1);
+    }
+
+    .hero-mini-pill i {
+      font-size: 0.9rem;
+      color: var(--accent-2);
+    }
+
+    .hero-float-card {
+      position: absolute;
+      right: -4px;
+      bottom: 11%;
+      padding: 0.55rem 0.8rem;
+      border-radius: 16px;
+      background: rgba(3, 0, 20, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 0.78rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9);
+      animation: float-card 6s ease-in-out infinite alternate;
+    }
+
+    body[data-theme="light"] .hero-float-card {
+      background: #ffffff;
+      border-color: rgba(15, 23, 42, 0.1);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.25);
+    }
+
+    .hero-float-card-avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 20% 20%, #ffffff, #f0e7ff 36%, #7d5cff);
+      display: grid;
+      place-items: center;
+      color: #050014;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .hero-float-card strong {
+      font-weight: 600;
+      display: block;
+    }
+
+    .hero-float-card span {
+      color: var(--text-soft);
+      display: block;
+    }
+
+    @keyframes float-card {
+      0% {
+        transform: translateY(0) translateX(0);
+      }
+
+      100% {
+        transform: translateY(-12px) translateX(-6px);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        padding-top: 2.6rem;
+      }
+
+      .hero-visual {
+        max-width: 360px;
+      }
+
+      .hero-float-card {
+        bottom: 7%;
+      }
+    }
+
+    /* ============ SECTION BASE ============ */
+    .section {
+      padding: var(--section-spacing) 0;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1.5rem;
+      margin-bottom: 1.9rem;
+    }
+
+    .section-eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-bottom: 0.35rem;
+    }
+
+    .section-title {
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .section-title span {
+      background: linear-gradient(120deg, var(--accent-gold), var(--accent-3), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .section-subtitle {
+      font-size: 0.94rem;
+      color: var(--text-muted);
+      max-width: 28rem;
+    }
+
+    @media (max-width: 800px) {
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .section {
+        padding: 3.2rem 0;
+      }
+    }
+
+    /* ============ FEATURES ============ */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 950px) {
+      .features-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .features-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .feature-card {
+      position: relative;
+      padding: 1.05rem 1.1rem;
+      border-radius: 18px;
+      background: var(--bg-soft);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      transition: transform var(--transition-med),
+        box-shadow var(--transition-med),
+        border-color var(--transition-med),
+        background var(--transition-med);
+    }
+
+    body[data-theme="light"] .feature-card {
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      inset: -50%;
+      background:
+        radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.18), transparent 55%),
+        radial-gradient(circle at 100% 0, rgba(77, 214, 255, 0.4), transparent 55%);
+      opacity: 0;
+      mix-blend-mode: screen;
+      transition: opacity var(--transition-med);
+      pointer-events: none;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.95);
+      border-color: rgba(125, 92, 255, 0.7);
+      background: rgba(10, 10, 36, 0.98);
+    }
+
+    body[data-theme="light"] .feature-card:hover {
+      background: #ffffff;
+      box-shadow: 0 22px 50px rgba(15, 23, 42, 0.28);
+    }
+
+    .feature-card:hover::before {
+      opacity: 0.45;
+    }
+
+    .feature-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+      background:
+        radial-gradient(circle at 20% 20%, #ffffff, transparent 45%),
+        linear-gradient(135deg, #7d5cff, #4dd6ff);
+      color: #050014;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    body[data-theme="light"] .feature-icon {
+      box-shadow: 0 14px 30px rgba(59, 130, 246, 0.35);
+    }
+
+    .feature-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .feature-body {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .feature-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--text-soft);
+    }
+
+    .feature-chip {
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    body[data-theme="light"] .feature-chip {
+      border-color: rgba(15, 23, 42, 0.1);
+    }
+
+    .usecases-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.8rem;
+      font-size: 0.86rem;
+    }
+
+    @media (max-width: 900px) {
+      .usecases-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .usecase-item {
+      padding: 0.75rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(7, 6, 30, 0.96);
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      color: var(--text-soft);
+    }
+
+    body[data-theme="light"] .usecase-item {
+      border-color: rgba(15, 23, 42, 0.08);
+      background: rgba(243, 246, 255, 1);
+    }
+
+    .usecase-item strong {
+      color: var(--text-main);
+    }
+
+    .usecase-pill-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      font-size: 0.9rem;
+      background: rgba(125, 92, 255, 0.2);
+      color: #e4ddff;
+    }
+
+    body[data-theme="light"] .usecase-pill-icon {
+      background: rgba(125, 92, 255, 0.16);
+      color: #3b1f7a;
+    }
+
+    .integrations-strip {
+      margin-top: 2rem;
+      border-radius: 18px;
+      padding: 0.9rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(9, 9, 28, 0.96);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    body[data-theme="light"] .integrations-strip {
+      border-color: rgba(15, 23, 42, 0.08);
+      background: rgba(236, 239, 255, 0.96);
+    }
+
+    .integration-pill {
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.78rem;
+      background: rgba(12, 10, 36, 0.96);
+    }
+
+    body[data-theme="light"] .integration-pill {
+      border-color: rgba(15, 23, 42, 0.08);
+      background: #ffffff;
+    }
+
+    .integration-pill i {
+      font-size: 0.9rem;
+      color: var(--accent-2);
+    }
+
+    /* ============ PREVIEW: INSIDE THE DASHBOARD ============ */
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.4rem;
+    }
+
+    @media (max-width: 950px) {
+      .preview-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .preview-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .preview-card {
+      border-radius: 18px;
+      padding: 0.9rem 1rem;
+      background: rgba(9, 9, 32, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: var(--shadow-card);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    body[data-theme="light"] .preview-card {
+      background: rgba(243, 246, 255, 1);
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    .preview-label {
+      font-size: 0.77rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-soft);
+    }
+
+    .preview-title {
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .preview-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .preview-pill {
+      font-size: 0.74rem;
+      padding: 0.16rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--text-soft);
+    }
+
+    body[data-theme="light"] .preview-pill {
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    /* ============ HOW IT WORKS ============ */
+    .how-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: 1.8rem;
+    }
+
+    @media (max-width: 900px) {
+      .how-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 1.1rem;
+      border-left: 1px dashed rgba(255, 255, 255, 0.2);
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    body[data-theme="light"] .timeline {
+      border-left-color: rgba(15, 23, 42, 0.1);
+    }
+
+    .timeline-step {
+      position: relative;
+      padding-left: 0.7rem;
+    }
+
+    .timeline-step::before {
+      content: "";
+      position: absolute;
+      left: -1.25rem;
+      top: 0.2rem;
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+      box-shadow: 0 0 0 4px rgba(125, 92, 255, 0.25);
+    }
+
+    .timeline-label {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.15rem;
+    }
+
+    .timeline-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    .timeline-body {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .how-card {
+      border-radius: 20px;
+      padding: 1.1rem 1rem;
+      background: var(--bg-card-strong);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    body[data-theme="light"] .how-card {
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    .how-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .how-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.84rem;
+      padding: 0.48rem 0.55rem;
+      border-radius: 12px;
+      background: rgba(8, 8, 30, 0.96);
+    }
+
+    body[data-theme="light"] .how-row {
+      background: rgba(243, 246, 255, 1);
+    }
+
+    .how-row-label {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--text-soft);
+    }
+
+    .how-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+      box-shadow: 0 0 16px rgba(77, 214, 255, 0.65);
+    }
+
+    .how-row strong {
+      font-weight: 600;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .badge {
+      font-size: 0.74rem;
+      padding: 0.22rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: var(--text-soft);
+      background: rgba(9, 9, 32, 0.96);
+    }
+
+    body[data-theme="light"] .badge {
+      border-color: rgba(15, 23, 42, 0.08);
+      background: rgba(243, 246, 255, 1);
+    }
+
+    /* ============ AUDIENCES / FOR YOU ============ */
+    .audience-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .pill-switch {
+      display: inline-flex;
+      padding: 0.2rem;
+      border-radius: 999px;
+      background: rgba(3, 2, 18, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    body[data-theme="light"] .pill-switch {
+      background: rgba(243, 246, 255, 1);
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    .pill-btn {
+      border-radius: 999px;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-soft);
+      transition: background var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+    }
+
+    .pill-btn.is-active {
+      background: linear-gradient(120deg, var(--accent-1), var(--accent-2));
+      color: #050014;
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 768px) {
+      .audience-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    .audience-panels {
+      position: relative;
+    }
+
+    .audience-panel {
+      display: none;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .audience-panel.is-active {
+      display: grid;
+    }
+
+    @media (max-width: 900px) {
+      .audience-panel.is-active {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .audience-list {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.75rem;
+    }
+
+    .audience-line {
+      padding: 0.55rem 0.7rem;
+      border-radius: 14px;
+      background: rgba(9, 9, 32, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.86rem;
+    }
+
+    body[data-theme="light"] .audience-line {
+      background: rgba(243, 246, 255, 1);
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    .audience-line span {
+      color: var(--text-soft);
+      font-size: 0.8rem;
+    }
+
+    .audience-kpi {
+      font-size: 0.8rem;
+      color: #b5bffd;
+      white-space: nowrap;
+    }
+
+    body[data-theme="light"] .audience-kpi {
+      color: #4f46e5;
+    }
+
+    .audience-panel-right {
+      border-radius: 20px;
+      padding: 1rem 1rem;
+      background: var(--bg-card-strong);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      font-size: 0.86rem;
+    }
+
+    body[data-theme="light"] .audience-panel-right {
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    .audience-panel-right h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .audience-panel-right p {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    /* ============ FREE PLAN (PRICING-STYLE) ============ */
+    .free-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 1.4rem;
+    }
+
+    @media (max-width: 900px) {
+      .free-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .free-card {
+      border-radius: var(--radius-lg);
+      padding: 1.15rem 1.2rem;
+      background:
+        radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.18), transparent 40%),
+        rgba(9, 9, 32, 0.98);
+      border: 1px solid rgba(125, 92, 255, 0.9);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body[data-theme="light"] .free-card {
+      background:
+        radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.9), transparent 40%),
+        #eef2ff;
+      border-color: rgba(79, 70, 229, 0.8);
+    }
+
+    .free-badge {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #ffefd0;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    body[data-theme="light"] .free-badge {
+      color: #92400e;
+    }
+
+    .free-badge i {
+      font-size: 0.98rem;
+      color: var(--accent-gold);
+    }
+
+    .free-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .free-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.45rem;
+    }
+
+    .free-price {
+      font-size: 1.7rem;
+      font-weight: 800;
+    }
+
+    .free-period {
+      font-size: 0.82rem;
+      color: var(--text-soft);
+    }
+
+    .free-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 0.35rem;
+      margin-bottom: 0.45rem;
+      max-width: 24rem;
+    }
+
+    .free-list {
+      font-size: 0.84rem;
+      color: var(--text-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .free-list span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .free-list i {
+      font-size: 0.9rem;
+      color: var(--accent-2);
+    }
+
+    .free-side {
+      border-radius: var(--radius-lg);
+      padding: 1.05rem 1.1rem;
+      background: var(--bg-card-strong);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    body[data-theme="light"] .free-side {
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    .free-side strong {
+      color: var(--text-main);
+    }
+
+    .free-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-top: 0.8rem;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .free-metric-pill {
+      padding: 0.26rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    body[data-theme="light"] .free-metric-pill {
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    /* ============ TESTIMONIALS ============ */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .testimonials-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .testimonial-card {
+      border-radius: 20px;
+      padding: 1rem 1.1rem;
+      background: rgba(10, 9, 34, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    body[data-theme="light"] .testimonial-card {
+      background: rgba(243, 246, 255, 1);
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    .testimonial-quote {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .testimonial-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.7rem;
+      font-size: 0.82rem;
+    }
+
+    .testimonial-person {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .testimonial-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 20% 10%, #ffffff, #e4dcff 40%, #7d5cff);
+      display: grid;
+      place-items: center;
+      color: #050014;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .testimonial-name {
+      font-weight: 600;
+    }
+
+    .testimonial-role {
+      color: var(--text-soft);
+      font-size: 0.78rem;
+    }
+
+    .testimonial-tag {
+      font-size: 0.76rem;
+      color: #b5bffd;
+      text-align: right;
+    }
+
+    body[data-theme="light"] .testimonial-tag {
+      color: #4f46e5;
+    }
+
+    .testimonial-mini-row {
+      margin-top: 1.3rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .testimonial-mini-pill {
+      padding: 0.26rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    body[data-theme="light"] .testimonial-mini-pill {
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    /* ============ FAQ ============ */
+    .faq-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 840px) {
+      .faq-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .faq-intro {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: 20rem;
+    }
+
+    .faq-intro strong {
+      color: var(--text-main);
+    }
+
+    .accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .accordion-item {
+      border-radius: 16px;
+      background: rgba(9, 9, 32, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      overflow: hidden;
+    }
+
+    body[data-theme="light"] .accordion-item {
+      background: rgba(243, 246, 255, 1);
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    .accordion-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.72rem 0.9rem;
+      font-size: 0.88rem;
+      cursor: pointer;
+    }
+
+    .accordion-header span {
+      max-width: 90%;
+    }
+
+    .accordion-header i {
+      font-size: 1rem;
+      color: var(--text-soft);
+      transition: transform 0.2s ease;
+    }
+
+    .accordion-header.is-open i {
+      transform: rotate(180deg);
+    }
+
+    .accordion-body {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      padding: 0 0.9rem 0.75rem;
+      display: none;
+    }
+
+    .accordion-body.is-open {
+      display: block;
+    }
+
+    /* ============ FOOTER ============ */
+    .footer {
+      padding: 2.4rem 0 2.4rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      background: var(--bg-footer);
+      margin-top: 1.3rem;
+      transition: background 0.4s ease, border-color 0.4s ease;
+    }
+
+    body[data-theme="light"] .footer {
+      border-top-color: rgba(15, 23, 42, 0.08);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 1.4rem;
+      align-items: center;
+    }
+
+    @media (max-width: 840px) {
+      .footer-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .footer-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+
+    .footer-body {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      max-width: 26rem;
+    }
+
+    .footer-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 1.4rem;
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      margin-top: 1.4rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .footer-links a:hover {
+      color: var(--text-main);
+    }
+
+    /* ============ SCROLL REVEAL ============ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s cubic-bezier(.16, .84, .44, 1),
+        transform 0.7s cubic-bezier(.16, .84, .44, 1);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Cursor glow -->
+  <div class="cursor-glow"></div>
+  <!-- Background orbs -->
+  <div class="orb orb--1"></div>
+  <div class="orb orb--2"></div>
+
+  <div class="page-shell">
+    <!-- NAVBAR -->
+    <header class="nav">
+      <div class="inner nav-inner">
+        <div class="nav-left">
+          <div class="logo-mark">
+            <span>Ln</span>
+          </div>
+          <div class="logo-text">
+            <div class="logo-title">Linktern</div>
+            <div class="logo-sub">Internship OS</div>
+          </div>
+        </div>
+        <nav class="nav-links" aria-label="Primary navigation">
+          <a href="#features" data-scroll>Product</a>
+          <a href="#how" data-scroll>Workflow</a>
+          <a href="#audiences" data-scroll>Use cases</a>
+          <a href="#free" data-scroll>Free forever</a>
+          <a href="#faq" data-scroll>FAQ</a>
+        </nav>
+        <div class="nav-right">
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
+            <i class="ri-moon-clear-line theme-toggle-icon" id="theme-toggle-icon"></i>
+            <span id="theme-toggle-label">Dark</span>
+          </button>
+          <a class="btn btn-outline" href="dashboard.html" target="_blank" rel="noopener">
+            Go to main Linktern
+          </a>
+          <a class="btn btn-primary" href="dashboard.html" target="_blank" rel="noopener">
+            Enter Linktern
+            <i class="ri-arrow-right-up-line"></i>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section class="hero" id="hero">
+        <div class="inner hero-grid">
+          <div class="hero-left reveal">
+            <div class="announcement-bar">
+              <span class="announcement-pill">Free forever</span>
+              <span>Built for students & early careers, not recruiters or ads.</span>
+            </div>
+
+            <div class="hero-tag-row">
+              <div class="hero-pill">
+                <span class="hero-pill-dot"></span>
+                <span>Internship OS for early careers</span>
+              </div>
+              <div class="hero-badge">
+                One clean dashboard to discover, track and learn from every internship attempt.
+              </div>
+            </div>
+
+            <h1 class="hero-title">
+              Turn internship chaos into a
+              <span class="gradient">calm, free dashboard</span> ✨
+            </h1>
+            <p class="hero-subtitle">
+              Linktern replaces 20 open tabs, random spreadsheets and missed deadlines
+              with a focused workspace. Discover roles that fit you, track every stage,
+              and turn each application into progress — at zero cost.
+            </p>
+
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="dashboard.html" target="_blank" rel="noopener">
+                Start using Linktern now
+                <i class="ri-arrow-right-line"></i>
+              </a>
+              <a class="btn btn-ghost" data-scroll href="#how">
+                See how it works
+                <i class="ri-play-circle-line"></i>
+              </a>
+            </div>
+
+            <div class="hero-microcopy">
+              <i class="ri-shield-star-line"></i>
+              <span>Privacy-first. No ads. No selling your data. Just internships and clarity.</span>
+            </div>
+
+            <div class="hero-stats">
+              <div class="hero-stat">
+                <div class="hero-stat-label">Matches generated</div>
+                <div class="hero-stat-number" data-counter data-target="12000">0+</div>
+              </div>
+              <div class="hero-stat">
+                <div class="hero-stat-label">Applications tracked</div>
+                <div class="hero-stat-number" data-counter data-target="5800">0+</div>
+              </div>
+              <div class="hero-stat">
+                <div class="hero-stat-label">Avg. time saved</div>
+                <div class="hero-stat-number">7 hrs / week</div>
+              </div>
+            </div>
+
+            <div class="trusted-strip">
+              <span>Quietly powering students from</span>
+              <div class="trusted-logos">
+                <div class="trusted-pill">STEM programs</div>
+                <div class="trusted-pill">Design schools</div>
+                <div class="trusted-pill">Student clubs</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-right hero-visual-wrap reveal">
+            <div class="hero-visual" id="hero-card-tilt">
+              <div class="hero-visual-header">
+                <div class="hero-logo-pill">
+                  <i class="ri-layout-grid-line"></i>
+                  <span>Linktern Dashboard</span>
+                </div>
+                <div class="hero-availability">
+                  <span class="hero-availability-dot"></span>
+                  <span>Internships synced</span>
+                </div>
+              </div>
+
+              <div class="hero-visual-main">
+                <!-- Opportunities card -->
+                <div class="hero-card">
+                  <div class="hero-card-heading">
+                    <div class="hero-card-title">Your week at a glance</div>
+                    <div class="hero-card-chip">Free forever</div>
+                  </div>
+                  <div class="hero-opportunity-list">
+                    <div class="hero-op">
+                      <div class="hero-op-meta">
+                        <div class="hero-op-title">Product Intern</div>
+                        <div class="hero-op-sub">NovaLabs · Remote · Paid</div>
+                      </div>
+                      <div class="hero-op-tag">Shortlisted</div>
+                    </div>
+                    <div class="hero-op">
+                      <div class="hero-op-meta">
+                        <div class="hero-op-title">Data Explorer</div>
+                        <div class="hero-op-sub">Aurora Analytics · Hybrid</div>
+                      </div>
+                      <div class="hero-op-tag">Interviewing</div>
+                    </div>
+                    <div class="hero-op">
+                      <div class="hero-op-meta">
+                        <div class="hero-op-title">Marketing Fellow</div>
+                        <div class="hero-op-sub">Orbit Studio · Part-time</div>
+                      </div>
+                      <div class="hero-op-tag">Applied</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Side card -->
+                <div class="hero-side-card">
+                  <div class="hero-progress-wrap">
+                    <div class="hero-progress-label-row">
+                      <span>Profile completeness</span>
+                      <span>78%</span>
+                    </div>
+                    <div class="hero-progress-bar">
+                      <span></span>
+                    </div>
+                  </div>
+
+                  <div class="hero-mini-row">
+                    <div class="hero-mini-pill">
+                      <i class="ri-robot-2-line"></i>
+                      <span>AI suggests fresh roles weekly</span>
+                    </div>
+                    <div class="hero-mini-pill">
+                      <i class="ri-timer-flash-line"></i>
+                      <span>Deadlines & follow-ups handled</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hero-float-card">
+                <div class="hero-float-card-avatar">U</div>
+                <div>
+                  <strong>Imagine this being you.</strong>
+                  <span>2 new internships moved to “Interviewing” this week from one dashboard.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- FEATURES -->
+      <section class="section" id="features">
+        <div class="inner">
+          <div class="section-header reveal">
+            <div>
+              <div class="section-eyebrow">Product</div>
+              <h2 class="section-title">
+                The free <span>internship OS</span> you wish existed earlier.
+              </h2>
+            </div>
+            <p class="section-subtitle">
+              Linktern replaces scattered tabs with one calm workspace:
+              discover roles, manage your pipeline, and learn from every attempt.
+            </p>
+          </div>
+
+          <div class="features-grid">
+            <article class="feature-card reveal">
+              <div class="feature-icon">
+                <i class="ri-sparkling-line"></i>
+              </div>
+              <h3 class="feature-title">Smart match engine</h3>
+              <p class="feature-body">
+                Set your skills, interests and constraints. Linktern filters the noise
+                and surfaces opportunities where you are actually a good fit.
+              </p>
+              <div class="feature-meta">
+                <span class="feature-chip">Signal over noise</span>
+                <span>Updated daily</span>
+              </div>
+            </article>
+
+            <article class="feature-card reveal">
+              <div class="feature-icon">
+                <i class="ri-layout-masonry-line"></i>
+              </div>
+              <h3 class="feature-title">Visual application board</h3>
+              <p class="feature-body">
+                Drag internships from Discover → Applied → Interviewing → Offer.
+                See your entire pipeline in a calm, simple board.
+              </p>
+              <div class="feature-meta">
+                <span class="feature-chip">Kanban-style</span>
+                <span>Zero setup</span>
+              </div>
+            </article>
+
+            <article class="feature-card reveal">
+              <div class="feature-icon">
+                <i class="ri-time-line"></i>
+              </div>
+              <h3 class="feature-title">Deadline radar</h3>
+              <p class="feature-body">
+                Smart reminders for upcoming deadlines and follow-ups.
+                Weekly digest, not constant notifications.
+              </p>
+              <div class="feature-meta">
+                <span class="feature-chip">Timeline view</span>
+                <span>Calm alerts</span>
+              </div>
+            </article>
+
+            <article class="feature-card reveal">
+              <div class="feature-icon">
+                <i class="ri-edit-circle-line"></i>
+              </div>
+              <h3 class="feature-title">Resume & portfolio context</h3>
+              <p class="feature-body">
+                Attach tailored resumes, websites and case studies to each role.
+                Linktern remembers which version you used where.
+              </p>
+              <div class="feature-meta">
+                <span class="feature-chip">Version history</span>
+                <span>Context-aware</span>
+              </div>
+            </article>
+
+            <article class="feature-card reveal">
+              <div class="feature-icon">
+                <i class="ri-chat-smile-3-line"></i>
+              </div>
+              <h3 class="feature-title">Reflection journal</h3>
+              <p class="feature-body">
+                Save interview questions, feedback and your own notes so each application
+                makes the next one easier.
+              </p>
+              <div class="feature-meta">
+                <span class="feature-chip">Compounding growth</span>
+                <span>Private by default</span>
+              </div>
+            </article>
+
+            <article class="feature-card reveal">
+              <div class="feature-icon">
+                <i class="ri-global-line"></i>
+              </div>
+              <h3 class="feature-title">Real-world filters</h3>
+              <p class="feature-body">
+                Filter by timezone, remote vs on-site, eligibility and more.
+                See roles that actually match your reality.
+              </p>
+              <div class="feature-meta">
+                <span class="feature-chip">50+ regions</span>
+                <span>Real constraints</span>
+              </div>
+            </article>
+          </div>
+
+          <!-- Use cases row -->
+          <div class="usecases-row reveal">
+            <div class="usecase-item">
+              <div class="usecase-pill-icon"><i class="ri-compass-3-line"></i></div>
+              <div><strong>Explorers</strong> test fields like design, data, research and more.</div>
+            </div>
+            <div class="usecase-item">
+              <div class="usecase-pill-icon"><i class="ri-presentation-line"></i></div>
+              <div><strong>Serious applicants</strong> keep every deadline, stage and note in one place.</div>
+            </div>
+            <div class="usecase-item">
+              <div class="usecase-pill-icon"><i class="ri-team-line"></i></div>
+              <div><strong>Clubs & programs</strong> support members without messy spreadsheets.</div>
+            </div>
+          </div>
+
+          <!-- Integrations strip -->
+          <div class="integrations-strip reveal">
+            Works with tools you already use:
+            <span class="integration-pill">
+              <i class="ri-file-text-line"></i> Resumes & portfolios
+            </span>
+            <span class="integration-pill">
+              <i class="ri-calendar-line"></i> Calendar & reminders
+            </span>
+            <span class="integration-pill">
+              <i class="ri-link-m"></i> External job boards & links
+            </span>
+          </div>
+
+          <!-- Inside the dashboard preview -->
+          <div class="preview-grid reveal" style="margin-top:2.2rem;">
+            <div class="preview-card">
+              <div class="preview-label">Inside Linktern</div>
+              <div class="preview-title">Discover</div>
+              <p>Curated roles based on skills, interests, location and eligibility, not just vague job titles.</p>
+              <div class="preview-pill-row">
+                <span class="preview-pill">STEM, design, content</span>
+                <span class="preview-pill">Remote & hybrid</span>
+              </div>
+            </div>
+            <div class="preview-card">
+              <div class="preview-label">Inside Linktern</div>
+              <div class="preview-title">Track</div>
+              <p>One board to see your entire pipeline. Never forget who you emailed, when, and what is next.</p>
+              <div class="preview-pill-row">
+                <span class="preview-pill">Applied → Offer</span>
+                <span class="preview-pill">Notes on every card</span>
+              </div>
+            </div>
+            <div class="preview-card">
+              <div class="preview-label">Inside Linktern</div>
+              <div class="preview-title">Reflect</div>
+              <p>Turn rejection into data. Save questions, feedback and your answers so every attempt compounds.</p>
+              <div class="preview-pill-row">
+                <span class="preview-pill">Interview tracker</span>
+                <span class="preview-pill">Reflection journal</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- HOW IT WORKS -->
+      <section class="section" id="how">
+        <div class="inner">
+          <div class="section-header reveal">
+            <div>
+              <div class="section-eyebrow">Workflow</div>
+              <h2 class="section-title">
+                From profile to <span>shortlist</span> in three calm steps.
+              </h2>
+            </div>
+            <p class="section-subtitle">
+              No more chaos. Just a focused workflow that respects your time
+              and your attention span.
+            </p>
+          </div>
+
+          <div class="how-grid">
+            <div class="timeline reveal">
+              <div class="timeline-step">
+                <div class="timeline-label">Step 1</div>
+                <div class="timeline-title">Create your Linktern fingerprint</div>
+                <p class="timeline-body">
+                  Add your skills, interests, availability and location. We turn this into a flexible
+                  profile that updates as you grow.
+                </p>
+              </div>
+              <div class="timeline-step">
+                <div class="timeline-label">Step 2</div>
+                <div class="timeline-title">Discover a curated feed</div>
+                <p class="timeline-body">
+                  Browse roles that already pass your basic filters. Save, hide or shortlist — every
+                  action trains your recommendations.
+                </p>
+              </div>
+              <div class="timeline-step">
+                <div class="timeline-label">Step 3</div>
+                <div class="timeline-title">Track, reflect, repeat</div>
+                <p class="timeline-body">
+                  Move roles across your pipeline, store notes after interviews and let reminders
+                  handle follow-ups so you can focus on performing.
+                </p>
+              </div>
+            </div>
+
+            <aside class="how-card reveal">
+              <div class="how-rows">
+                <div class="how-row">
+                  <div class="how-row-label">
+                    <div class="how-dot"></div>
+                    <span>Extra internships discovered</span>
+                  </div>
+                  <strong>+38%</strong>
+                </div>
+                <div class="how-row">
+                  <div class="how-row-label">
+                    <div class="how-dot"></div>
+                    <span>Time saved vs job boards</span>
+                  </div>
+                  <strong>7 hrs / week</strong>
+                </div>
+                <div class="how-row">
+                  <div class="how-row-label">
+                    <div class="how-dot"></div>
+                    <span>Students who feel more in control</span>
+                  </div>
+                  <strong>9 / 10</strong>
+                </div>
+              </div>
+              <div class="badge-row">
+                <span class="badge">No ads</span>
+                <span class="badge">No paywalls</span>
+                <span class="badge">Built for early careers</span>
+              </div>
+              <p style="font-size:0.8rem;color:var(--text-soft);margin-top:0.4rem;">
+                Linktern is evolving with real student feedback. Every new feature ships free,
+                for everyone.
+              </p>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- AUDIENCES / FOR YOU -->
+      <section class="section" id="audiences">
+        <div class="inner">
+          <div class="audience-header reveal">
+            <div>
+              <div class="section-eyebrow">Use cases</div>
+              <h2 class="section-title">
+                Built for <span>students</span> first, friendly to teams.
+              </h2>
+            </div>
+            <div class="pill-switch" role="tablist" aria-label="Audience views">
+              <button class="pill-btn is-active" data-tab="students" role="tab" id="tab-students" aria-selected="true"
+                aria-controls="panel-students">
+                For students
+              </button>
+              <button class="pill-btn" data-tab="teams" role="tab" id="tab-teams" aria-selected="false"
+                aria-controls="panel-teams">
+                For teams & programs
+              </button>
+            </div>
+          </div>
+
+          <div class="audience-panels">
+            <!-- Students -->
+            <div class="audience-panel is-active reveal" data-panel="students" role="tabpanel" id="panel-students"
+              aria-labelledby="tab-students">
+              <div>
+                <div class="audience-list">
+                  <div class="audience-line">
+                    <div>
+                      Discover internships by <strong>skills and interests</strong>,
+                      not just job titles.
+                      <span>Perfect if you are still figuring things out.</span>
+                    </div>
+                    <div class="audience-kpi">Exploration mode</div>
+                  </div>
+                  <div class="audience-line">
+                    <div>
+                      Keep one calm view of every application, stage and
+                      <strong>next action</strong>.
+                      <span>No more forgotten follow-ups.</span>
+                    </div>
+                    <div class="audience-kpi">Zero chaos</div>
+                  </div>
+                  <div class="audience-line">
+                    <div>
+                      Use the reflection journal to practice answers and track what
+                      <strong>actually worked</strong>.
+                    </div>
+                    <div class="audience-kpi">Compounding improvements</div>
+                  </div>
+                </div>
+              </div>
+              <aside class="audience-panel-right">
+                <h4>Feels like a calm control center, not a job board.</h4>
+                <p>
+                  Linktern replaces scattered tabs, screenshots and notes with one workspace.
+                  You get to see your progress instead of just your stress — for free.
+                </p>
+                <div class="badge-row" style="margin-top:0.3rem;">
+                  <span class="badge">Side projects welcomed</span>
+                  <span class="badge">Non-traditional paths</span>
+                </div>
+              </aside>
+            </div>
+
+            <!-- Teams / programs -->
+            <div class="audience-panel reveal" data-panel="teams" role="tabpanel" id="panel-teams"
+              aria-labelledby="tab-teams" aria-hidden="true">
+              <div>
+                <div class="audience-list">
+                  <div class="audience-line">
+                    <div>
+                      Give students a structured way to discover and track internships
+                      <strong>under your program</strong>.
+                    </div>
+                    <div class="audience-kpi">Better outcomes</div>
+                  </div>
+                  <div class="audience-line">
+                    <div>
+                      See anonymised dashboards of where students apply and where they get in,
+                      without reading every email.
+                    </div>
+                    <div class="audience-kpi">Program insights</div>
+                  </div>
+                  <div class="audience-line">
+                    <div>
+                      Share trusted opportunities and keep them visible to your students
+                      <strong>without another messy spreadsheet</strong>.
+                    </div>
+                    <div class="audience-kpi">Less admin</div>
+                  </div>
+                </div>
+              </div>
+              <aside class="audience-panel-right">
+                <h4>Give your cohort a modern internship OS — for free.</h4>
+                <p>
+                  Whether you run a club, a bootcamp or a university program, Linktern helps
+                  your members move with clarity while you keep an eye on the bigger picture.
+                  No licenses, no billing.
+                </p>
+                <div class="badge-row" style="margin-top:0.3rem;">
+                  <span class="badge">Free for schools & clubs</span>
+                  <span class="badge">Co-branded spaces</span>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- FREE PLAN -->
+      <section class="section" id="free">
+        <div class="inner">
+          <div class="section-header reveal">
+            <div>
+              <div class="section-eyebrow">Free forever</div>
+              <h2 class="section-title">
+                One simple plan: <span>$0, for everyone</span>.
+              </h2>
+            </div>
+            <p class="section-subtitle">
+              No trials, no credit cards, no “upgrade to actually use it”.
+              You get the full product, completely free.
+            </p>
+          </div>
+
+          <div class="free-grid">
+            <article class="free-card reveal">
+              <div class="free-badge">
+                <i class="ri-sparkling-2-line"></i>
+                Free forever · All features included
+              </div>
+              <div class="free-name">Linktern Free</div>
+              <div class="free-price-row">
+                <span class="free-price">$0</span>
+                <span class="free-period">for students, clubs & schools</span>
+              </div>
+              <p class="free-desc">
+                Everything you need to run your internship journey like a pro:
+                discovery, tracking, reflections and reminders — at no cost.
+              </p>
+              <div class="free-list">
+                <span><i class="ri-check-line"></i> Curated internship feed & smart matching</span>
+                <span><i class="ri-check-line"></i> Visual board for all applications & stages</span>
+                <span><i class="ri-check-line"></i> Deadline radar & gentle reminders</span>
+                <span><i class="ri-check-line"></i> Reflection journal for interviews & learnings</span>
+                <span><i class="ri-check-line"></i> Works for individuals, clubs & schools</span>
+              </div>
+              <a class="btn btn-primary" href="dashboard.html" target="_blank" rel="noopener">
+                Create my free workspace
+                <i class="ri-arrow-right-up-line"></i>
+              </a>
+            </article>
+
+            <aside class="free-side reveal">
+              <p>
+                <strong>No pricing page rabbit hole.</strong><br />
+                Linktern is completely free. We built it because we wished we had it
+                when we were searching for internships.
+              </p>
+              <p>
+                If we ever introduce optional paid extras, the core product you see here
+                will remain free and existing users will keep what they already have.
+              </p>
+              <p>
+                Until then, the best way to support us is to use it, share feedback
+                and tell a friend who is hunting for internships.
+              </p>
+
+              <div class="free-metrics">
+                <span class="free-metric-pill">0 setup · start in under 2 minutes</span>
+                <span class="free-metric-pill">Built with students across 10+ countries</span>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- TESTIMONIALS -->
+      <section class="section" id="testimonials">
+        <div class="inner">
+          <div class="section-header reveal">
+            <div>
+              <div class="section-eyebrow">Stories</div>
+              <h2 class="section-title">
+                Students who turned <span>scrolling</span> into progress.
+              </h2>
+            </div>
+            <p class="section-subtitle">
+              Real people using Linktern to land their first serious projects and internships.
+            </p>
+          </div>
+
+          <div class="testimonials-grid">
+            <article class="testimonial-card reveal">
+              <p class="testimonial-quote">
+                “I used to have one spreadsheet, screenshots and five job boards.
+                Now I just open Linktern and see exactly where I am. I stopped
+                missing deadlines and I sound so much more prepared in interviews.”
+              </p>
+              <div class="testimonial-meta">
+                <div class="testimonial-person">
+                  <div class="testimonial-avatar">A</div>
+                  <div>
+                    <div class="testimonial-name">Anika</div>
+                    <div class="testimonial-role">1st year CS · Singapore</div>
+                  </div>
+                </div>
+                <div class="testimonial-tag">Landed 2 remote roles</div>
+              </div>
+            </article>
+
+            <article class="testimonial-card reveal">
+              <p class="testimonial-quote">
+                “I am into design and physics and had no idea what to search for.
+                Linktern suggested internships I did not even know existed.
+                It felt less like hunting for jobs and more like discovering options
+                that actually fit me.”
+              </p>
+              <div class="testimonial-meta">
+                <div class="testimonial-person">
+                  <div class="testimonial-avatar">R</div>
+                  <div>
+                    <div class="testimonial-name">Ravi</div>
+                    <div class="testimonial-role">High school · India</div>
+                  </div>
+                </div>
+                <div class="testimonial-tag">Shortlisted at 3 labs</div>
+              </div>
+            </article>
+          </div>
+
+          <div class="testimonial-mini-row reveal">
+            <div class="testimonial-mini-pill">Perfect for “I am not sure what field yet” students</div>
+            <div class="testimonial-mini-pill">Great add-on for school career offices</div>
+            <div class="testimonial-mini-pill">Especially useful for remote & hybrid internships</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- FAQ / BETA -->
+      <section class="section" id="faq">
+        <div class="inner">
+          <div class="section-header reveal">
+            <div>
+              <div class="section-eyebrow">Questions</div>
+              <h2 class="section-title">
+                You ask, <span>we answer</span>.
+              </h2>
+            </div>
+            <p class="section-subtitle">
+              Before you create your free workspace, here are the things people
+              usually want to know.
+            </p>
+          </div>
+
+          <div class="faq-grid">
+            <div class="faq-intro reveal" id="beta">
+              <p>
+                <strong>Ready to try it?</strong><br /><br />
+                Linktern is live and completely free. When you sign up, share a sentence about your goals
+                so we can tune the product towards what you need most.
+              </p>
+              <div style="margin-top:1.1rem;display:flex;flex-wrap:wrap;gap:0.7rem;">
+                <a class="btn btn-primary" href="dashboard.html" target="_blank" rel="noopener">
+                  Create your free account
+                  <i class="ri-arrow-right-up-line"></i>
+                </a>
+                <button class="btn btn-ghost" type="button">
+                  Talk to the team
+                  <i class="ri-chat-1-line"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="accordion reveal">
+              <div class="accordion-item">
+                <div class="accordion-header">
+                  <span>Is Linktern really free?</span>
+                  <i class="ri-arrow-down-s-line"></i>
+                </div>
+                <div class="accordion-body">
+                  Yes. Linktern is completely free for students, early-career folks,
+                  clubs, programs and schools. You get the full product with no billing,
+                  no credit card and no hidden upgrade wall.
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <div class="accordion-header">
+                  <span>Can I use it if I am still in high school?</span>
+                  <i class="ri-arrow-down-s-line"></i>
+                </div>
+                <div class="accordion-body">
+                  Absolutely. Many of our earliest users are high school students exploring
+                  research labs, startups and online projects. We help you filter for
+                  opportunities that make sense at your level.
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <div class="accordion-header">
+                  <span>Which fields does Linktern support?</span>
+                  <i class="ri-arrow-down-s-line"></i>
+                </div>
+                <div class="accordion-body">
+                  We are starting with STEM, design, product, research and content roles.
+                  Our focus is on internships where learning, mentorship and real experience
+                  are built in.
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <div class="accordion-header">
+                  <span>Can clubs, schools or programs use it as well?</span>
+                  <i class="ri-arrow-down-s-line"></i>
+                </div>
+                <div class="accordion-body">
+                  Yes. If you run a club, program or school and want a better way for students
+                  to discover and track opportunities, Linktern is free for you too.
+                  Reach out and we will help you onboard your cohort.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="footer">
+        <div class="inner">
+          <div class="footer-grid">
+            <div class="reveal">
+              <h3 class="footer-title">Ready to give your internship search a real system?</h3>
+              <p class="footer-body">
+                Linktern turns scattered job tabs into a single, calm dashboard.
+                It is completely free — for you, your friends and your entire club.
+              </p>
+              <a class="btn btn-primary" href="dashboard.html" target="_blank" rel="noopener">
+                Enter Linktern now
+                <i class="ri-rocket-line"></i>
+              </a>
+            </div>
+            <div class="reveal">
+              <div class="badge-row" style="margin-bottom:0.8rem;">
+                <span class="badge">Built with students</span>
+                <span class="badge">Privacy first</span>
+                <span class="badge">Global by design</span>
+              </div>
+              <div class="footer-meta">
+                <span>© <span id="year"></span> Linktern. All rights reserved.</span>
+                <div class="footer-links">
+                  <a href="#">Privacy</a>
+                  <a href="#">Terms</a>
+                  <a href="#">Contact</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const yearEl = document.getElementById("year");
+      if (yearEl) yearEl.textContent = new Date().getFullYear().toString();
+
+      /* Theme setup */
+      const body = document.body;
+      const themeToggle = document.getElementById("theme-toggle");
+      const themeIcon = document.getElementById("theme-toggle-icon");
+      const themeLabel = document.getElementById("theme-toggle-label");
+      const storedTheme = localStorage.getItem("lt-theme");
+      // Default to dark unless user has chosen before
+      const initialTheme = storedTheme || "dark";
+
+      function applyTheme(theme) {
+        if (theme === "light") {
+          body.setAttribute("data-theme", "light");
+          themeIcon.className = "ri-sun-line theme-toggle-icon";
+          themeLabel.textContent = "Light";
+        } else {
+          body.removeAttribute("data-theme");
+          themeIcon.className = "ri-moon-clear-line theme-toggle-icon";
+          themeLabel.textContent = "Dark";
+        }
+        localStorage.setItem("lt-theme", theme);
+      }
+
+      applyTheme(initialTheme);
+
+      if (themeToggle) {
+        themeToggle.addEventListener("click", function () {
+          const isLight = body.getAttribute("data-theme") === "light";
+          applyTheme(isLight ? "dark" : "light");
+        });
+      }
+
+      /* Smooth scroll for data-scroll elements */
+      document.querySelectorAll("[data-scroll]").forEach(function (el) {
+        el.addEventListener("click", function (e) {
+          const href = el.getAttribute("href");
+          if (href && href.startsWith("#")) {
+            const target = document.querySelector(href);
+            if (target) {
+              e.preventDefault();
+              target.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          }
+        });
+      });
+
+      /* Scroll reveal */
+      const revealEls = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        const revealObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        revealEls.forEach(function (el) {
+          revealObserver.observe(el);
+        });
+      } else {
+        revealEls.forEach(function (el) {
+          el.classList.add("is-visible");
+        });
+      }
+
+      /* Counters */
+      const counterEls = document.querySelectorAll("[data-counter]");
+      if ("IntersectionObserver" in window) {
+        const counterObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            const el = entry.target;
+            if (el.dataset.started === "true") return;
+            el.dataset.started = "true";
+            const target = parseInt(el.getAttribute("data-target") || "0", 10);
+            const start = 0;
+            const duration = 1600;
+            const startTime = performance.now();
+
+            function tick(now) {
+              const progress = Math.min((now - startTime) / duration, 1);
+              const value = Math.floor(start + (target - start) * progress);
+              el.textContent = value.toLocaleString() + "+";
+              if (progress < 1) {
+                requestAnimationFrame(tick);
+              }
+            }
+            requestAnimationFrame(tick);
+            counterObserver.unobserve(el);
+          });
+        }, { threshold: 0.6 });
+        counterEls.forEach(function (el) {
+          counterObserver.observe(el);
+        });
+      } else {
+        counterEls.forEach(function (el) {
+          const target = parseInt(el.getAttribute("data-target") || "0", 10);
+          el.textContent = target.toLocaleString() + "+";
+        });
+      }
+
+      /* Cursor glow */
+      const cursorGlow = document.querySelector(".cursor-glow");
+      let glowVisible = false;
+      document.addEventListener("pointermove", function (e) {
+        if (!cursorGlow) return;
+        const x = e.clientX;
+        const y = e.clientY;
+        cursorGlow.style.transform = "translate3d(" + (x - 130) + "px," + (y - 130) + "px,0)";
+        if (!glowVisible) {
+          cursorGlow.style.opacity = "0.75";
+          glowVisible = true;
+        }
+      });
+      document.addEventListener("pointerleave", function () {
+        if (!cursorGlow) return;
+        cursorGlow.style.opacity = "0";
+        glowVisible = false;
+      });
+
+      /* Hero tilt */
+      const heroCard = document.getElementById("hero-card-tilt");
+      if (heroCard) {
+        const strength = 12;
+        heroCard.addEventListener("pointermove", function (e) {
+          const rect = heroCard.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const rotateY = ((x / rect.width) - 0.5) * strength;
+          const rotateX = ((y / rect.height) - 0.5) * -strength;
+          heroCard.style.transform = "rotateX(" + rotateX + "deg) rotateY(" + rotateY + "deg)";
+          heroCard.classList.add("is-tilted");
+        });
+        heroCard.addEventListener("pointerleave", function () {
+          heroCard.style.transform = "rotateX(0deg) rotateY(0deg)";
+          heroCard.classList.remove("is-tilted");
+        });
+      }
+
+      /* Audience tab switcher */
+      const tabButtons = document.querySelectorAll(".pill-btn");
+      const panels = document.querySelectorAll(".audience-panel");
+      tabButtons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          const tab = btn.getAttribute("data-tab");
+          if (!tab) return;
+          tabButtons.forEach(function (b) {
+            b.classList.remove("is-active");
+            b.setAttribute("aria-selected", "false");
+          });
+          btn.classList.add("is-active");
+          btn.setAttribute("aria-selected", "true");
+          panels.forEach(function (panel) {
+            const isTarget = panel.getAttribute("data-panel") === tab;
+            if (isTarget) {
+              panel.classList.add("is-active");
+              panel.setAttribute("aria-hidden", "false");
+            } else {
+              panel.classList.remove("is-active");
+              panel.setAttribute("aria-hidden", "true");
+            }
+          });
+        });
+      });
+
+      /* FAQ accordion */
+      const accordionItems = document.querySelectorAll(".accordion-item");
+      accordionItems.forEach(function (item) {
+        const header = item.querySelector(".accordion-header");
+        const body = item.querySelector(".accordion-body");
+        if (!header || !body) return;
+
+        header.addEventListener("click", function () {
+          const isOpen = body.classList.contains("is-open");
+          accordionItems.forEach(function (other) {
+            const otherHeader = other.querySelector(".accordion-header");
+            const otherBody = other.querySelector(".accordion-body");
+            if (otherBody && otherHeader) {
+              otherBody.classList.remove("is-open");
+              otherHeader.classList.remove("is-open");
+            }
+          });
+
+          if (!isOpen) {
+            body.classList.add("is-open");
+            header.classList.add("is-open");
+          }
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>
