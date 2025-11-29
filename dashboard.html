@@ -208,8 +208,8 @@
     }
 
     .avatar {
-      width: 26px;
-      height: 26px;
+      width: 32px;
+      height: 32px;
       border-radius: 999px;
       background: #e5e7eb;
       display: grid;
@@ -255,6 +255,7 @@
       align-items: center;
       gap: 0.7rem;
       min-width: 0;
+      flex: 1;
     }
 
     .topbar-left-text {
@@ -853,6 +854,7 @@
       color: var(--text-soft);
       transition: background var(--transition-fast), color var(--transition-fast), border var(--transition-fast), transform var(--transition-fast);
       white-space: nowrap;
+      min-height: 40px;
     }
 
     .btn-small-primary {
@@ -873,8 +875,8 @@
     }
 
     .icon-btn {
-      width: 32px;
-      height: 32px;
+      width: 40px;
+      height: 40px;
       border-radius: 999px;
       border: 1px solid var(--border-subtle);
       display: grid;
@@ -948,7 +950,7 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -48%) scale(0.98);
-      width: min(620px, 92vw);
+      width: min(620px, 100vw - 1.5rem);
       max-height: 80vh;
       overflow: auto;
       border-radius: var(--radius-lg);
@@ -1526,10 +1528,12 @@
         top: 0;
         bottom: 0;
         left: 0;
-        width: 260px;
+        width: 80%;
+        max-width: 260px;
         transform: translateX(-100%);
         transition: transform var(--transition-fast);
         box-shadow: 12px 0 30px rgba(15, 23, 42, 0.5);
+        overflow-y: auto;
       }
 
       body.sidebar-open .sidebar {
@@ -1562,6 +1566,50 @@
       }
     }
 
+    @media (max-width: 768px) {
+      .topbar {
+        flex-wrap: wrap;
+        height: auto;
+        padding-block: 0.6rem;
+        align-items: flex-start;
+      }
+
+      .topbar-left {
+        flex: 1 1 100%;
+      }
+
+      .topbar-center {
+        order: 3;
+        flex: 1 1 100%;
+        max-width: 100%;
+        margin-top: 0.45rem;
+      }
+
+      .topbar-right {
+        order: 2;
+      }
+
+      .view-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .list-controls {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .list-controls-left,
+      .list-controls-right {
+        width: 100%;
+      }
+
+      .select.select-compact,
+      .input-date {
+        width: 100%;
+      }
+    }
+
     @media (max-width: 540px) {
       body {
         font-size: 14px;
@@ -1577,6 +1625,14 @@
 
       .btn-primary {
         padding-inline: 0.8rem;
+      }
+
+      .card {
+        padding: 0.8rem 0.85rem;
+      }
+
+      .internship-card {
+        padding: 0.75rem 0.75rem 0.65rem;
       }
     }
   </style>
@@ -1594,38 +1650,38 @@
             <div class="logo-text-sub">Find The Right Internships For You</div>
           </div>
         </div>
-        <nav class="sidebar-nav">
+        <nav class="sidebar-nav" aria-label="Main navigation">
           <div class="nav-label">Main</div>
           <button class="nav-item is-active" data-view="home">
-            <i class="ri-compass-3-line"></i>
+            <i class="ri-compass-3-line" aria-hidden="true"></i>
             <span>Dashboard</span>
           </button>
           <button class="nav-item" data-view="list">
-            <i class="ri-file-list-3-line"></i>
+            <i class="ri-file-list-3-line" aria-hidden="true"></i>
             <span>Internships</span>
           </button>
           <button class="nav-item" data-view="board">
-            <i class="ri-layout-masonry-line"></i>
+            <i class="ri-layout-masonry-line" aria-hidden="true"></i>
             <span>Board</span>
           </button>
           <button class="nav-item" data-view="calendar">
-            <i class="ri-calendar-line"></i>
+            <i class="ri-calendar-line" aria-hidden="true"></i>
             <span>Calendar</span>
           </button>
           <button class="nav-item" data-view="insights">
-            <i class="ri-bar-chart-2-line"></i>
+            <i class="ri-bar-chart-2-line" aria-hidden="true"></i>
             <span>Insights</span>
           </button>
           <button class="nav-item" data-view="journal">
-            <i class="ri-book-open-line"></i>
+            <i class="ri-book-open-line" aria-hidden="true"></i>
             <span>Journal</span>
           </button>
           <button class="nav-item" data-view="profile">
-            <i class="ri-user-3-line"></i>
+            <i class="ri-user-3-line" aria-hidden="true"></i>
             <span>Profile</span>
           </button>
           <button class="nav-item" data-view="resources">
-            <i class="ri-graduation-cap-line"></i>
+            <i class="ri-graduation-cap-line" aria-hidden="true"></i>
             <span>Resources</span>
           </button>
         </nav>
@@ -1633,7 +1689,7 @@
       <div class="sidebar-footer">
         <div>Free for students · <span id="year"></span></div>
         <div class="sidebar-footer-bottom">
-          <div class="avatar">U</div>
+          <div class="avatar" aria-hidden="true">U</div>
           <div>
             <div style="font-size:0.9rem;">You</div>
             <div style="font-size:0.8rem;color:var(--text-soft);"> </div>
@@ -1647,8 +1703,9 @@
       <!-- TOPBAR -->
       <header class="topbar">
         <div class="topbar-left">
-          <button class="icon-btn menu-toggle-btn" id="sidebar-toggle" type="button">
-            <i class="ri-menu-2-line"></i>
+          <button class="icon-btn menu-toggle-btn" id="sidebar-toggle" type="button"
+            aria-label="Toggle navigation menu">
+            <i class="ri-menu-2-line" aria-hidden="true"></i>
           </button>
           <div class="topbar-left-text">
             <div class="topbar-title">Track internships, notes, and goals in one place.</div>
@@ -1657,26 +1714,27 @@
         </div>
         <div class="topbar-center">
           <div class="search-shell">
-            <i class="ri-search-2-line"></i>
-            <input id="search-input" class="search-input" placeholder="Search roles, companies, keywords..." />
+            <i class="ri-search-2-line" aria-hidden="true"></i>
+            <input id="search-input" class="search-input" placeholder="Search roles, companies, keywords..."
+              aria-label="Search internships" />
           </div>
         </div>
         <div class="topbar-right">
-          <button class="pill-btn" id="theme-toggle">
-            <i class="ri-sun-line" id="theme-icon"></i>
+          <button class="pill-btn" id="theme-toggle" type="button" aria-label="Toggle theme" aria-pressed="false">
+            <i class="ri-sun-line" id="theme-icon" aria-hidden="true"></i>
             <span id="theme-label">Light</span>
           </button>
-          <button class="btn-primary" id="quick-add-open">
-            <i class="ri-add-line"></i>
+          <button class="btn-primary" id="quick-add-open" type="button">
+            <i class="ri-add-line" aria-hidden="true"></i>
             Add opportunity
           </button>
         </div>
       </header>
 
       <!-- CONTENT -->
-      <main class="content">
+      <main class="content container-fluid">
         <!-- HOME / DASHBOARD -->
-        <section class="view is-active" id="view-home">
+        <section class="view is-active" id="view-home" aria-label="Dashboard">
           <div class="view-header">
             <div>
               <div class="view-title">Today at a glance</div>
@@ -1688,7 +1746,7 @@
             <div class="view-actions">
               <button class="btn-ghost" data-view-switch="list">
                 Go to internships
-                <i class="ri-arrow-right-up-line"></i>
+                <i class="ri-arrow-right-up-line" aria-hidden="true"></i>
               </button>
             </div>
           </div>
@@ -1730,7 +1788,7 @@
         </section>
 
         <!-- INTERNSHIP LIST PAGE -->
-        <section class="view" id="view-list">
+        <section class="view" id="view-list" aria-label="Internships">
           <div class="view-header">
             <div>
               <div class="view-title">Internships</div>
@@ -1740,8 +1798,8 @@
               </div>
             </div>
             <div class="view-actions">
-              <button class="btn-primary" id="list-add">
-                <i class="ri-add-line"></i>
+              <button class="btn-primary" id="list-add" type="button">
+                <i class="ri-add-line" aria-hidden="true"></i>
                 Add internship
               </button>
             </div>
@@ -1760,7 +1818,7 @@
                   <div class="card-subtitle" id="results-count">Showing 0 internships.</div>
                 </div>
                 <div style="display:flex;gap:0.4rem;align-items:center;flex-wrap:wrap;">
-                  <select id="sort-select" class="select select-compact">
+                  <select id="sort-select" class="select select-compact" aria-label="Sort internships">
                     <option value="deadline">Sort: deadline</option>
                     <option value="company">Sort: company</option>
                     <option value="title">Sort: title</option>
@@ -1794,10 +1852,12 @@
                   <input id="filter-before" type="date" class="input-date" />
                 </div>
                 <div class="list-controls-right">
-                  <button class="btn-ghost" id="filter-clear">Reset filters</button>
-                  <div class="tab-row">
-                    <button class="tab-pill is-active" data-list-tab="all">All</button>
-                    <button class="tab-pill" data-list-tab="favorites">Favorites</button>
+                  <button class="btn-ghost" id="filter-clear" type="button">Reset filters</button>
+                  <div class="tab-row" role="tablist" aria-label="Favorites filter">
+                    <button class="tab-pill is-active" data-list-tab="all" type="button" role="tab"
+                      aria-selected="true">All</button>
+                    <button class="tab-pill" data-list-tab="favorites" type="button" role="tab"
+                      aria-selected="false">Favorites</button>
                   </div>
                 </div>
               </div>
@@ -1807,7 +1867,8 @@
               </div>
 
               <!-- DETAIL MODAL CONTENT (popup) -->
-              <div class="detail-panel" id="detail-panel">
+              <div class="detail-panel" id="detail-panel" role="dialog" aria-modal="true" aria-labelledby="detail-title"
+                aria-hidden="true">
                 <div class="card-header" style="padding:0; margin-bottom:0.4rem;">
                   <div>
                     <div class="card-title" id="detail-title">Select an internship</div>
@@ -1815,8 +1876,8 @@
                       Click a card above to see more info and notes.
                     </div>
                   </div>
-                  <button class="icon-btn" id="detail-close-btn" type="button">
-                    <i class="ri-close-line"></i>
+                  <button class="icon-btn" id="detail-close-btn" type="button" aria-label="Close details">
+                    <i class="ri-close-line" aria-hidden="true"></i>
                   </button>
                 </div>
                 <div class="detail-block" id="detail-block">
@@ -1850,8 +1911,8 @@
                   </div>
                   <div>
                     <div class="detail-label">Favourite</div>
-                    <button class="btn-small" id="detail-favorite-toggle">
-                      <i class="ri-star-line"></i>
+                    <button class="btn-small" id="detail-favorite-toggle" type="button">
+                      <i class="ri-star-line" aria-hidden="true"></i>
                       <span>Mark as favourite</span>
                     </button>
                   </div>
@@ -1861,7 +1922,7 @@
                       placeholder="Write short notes about why you like this role, what they want, or what you need to do next."></textarea>
                   </div>
                   <div style="display:flex;justify-content:flex-end;margin-top:0.2rem;">
-                    <button class="btn-ghost" id="detail-save-notes">
+                    <button class="btn-ghost" id="detail-save-notes" type="button">
                       Save notes
                     </button>
                   </div>
@@ -1875,7 +1936,7 @@
         </section>
 
         <!-- BOARD PAGE -->
-        <section class="view" id="view-board">
+        <section class="view" id="view-board" aria-label="Board">
           <div class="view-header">
             <div>
               <div class="view-title">Board</div>
@@ -1884,9 +1945,9 @@
               </div>
             </div>
             <div class="view-actions">
-              <button class="btn-ghost" data-view-switch="list">
+              <button class="btn-ghost" data-view-switch="list" type="button">
                 Back to list
-                <i class="ri-arrow-right-up-line"></i>
+                <i class="ri-arrow-right-up-line" aria-hidden="true"></i>
               </button>
             </div>
           </div>
@@ -1895,18 +1956,19 @@
               Quick add
             </div>
             <div class="quick-add">
-              <input id="qa-title" type="text" class="input-small" placeholder="Role title" />
-              <input id="qa-company" type="text" class="input-small" placeholder="Company" />
-              <input id="qa-deadline" type="date" class="input-date" />
-              <select id="qa-status" class="select">
+              <input id="qa-title" type="text" class="input-small" placeholder="Role title" aria-label="Role title" />
+              <input id="qa-company" type="text" class="input-small" placeholder="Company" aria-label="Company" />
+              <input id="qa-deadline" type="date" class="input-date" aria-label="Deadline" />
+              <select id="qa-status" class="select" aria-label="Status">
                 <option value="Saved">Saved</option>
                 <option value="Applied">Applied</option>
                 <option value="Interviewing">Interviewing</option>
                 <option value="Offer">Offer</option>
               </select>
-              <input id="qa-subjects" type="text" class="input-small" placeholder="Subjects (comma separated)" />
-              <button class="btn-primary" id="qa-add">
-                <i class="ri-add-line"></i>
+              <input id="qa-subjects" type="text" class="input-small" placeholder="Subjects (comma separated)"
+                aria-label="Subjects" />
+              <button class="btn-primary" id="qa-add" type="button">
+                <i class="ri-add-line" aria-hidden="true"></i>
                 Add
               </button>
             </div>
@@ -1915,7 +1977,7 @@
         </section>
 
         <!-- CALENDAR PAGE -->
-        <section class="view" id="view-calendar">
+        <section class="view" id="view-calendar" aria-label="Calendar">
           <div class="view-header">
             <div>
               <div class="view-title">Calendar</div>
@@ -1947,7 +2009,7 @@
         </section>
 
         <!-- INSIGHTS PAGE -->
-        <section class="view" id="view-insights">
+        <section class="view" id="view-insights" aria-label="Insights">
           <div class="view-header">
             <div>
               <div class="view-title">Insights</div>
@@ -1979,7 +2041,7 @@
         </section>
 
         <!-- JOURNAL PAGE -->
-        <section class="view" id="view-journal">
+        <section class="view" id="view-journal" aria-label="Journal">
           <div class="view-header">
             <div>
               <div class="view-title">Journal</div>
@@ -1989,8 +2051,8 @@
               </div>
             </div>
             <div class="view-actions">
-              <button class="btn-primary" id="journal-new">
-                <i class="ri-edit-2-line"></i>
+              <button class="btn-primary" id="journal-new" type="button">
+                <i class="ri-edit-2-line" aria-hidden="true"></i>
                 New note
               </button>
             </div>
@@ -2012,7 +2074,7 @@
                   <div class="card-subtitle" id="journal-detail-meta">Data intern · 45 minutes · Online</div>
                 </div>
                 <span class="badge-soft">
-                  <i class="ri-lightbulb-flash-line"></i>
+                  <i class="ri-lightbulb-flash-line" aria-hidden="true"></i>
                   Main takeaway
                 </span>
               </div>
@@ -2031,7 +2093,7 @@
                 placeholder="Add your own notes or lessons. Keep them short and clear."></textarea>
               <div class="journal-footer">
                 <span>Tip: save details right after each step while it is fresh.</span>
-                <button class="btn-ghost" id="journal-save">
+                <button class="btn-ghost" id="journal-save" type="button">
                   Save note
                 </button>
               </div>
@@ -2040,7 +2102,7 @@
         </section>
 
         <!-- PROFILE PAGE -->
-        <section class="view" id="view-profile">
+        <section class="view" id="view-profile" aria-label="Profile and goals">
           <div class="view-header">
             <div>
               <div class="view-title">Profile and goals</div>
@@ -2107,12 +2169,12 @@
               </div>
             </div>
             <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
-              <button class="btn-ghost" id="export-roles">
-                <i class="ri-upload-2-line"></i>
+              <button class="btn-ghost" id="export-roles" type="button">
+                <i class="ri-upload-2-line" aria-hidden="true"></i>
                 Export internships
               </button>
-              <button class="btn-ghost" id="clear-roles">
-                <i class="ri-delete-bin-6-line"></i>
+              <button class="btn-ghost" id="clear-roles" type="button">
+                <i class="ri-delete-bin-6-line" aria-hidden="true"></i>
                 Clear internships
               </button>
             </div>
@@ -2120,7 +2182,7 @@
         </section>
 
         <!-- RESOURCES PAGE -->
-        <section class="view" id="view-resources">
+        <section class="view" id="view-resources" aria-label="Resources">
           <div class="view-header">
             <div>
               <div class="view-title">Resources</div>
@@ -2228,6 +2290,9 @@
         } else {
           themeIcon.className = "ri-sun-line";
           themeLabel.textContent = "Light";
+        }
+        if (themeToggle) {
+          themeToggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
         }
         try {
           localStorage.setItem("linktern-theme", theme);
@@ -7781,6 +7846,7 @@
           logo: "FGOV"
         },
 
+
       ];
 
       function hydrateRoles(baseRoles) {
@@ -7976,7 +8042,11 @@
         btn.addEventListener("click", () => {
           const value = btn.getAttribute("data-list-tab") || "all";
           listTab = value;
-          tabButtons.forEach(b => b.classList.toggle("is-active", b === btn));
+          tabButtons.forEach(b => {
+            const isActive = b === btn;
+            b.classList.toggle("is-active", isActive);
+            b.setAttribute("aria-selected", isActive ? "true" : "false");
+          });
           renderEverything();
         });
       });
@@ -8284,13 +8354,20 @@
       let activeRoleId = null;
 
       function openDetailModal() {
-        if (detailPanel) detailPanel.classList.add("is-open");
+        if (detailPanel) {
+          detailPanel.classList.add("is-open");
+          detailPanel.setAttribute("aria-hidden", "false");
+        }
         if (detailOverlay) detailOverlay.classList.add("is-active");
         document.body.classList.add("modal-open");
+        if (detailCloseBtn) detailCloseBtn.focus();
       }
 
       function closeDetailModal() {
-        if (detailPanel) detailPanel.classList.remove("is-open");
+        if (detailPanel) {
+          detailPanel.classList.remove("is-open");
+          detailPanel.setAttribute("aria-hidden", "true");
+        }
         if (detailOverlay) detailOverlay.classList.remove("is-active");
         document.body.classList.remove("modal-open");
       }
@@ -8362,7 +8439,7 @@
                   <div class="internship-company">${r.company}</div>
                 </div>
               </div>
-              <button class="icon-btn fav-btn" type="button">
+              <button class="icon-btn fav-btn" type="button" aria-label="Toggle favourite">
                 <i class="${r.favorite ? "ri-star-fill" : "ri-star-line"}"></i>
               </button>
             </div>
