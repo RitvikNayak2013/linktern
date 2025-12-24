@@ -17,6 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/x-icon" href="Untitled-removebg-preview (1).png">
 
+  <!-- Font & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
@@ -50,7 +51,6 @@
       --bg-hero-card: rgba(4, 3, 20, 0.96);
       --bg-hero-side: rgba(5, 4, 22, 0.96);
       --bg-footer: radial-gradient(circle at 0 0, rgba(125, 92, 255, 0.26), transparent 50%), rgba(5, 0, 16, 0.98);
-      --bg-mobile-menu: rgba(5, 0, 22, 0.98);
 
       /* Accent */
       --accent-1: #7d5cff;
@@ -78,14 +78,6 @@
       --divider-color: rgba(255, 255, 255, 0.08);
     }
 
-    /* Mobile overrides for spacing */
-    @media (max-width: 768px) {
-      :root {
-        --nav-height: 64px;
-        --section-spacing: 2.5rem;
-      }
-    }
-
     /* Light theme overrides */
     body[data-theme="light"] {
       --body-bg: radial-gradient(circle at top left, #ffffff 0, #e7f0ff 40%, #d6e3ff 100%);
@@ -98,7 +90,6 @@
       --bg-hero-card: rgba(242, 245, 255, 0.96);
       --bg-hero-side: rgba(240, 244, 255, 0.96);
       --bg-footer: radial-gradient(circle at 0 0, rgba(125, 92, 255, 0.12), transparent 50%), #eef2ff;
-      --bg-mobile-menu: rgba(255, 255, 255, 0.98);
 
       --text-main: #0f172a;
       --text-muted: #5b647b;
@@ -162,13 +153,6 @@
       z-index: 0;
       transform: translate3d(-999px, -999px, 0);
       transition: opacity 0.45s ease-out;
-    }
-
-    /* Disable cursor glow on touch devices to save performance */
-    @media (hover: none) {
-      .cursor-glow {
-        display: none;
-      }
     }
 
     body[data-theme="light"] .cursor-glow {
@@ -250,13 +234,6 @@
       margin: 0 auto;
     }
 
-    @media (max-width: 768px) {
-      .inner {
-        width: 100%;
-        padding: 0 1.25rem;
-      }
-    }
-
     .section-divider {
       border-top: 1px solid var(--divider-color);
       margin: 0 auto;
@@ -297,8 +274,6 @@
       display: flex;
       align-items: center;
       gap: 0.85rem;
-      z-index: 50;
-      /* Above mobile menu */
     }
 
     .logo-mark {
@@ -393,52 +368,28 @@
       gap: 0.75rem;
     }
 
-    /* Mobile Menu Toggle */
-    .mobile-toggle {
-      display: none;
-      z-index: 50;
-      width: 40px;
-      height: 40px;
+    .nav-pill {
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-soft);
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      color: var(--text-main);
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      border: 1px solid var(--border-soft);
+      gap: 0.35rem;
+      background: var(--bg-elevated);
+      white-space: nowrap;
     }
 
-    .mobile-toggle i {
-      font-size: 1.25rem;
+    body[data-theme="light"] .nav-pill {
+      border-color: rgba(15, 23, 42, 0.08);
     }
 
-    /* Mobile Menu Container */
-    .mobile-menu {
-      position: fixed;
-      inset: 0;
-      background: var(--bg-mobile-menu);
-      z-index: 45;
-      padding: 6rem 1.5rem 2rem;
-      flex-direction: column;
-      gap: 2rem;
-      transform: translateY(-100%);
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      display: flex;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .mobile-menu.is-open {
-      transform: translateY(0);
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .mobile-menu a {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--text-main);
-      padding: 0.5rem 0;
-      border-bottom: 1px solid var(--border-soft);
+    .nav-pill i {
+      font-size: 0.9rem;
+      color: var(--accent-gold);
     }
 
     .btn {
@@ -575,7 +526,6 @@
       transform: translateY(-1px);
     }
 
-    /* Mobile Breakpoints */
     @media (max-width: 960px) {
       .nav-right .btn-outline {
         display: none;
@@ -583,18 +533,16 @@
     }
 
     @media (max-width: 840px) {
+      .nav-inner {
+        justify-content: space-between;
+      }
+
       .nav-links {
         display: none;
       }
 
-      .mobile-toggle {
-        display: flex;
-      }
-
-      .nav-right .theme-toggle,
-      .nav-right .btn {
+      .nav-pill {
         display: none;
-        /* Move these to mobile menu */
       }
     }
 
@@ -614,49 +562,6 @@
       .hero-grid {
         grid-template-columns: minmax(0, 1fr);
         gap: 2.8rem;
-      }
-
-      .hero {
-        padding-top: 1.5rem;
-        text-align: center;
-      }
-
-      .announcement-bar {
-        text-align: left;
-        display: inline-flex;
-        /* ensure it stays centered inline if parent is text-center */
-      }
-
-      .hero-tag-row {
-        justify-content: center;
-      }
-
-      .hero-subtitle {
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .hero-actions {
-        justify-content: center;
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .hero-actions .btn {
-        width: 100%;
-      }
-
-      .hero-microcopy {
-        justify-content: center;
-        text-align: left;
-      }
-
-      .hero-stats {
-        justify-content: center;
-      }
-
-      .trusted-strip {
-        justify-content: center;
       }
     }
 
@@ -732,8 +637,8 @@
     }
 
     .hero-title {
-      font-size: clamp(2.2rem, 5vw, 3.4rem);
-      line-height: 1.1;
+      font-size: clamp(2.5rem, 3.9vw, 3.4rem);
+      line-height: 1.05;
       font-weight: 800;
       letter-spacing: 0.01em;
       margin-bottom: 0.9rem;
@@ -854,13 +759,6 @@
       justify-content: center;
       align-items: center;
       perspective: 1200px;
-    }
-
-    /* Disable perspective on mobile for performance */
-    @media (max-width: 768px) {
-      .hero-visual-wrap {
-        perspective: none;
-      }
     }
 
     .hero-visual {
@@ -1202,8 +1100,6 @@
 
       .hero-visual {
         max-width: 360px;
-        /* Center image on mobile */
-        margin: 0 auto;
       }
 
       .hero-float-card {
@@ -1236,7 +1132,6 @@
       font-size: 1.7rem;
       font-weight: 700;
       letter-spacing: 0.02em;
-      line-height: 1.2;
     }
 
     .section-title span {
@@ -1256,7 +1151,6 @@
       .section-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 1rem;
       }
 
       .section {
@@ -1696,15 +1590,6 @@
       border: 1px solid rgba(255, 255, 255, 0.18);
     }
 
-    /* Make switcher scrollable on tiny screens */
-    @media (max-width: 400px) {
-      .pill-switch {
-        width: 100%;
-        overflow-x: auto;
-        white-space: nowrap;
-      }
-    }
-
     body[data-theme="light"] .pill-switch {
       background: rgba(243, 246, 255, 1);
       border-color: rgba(15, 23, 42, 0.08);
@@ -1847,13 +1732,6 @@
       gap: 0.5rem;
       position: relative;
       overflow: hidden;
-    }
-
-    /* Make CTA full width on mobile */
-    @media (max-width: 768px) {
-      .free-card .btn {
-        width: 100%;
-      }
     }
 
     body[data-theme="light"] .free-card {
@@ -2081,15 +1959,6 @@
       .faq-grid {
         grid-template-columns: minmax(0, 1fr);
       }
-
-      .faq-intro {
-        margin-bottom: 2rem;
-      }
-
-      /* Stack buttons */
-      .faq-intro .btn {
-        flex: 1;
-      }
     }
 
     .faq-intro {
@@ -2127,8 +1996,6 @@
       padding: 0.72rem 0.9rem;
       font-size: 0.88rem;
       cursor: pointer;
-      /* Improve tap target */
-      min-height: 48px;
     }
 
     .accordion-header span {
@@ -2180,10 +2047,6 @@
       .footer-grid {
         grid-template-columns: minmax(0, 1fr);
       }
-
-      .footer-grid .btn {
-        width: 100%;
-      }
     }
 
     .footer-title {
@@ -2215,11 +2078,9 @@
       flex-wrap: wrap;
     }
 
-    /* Bigger tap targets for footer links */
     .footer-links a {
       font-size: 0.8rem;
       color: var(--text-soft);
-      padding: 5px 0;
     }
 
     .footer-links a:hover {
@@ -2242,27 +2103,14 @@
 </head>
 
 <body>
+  <!-- Cursor glow -->
   <div class="cursor-glow"></div>
+  <!-- Background orbs -->
   <div class="orb orb--1"></div>
   <div class="orb orb--2"></div>
 
-  <div class="mobile-menu" id="mobile-menu">
-    <a href="#features" data-mobile-link>Product</a>
-    <a href="#how" data-mobile-link>Workflow</a>
-    <a href="#audiences" data-mobile-link>Use cases</a>
-    <a href="#free" data-mobile-link>Free forever</a>
-    <a href="#faq" data-mobile-link>FAQ</a>
-    <button class="theme-toggle" id="theme-toggle-mobile" type="button" aria-label="Toggle theme">
-      <i class="ri-moon-clear-line theme-toggle-icon" id="theme-toggle-icon-mobile"></i>
-      <span id="theme-toggle-label-mobile">Dark Mode</span>
-    </button>
-    <a class="btn btn-primary" href="dashboard.html" target="_blank" rel="noopener">
-      Enter Linktern
-      <i class="ri-arrow-right-up-line"></i>
-    </a>
-  </div>
-
   <div class="page-shell">
+    <!-- NAVBAR -->
     <header class="nav">
       <div class="inner nav-inner">
         <div class="nav-left">
@@ -2293,15 +2141,12 @@
             Enter Linktern
             <i class="ri-arrow-right-up-line"></i>
           </a>
-
-          <button class="mobile-toggle" id="mobile-toggle" aria-label="Open menu">
-            <i class="ri-menu-4-line"></i>
-          </button>
         </div>
       </div>
     </header>
 
     <main>
+      <!-- HERO -->
       <section class="hero" id="hero">
         <div class="inner hero-grid">
           <div class="hero-left reveal">
@@ -2385,6 +2230,7 @@
               </div>
 
               <div class="hero-visual-main">
+                <!-- Opportunities card -->
                 <div class="hero-card">
                   <div class="hero-card-heading">
                     <div class="hero-card-title">Your week at a glance</div>
@@ -2415,6 +2261,7 @@
                   </div>
                 </div>
 
+                <!-- Side card -->
                 <div class="hero-side-card">
                   <div class="hero-progress-wrap">
                     <div class="hero-progress-label-row">
@@ -2453,6 +2300,7 @@
 
       <div class="section-divider"></div>
 
+      <!-- FEATURES -->
       <section class="section" id="features">
         <div class="inner">
           <div class="section-header reveal">
@@ -2560,6 +2408,7 @@
             </article>
           </div>
 
+          <!-- Use cases row -->
           <div class="usecases-row reveal">
             <div class="usecase-item">
               <div class="usecase-pill-icon"><i class="ri-compass-3-line"></i></div>
@@ -2575,6 +2424,7 @@
             </div>
           </div>
 
+          <!-- Integrations strip -->
           <div class="integrations-strip reveal">
             Works with tools you already use:
             <span class="integration-pill">
@@ -2588,6 +2438,7 @@
             </span>
           </div>
 
+          <!-- Inside the dashboard preview -->
           <div class="preview-grid reveal" style="margin-top:2.2rem;">
             <div class="preview-card">
               <div class="preview-label">Inside Linktern</div>
@@ -2622,6 +2473,7 @@
 
       <div class="section-divider"></div>
 
+      <!-- HOW IT WORKS -->
       <section class="section" id="how">
         <div class="inner">
           <div class="section-header reveal">
@@ -2705,6 +2557,7 @@
 
       <div class="section-divider"></div>
 
+      <!-- AUDIENCES / FOR YOU -->
       <section class="section" id="audiences">
         <div class="inner">
           <div class="audience-header reveal">
@@ -2727,6 +2580,7 @@
           </div>
 
           <div class="audience-panels">
+            <!-- Students -->
             <div class="audience-panel is-active reveal" data-panel="students" role="tabpanel" id="panel-students"
               aria-labelledby="tab-students">
               <div>
@@ -2769,6 +2623,7 @@
               </aside>
             </div>
 
+            <!-- Teams / programs -->
             <div class="audience-panel reveal" data-panel="teams" role="tabpanel" id="panel-teams"
               aria-labelledby="tab-teams" aria-hidden="true">
               <div>
@@ -2815,6 +2670,7 @@
 
       <div class="section-divider"></div>
 
+      <!-- FREE PLAN -->
       <section class="section" id="free">
         <div class="inner">
           <div class="section-header reveal">
@@ -2884,6 +2740,7 @@
 
       <div class="section-divider"></div>
 
+      <!-- TESTIMONIALS -->
       <section class="section" id="testimonials">
         <div class="inner">
           <div class="section-header reveal">
@@ -2947,6 +2804,7 @@
 
       <div class="section-divider"></div>
 
+      <!-- FAQ / BETA -->
       <section class="section" id="faq">
         <div class="inner">
           <div class="section-header reveal">
@@ -3034,6 +2892,7 @@
         </div>
       </section>
 
+      <!-- FOOTER -->
       <footer class="footer">
         <div class="inner">
           <div class="footer-grid">
@@ -3077,26 +2936,21 @@
       /* Theme setup */
       const body = document.body;
       const themeToggle = document.getElementById("theme-toggle");
-      const themeToggleMobile = document.getElementById("theme-toggle-mobile");
+      const themeIcon = document.getElementById("theme-toggle-icon");
+      const themeLabel = document.getElementById("theme-toggle-label");
       const storedTheme = localStorage.getItem("lt-theme");
       // Default to dark unless user has chosen before
       const initialTheme = storedTheme || "dark";
 
       function applyTheme(theme) {
-        const themeIcon = document.getElementById("theme-toggle-icon");
-        const themeLabel = document.getElementById("theme-toggle-label");
-        const themeIconMobile = document.getElementById("theme-toggle-icon-mobile");
-
         if (theme === "light") {
           body.setAttribute("data-theme", "light");
-          if (themeIcon) themeIcon.className = "ri-sun-line theme-toggle-icon";
-          if (themeLabel) themeLabel.textContent = "Light";
-          if (themeIconMobile) themeIconMobile.className = "ri-sun-line theme-toggle-icon";
+          themeIcon.className = "ri-sun-line theme-toggle-icon";
+          themeLabel.textContent = "Light";
         } else {
           body.removeAttribute("data-theme");
-          if (themeIcon) themeIcon.className = "ri-moon-clear-line theme-toggle-icon";
-          if (themeLabel) themeLabel.textContent = "Dark";
-          if (themeIconMobile) themeIconMobile.className = "ri-moon-clear-line theme-toggle-icon";
+          themeIcon.className = "ri-moon-clear-line theme-toggle-icon";
+          themeLabel.textContent = "Dark";
         }
         localStorage.setItem("lt-theme", theme);
       }
@@ -3107,39 +2961,6 @@
         themeToggle.addEventListener("click", function () {
           const isLight = body.getAttribute("data-theme") === "light";
           applyTheme(isLight ? "dark" : "light");
-        });
-      }
-
-      if (themeToggleMobile) {
-        themeToggleMobile.addEventListener("click", function () {
-          const isLight = body.getAttribute("data-theme") === "light";
-          applyTheme(isLight ? "dark" : "light");
-        });
-      }
-
-      /* Mobile Menu Logic */
-      const mobileToggle = document.getElementById("mobile-toggle");
-      const mobileMenu = document.getElementById("mobile-menu");
-      const mobileLinks = document.querySelectorAll("[data-mobile-link]");
-
-      if (mobileToggle && mobileMenu) {
-        mobileToggle.addEventListener("click", function () {
-          const isOpen = mobileMenu.classList.contains("is-open");
-          if (isOpen) {
-            mobileMenu.classList.remove("is-open");
-            mobileToggle.innerHTML = '<i class="ri-menu-4-line"></i>';
-          } else {
-            mobileMenu.classList.add("is-open");
-            mobileToggle.innerHTML = '<i class="ri-close-line"></i>';
-          }
-        });
-
-        // Close menu when a link is clicked
-        mobileLinks.forEach(link => {
-          link.addEventListener("click", function () {
-            mobileMenu.classList.remove("is-open");
-            mobileToggle.innerHTML = '<i class="ri-menu-4-line"></i>';
-          });
         });
       }
 
@@ -3232,11 +3053,9 @@
         glowVisible = false;
       });
 
-      /* Hero tilt (Disable on Touch for Performance) */
+      /* Hero tilt */
       const heroCard = document.getElementById("hero-card-tilt");
-      const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-
-      if (heroCard && !isTouch) {
+      if (heroCard) {
         const strength = 12;
         heroCard.addEventListener("pointermove", function (e) {
           const rect = heroCard.getBoundingClientRect();
